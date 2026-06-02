@@ -1,34 +1,60 @@
 <h1>Games#index</h1>
 <p>Find me in app/views/games/index.html.erb</p>
 
+<div class="container my-5">
 
-<h1>Liste des jeux</h1>
+  <h1 class="mb-5 text-center">
+    <span class="red">L</span>
+    <span class="blue">e</span>
+    <span class="yellow">s</span>
+    <span>&nbsp;</span>
+    <span class="orange">J</span>
+    <span class="green">e</span>
+    <span class="red">u</span>
+    <span class="blue">x</span>
+  </h1>
 
-<% if @games.any? %>
-  <div class="games-list">
-    <% @games.each do |game| %>
-      <div class="game-card">
-        <h2>
-          <%= link_to game.title, game_path(game) %>
-        </h2>
+  <% if @games.any? %>
 
+    <div class="row">
+      <% @games.each do |game| %>
 
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
 
-        <p><strong>Catégorie :</strong> <%= game.category %></p>
+          <%= link_to game_path(game), class: "game-card-link" do %>
 
-        <p><strong>Âge minimum :</strong> <%= game.age %> ans</p>
+            <div class="game-card h-100">
 
-        <p><strong>Nombre de joueurs :</strong> <%= game.player_number %></p>
+              <h2 class="game-title">
+                <%= game.title %>
+              </h2>
 
-        <p><strong>Caution :</strong> <%= game.deposit %> €</p>
+              <%= image_tag game.picture,
+                            alt: game.title,
+                            class: "game-image img-fluid" %>
 
-        <p>
-          <strong>Disponible :</strong>
-          <%= game.available ? "Oui" : "Non" %>
-        </p>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <p>Aucun jeu disponible.</p>
-<% end %>
+              <p><strong>Catégorie :</strong> <%= game.category %></p>
+              <p><strong>Âge minimum :</strong> <%= game.age %> ans</p>
+              <p><strong>Nombre de joueurs :</strong> <%= game.player_number %></p>
+              <p><strong>Caution :</strong> <%= game.deposit %> €</p>
+              <p><strong>Disponible :</strong> <%= game.available ? "Oui" : "Non" %></p>
+
+            </div>
+
+          <% end %>
+
+        </div>
+
+      <% end %>
+    </div>
+
+  <% else %>
+
+    <div class="text-center">
+      <p>Aucun jeu disponible.</p>
+    </div>
+
+  <% end %>
+
+</div>
+```
