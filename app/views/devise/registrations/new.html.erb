@@ -1,37 +1,50 @@
-<h2>Sign up</h2>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+      <h2 class="mb-4 text-center h2">
+  <span class="red">S</span>
+  <span class="blue">i</span>
+  <span class="yellow">g</span>
+  <span class="orange">n</span>
+  <span>&nbsp;</span>
+  <span class="green">u</span>
+  <span class="purple">p</span>
+</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
-    <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
-     <%= f.input :username,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "username" }%>
-      <%= f.input :city,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "city" }%>
-       <%= f.input :postalcode,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "postalcode" }%>
+        <div class="form-inputs">
+          <%= f.input :email,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "form-control" } %>
+          <%= f.input :password,
+                      required: true,
+                      hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                      input_html: { autocomplete: "new-password", class: "form-control" } %>
+          <%= f.input :password_confirmation,
+                      required: true,
+                      input_html: { autocomplete: "new-password", class: "form-control" } %>
+          <%= f.input :username,
+                      required: true,
+                      input_html: { autocomplete: "username", class: "form-control" } %>
+          <%= f.input :city,
+                      required: true,
+                      input_html: { autocomplete: "address-level2", class: "form-control" } %>
+          <%= f.input :postalcode,
+                      required: true,
+                      input_html: { autocomplete: "postal-code", class: "form-control" } %>
+        </div>
+
+        <div class="form-actions mt-3 d-grid">
+          <%= f.button :submit, "Sign up", class: "button w-100" %>
+        </div>
+      <% end %>
+
+      <div class="mt-3">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
