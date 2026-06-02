@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_02_133609) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_02_161319) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "chats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "game_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["game_id"], name: "index_chats_on_game_id"
+    t.index ["user_id"], name: "index_chats_on_user_id"
+  end
 
   create_table "games", force: :cascade do |t|
     t.integer "age"
@@ -190,6 +199,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_02_133609) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "chats", "games"
+  add_foreign_key "chats", "users"
   add_foreign_key "games", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
