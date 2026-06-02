@@ -1,27 +1,56 @@
-<h2>Change your password</h2>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+      <h2 class="mb-4 text-center h2">
+  <span class="red">C</span>
+  <span class="blue">h</span>
+  <span class="yellow">a</span>
+  <span class="orange">n</span>
+  <span class="green">g</span>
+  <span class="purple">e</span>
+  <span class="red">&nbsp;</span>
+  <span class="blue">y</span>
+  <span class="yellow">o</span>
+  <span class="orange">u</span>
+  <span class="green">r</span>
+  <span class="purple">&nbsp;</span>
+  <span class="red">p</span>
+  <span class="blue">a</span>
+  <span class="yellow">s</span>
+  <span class="orange">s</span>
+  <span class="green">w</span>
+  <span class="purple">o</span>
+  <span class="red">r</span>
+  <span class="blue">d</span>
+</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+      <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+        <%= f.error_notification %>
 
-  <%= f.input :reset_password_token, as: :hidden %>
-  <%= f.full_error :reset_password_token %>
+        <%= f.input :reset_password_token, as: :hidden %>
+        <%= f.full_error :reset_password_token %>
 
-  <div class="form-inputs">
-    <%= f.input :password,
-                label: "New password",
-                required: true,
-                autofocus: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                label: "Confirm your new password",
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
+        <div class="form-inputs">
+          <%= f.input :password,
+                      label: "New password",
+                      required: true,
+                      autofocus: true,
+                      hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                      input_html: { autocomplete: "new-password", class: "form-control" } %>
+          <%= f.input :password_confirmation,
+                      label: "Confirm your new password",
+                      required: true,
+                      input_html: { autocomplete: "new-password", class: "form-control" } %>
+        </div>
+
+        <div class="form-actions mt-3 d-grid">
+          <%= f.button :submit, "Change my password", class: "button w-100" %>
+        </div>
+      <% end %>
+
+      <div class="mt-3">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Change my password" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

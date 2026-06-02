@@ -1,0 +1,9 @@
+.link {
+  text-decoration: none;
+  color: $Moderngrey;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: darken($Moderngrey, 25%);
+  }
+}
