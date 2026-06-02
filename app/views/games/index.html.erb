@@ -1,0 +1,34 @@
+<h1>Games#index</h1>
+<p>Find me in app/views/games/index.html.erb</p>
+
+
+<h1>Liste des jeux</h1>
+
+<% if @games.any? %>
+  <div class="games-list">
+    <% @games.each do |game| %>
+      <div class="game-card">
+        <h2>
+          <%= link_to game.title, game_path(game) %>
+        </h2>
+
+
+
+        <p><strong>Catégorie :</strong> <%= game.category %></p>
+
+        <p><strong>Âge minimum :</strong> <%= game.age %> ans</p>
+
+        <p><strong>Nombre de joueurs :</strong> <%= game.player_number %></p>
+
+        <p><strong>Caution :</strong> <%= game.deposit %> €</p>
+
+        <p>
+          <strong>Disponible :</strong>
+          <%= game.available ? "Oui" : "Non" %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>Aucun jeu disponible.</p>
+<% end %>
