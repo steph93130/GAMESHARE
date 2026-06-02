@@ -15,6 +15,18 @@
     <%= f.input :password_confirmation,
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
+     <%= f.input :username,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "username" }%>
+      <%= f.input :city,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "city" }%>
+       <%= f.input :postalcode,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "postalcode" }%>
   </div>
 
   <div class="form-actions">
