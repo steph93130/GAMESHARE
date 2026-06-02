@@ -1,0 +1,65 @@
+ .button {
+ display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 21px;
+  min-width: 140px;
+  margin-bottom: 5px;
+
+  background-color: $purple;
+  color: white;
+
+  border: 1px solid #BFC9D1;
+  border-radius: 999px;
+
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+
+  cursor: pointer;
+  position: relative;
+
+  background-image: linear-gradient(
+    to bottom,
+    lighten($purple, 8%) 0%,
+    $purple 45%,
+    darken($purple, 6%) 100%
+  );
+
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.35),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.18),
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    0 1px 1px rgba(255, 255, 255, 0.2);
+
+  transition: all 0.25s ease;
+
+  &:hover {
+    background-color: darken( $purple, 10%);
+    color: lightgray;
+
+    background-image: linear-gradient(
+      to bottom,
+      lighten($purple, 2%) 0%,
+      darken($purple, 4%) 100%
+    );
+
+    transform: translateY(-1px);
+
+    box-shadow:
+      inset 0 1px 2px rgba(255, 255, 255, 0.25),
+      inset 0 -2px 3px rgba(0, 0, 0, 0.22),
+      0 5px 10px rgba(0, 0, 0, 0.28),
+      0 2px 4px rgba(255, 155, 81, 0.35);
+  }
+
+  &:active {
+    transform: translateY(1px);
+
+    box-shadow:
+      inset 0 1px 3px rgba(0, 0, 0, 0.2),
+      0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+ }
