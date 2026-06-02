@@ -21,6 +21,14 @@
                 hint: "we need your current password to confirm your changes",
                 required: true,
                 input_html: { autocomplete: "current-password" } %>
+          <%= f.input :city,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "city" }%>
+     <%= f.input :postalcode,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "postalcode" }%>
   </div>
 
   <div class="form-actions">
