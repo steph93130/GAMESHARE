@@ -41,5 +41,5 @@
 *.swp
 .DS_Store
 
-# ignore Claude.md fil
+# ignore claude.md file
 CLAUDE.md
