@@ -53,8 +53,8 @@
     <!-- On vérifie qu'un bokking a bien été crée -->
     <% if @chat.booking.present? %>
       <!-- Si oui on affiche les lien accepter et refuser -->
-      <%= link_to "accepter l'emprunt",  chat_bookings_path(@chat), data: { turbo_method: :post } %> | 
-      <%= link_to "refuser l'emprunt",  chat_bookings_path(@chat), data: { turbo_method: :post } %>
+      <%= link_to "accepter l'emprunt", chat_booking_path(@chat, @chat.booking), data: { turbo_method: :patch } %> | 
+      <%= link_to "refuser l'emprunt", chat_bookings_path(@chat), data: { turbo_method: :post } %>
     <% end %>
     <!-- Sinon on affiche rien -->
   <% end %>
