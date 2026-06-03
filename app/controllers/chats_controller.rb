@@ -5,7 +5,7 @@ class ChatsController < ApplicationController
     authorize @chat
     if @chat.save
       # Rails.logger.info "Chat bien créé avec l'ID #{@chat.id}."
-      redirect_to @chat # = chat_path(@chat)
+      redirect_to @chat
     else
       render "games/show", status: :unprocessable_entity
     end
@@ -13,11 +13,12 @@ class ChatsController < ApplicationController
 
   def show
     @chat = Chat.find(params[:id])
-    # @chat = current_user.chat.find([:id])
     @game = @chat.game
     @borrower = @chat.user
     @owner = @game.user
     @role = current_user == @borrower ? "borrower" : "owner"
     @other_user = @role == "borrower" ? @owner : @borrower
+    @message = Message.new(chat: @chat)
+    @messages = @chat.messages
   end
 end

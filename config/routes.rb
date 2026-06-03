@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "messages/create"
   devise_for :users
   root to: "pages#home"
   get "profile", to: "profiles#show", as: :profile
@@ -11,6 +10,11 @@ Rails.application.routes.draw do
   resources :chats, only: [:show] do
     resources :bookings, only: [:create, :edit]
   end
+  resources :chats, only: [:show] do
+    resources :messages, only: [:create, :index, :show]
+  end
+
+
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

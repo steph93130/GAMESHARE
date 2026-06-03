@@ -1,11 +1,20 @@
 class GamesController < ApplicationController
   def index
-    @games = policy_scope(Game).where(available: true)
+    @address = params[:query]
+    @games = policy_scope(Game).where(available: true).near(@address, 5)
+    # @games = Game.near(address, 0.3)
+    @markers = @games.where.not(lat: nil, lng: nil).map do |game|
+      {
+        lat: game.lat,
+        lng: game.lng
+      }
+    end
   end
 
   def show
     @game = Game.find(params[:id])
     authorize @game
+
   end
 
   def new
@@ -16,6 +25,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     @game.user = current_user
+    @game.address = current_user.address
     authorize @game
 
     if @game.save
