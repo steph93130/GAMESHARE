@@ -13,10 +13,10 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     # For additional fields in app/views/devise/registrations/new.html.erb
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :city, :postalcode])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :address])
 
     # For additional in app/views/devise/registrations/edit.html.erb
-    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :city, :postalcode])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :address])
   end
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
