@@ -2,21 +2,33 @@
 
 <h1 id="titre" class="mt-2 ms-3">Chat avec <%= @other_user.username %> pour le jeu <%= @game.title %></h1>
 
-
-<div id="messages">
-
+<div id="messages" class="d-flex align-items-start flex-column" >
+    <% @messages.each do |message| %>
+      <% if message.user.username == current_user.username %>
+        <div class="emprunteur  fs-3 fst-italic text-light bg-primary text-end rounded-3 mb-auto p-2 col-8" >
+          <%= message.content %>
+        </div>
+      <% else %>
+        <div class="preteur fs-4 text fw-bold text-primary bg-success  text-light col-8 rounded-3 my-2 p-2 ">
+          <%= message.content %>
+        </div>
+      <% end %>
+      <% end %>
 </div>
 
 <div class="form-input-message">
 
+  <%= simple_form_for [@chat, @message] do |f| %>
+  <%= f.input :content,
+              label: "Poser une question" ,
+              required: true,
+              placeholder: "Echanger ici avec #{ @other_user.username}." ,
+              input_html: { class:"input_ask",
+                            data: {
+                              action:"keyup->stopbutton#call",
+                              stopbutton_target: "input"
+                              }
+                            } %>
+  <%= f.button :submit, 'Discuter', class:'btn btn-outline-secondary' %>
+  <% end %>
 </div>
-
-
-  <%#= render @chat.messages, messages: @chat.messages %>
-<!-- </div> -->
-
-<!-- <div id="new_message_container" data-controller="stopbutton"> -->
-  <%#= render "messages/form", conversation: @chat, message: @message %>
-<!-- </div> -->
-
-<%#= link_to "← Retour", game_path, class: "bouton-sign mt-2" %>
