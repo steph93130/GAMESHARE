@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   def index
-    @games = policy_scope(Game)
+    @games = policy_scope(Game).where(available: true)
   end
 
   def show
