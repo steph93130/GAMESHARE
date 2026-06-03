@@ -13,7 +13,7 @@
 ActiveRecord::Schema[8.1].define(version: 2026_06_03_103920) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
-
+  
   create_table "bookings", force: :cascade do |t|
     t.bigint "chat_id", null: false
     t.datetime "created_at", null: false
