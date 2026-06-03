@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "messages/create"
   devise_for :users
   root to: "pages#home"
   get "profile", to: "profiles#show", as: :profile
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
       resources :bookings only: [:create]
     end
   end
+  resources :chats, only: [:show]
 
 
 

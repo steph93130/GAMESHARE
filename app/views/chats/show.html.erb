@@ -1,3 +1,22 @@
-<%= turbo_stream_from @chat %>
-<h1>Chats#show</h1>
-<p>Find me in app/views/chats/show.html.erb</p>
+<%#= turbo_stream_from @chat %>
+
+<h1 id="titre" class="mt-2 ms-3">Chat avec <%= @other_user.username %> pour le jeu <%= @game.title %></h1>
+
+
+<div id="messages">
+
+</div>
+
+<div class="form-input-message">
+
+</div>
+
+
+  <%#= render @chat.messages, messages: @chat.messages %>
+<!-- </div> -->
+
+<!-- <div id="new_message_container" data-controller="stopbutton"> -->
+  <%#= render "messages/form", conversation: @chat, message: @message %>
+<!-- </div> -->
+
+<%#= link_to "← Retour", game_path, class: "bouton-sign mt-2" %>
