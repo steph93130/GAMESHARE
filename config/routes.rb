@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :games do
     resources :chats, only: [:create]
   end
+  resources :chats, only: [:show]
 
 
 
