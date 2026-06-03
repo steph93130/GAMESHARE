@@ -12,8 +12,8 @@ class ChatsController < ApplicationController
   end
 
   def show
-    # @chat = Chat.find(params[:id])
-    @chat = current_user.chat.find([:id])
+    @chat = Chat.find(params[:id])
+    # @chat = current_user.chat.find([:id])
     @game = @chat.game
     @borrower = @chat.user
     @owner = @game.user
