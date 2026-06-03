@@ -1,4 +1,89 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="container my-5">
 
-<%= link_to "Sign out", destroy_user_session_path, data: {turbo_method: :delete} %>
+  <div class="d-flex justify-content-center mb-4">
+    <%= image_tag "logomax.png", alt: "GameShare", class: "logo" %>
+  </div>
+
+  <h1 class="mb-5 text-center">
+    <span class="red">G</span><span class="blue">a</span><span class="yellow">m</span><span class="red">e</span><span class="blue">S</span><span class="yellow">h</span><span class="red">a</span><span class="blue">r</span><span class="yellow">e</span>
+  </h1>
+
+  <h2 class="mb-4 text-center">
+    <span class="red">T</span><span class="blue">r</span><span class="yellow">o</span><span class="red">u</span><span class="blue">v</span><span class="yellow">e</span><span class="red">r</span>
+    <span>&nbsp;</span>
+    <span class="blue">u</span><span class="yellow">n</span>
+    <span>&nbsp;</span>
+    <span class="orange">J</span><span class="green">e</span><span class="red">u</span>
+  </h2>
+
+
+
+
+
+
+  <div class="row justify-content-center mb-5">
+    <div class="col-12 col-md-8 col-lg-6">
+      <%= form_with url: games_path, method: :get, local: true do |f| %>
+        <div class="input-group">
+
+            <span class="input-group-text">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </span>
+          <%= f.text_field :query,
+                           class: "form-control",
+                           placeholder: "Rechercher un jeu..." %>
+
+          <button class="btn btn-primary" type="submit">
+            Rechercher
+          </button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <h2 class="mb-5 text-center">
+    <span class="red">L</span><span class="blue">e</span><span class="yellow">s</span>
+    <span>&nbsp;</span>
+    <span class="red">D</span><span class="blue">e</span><span class="yellow">r</span><span class="red">n</span><span class="blue">i</span><span class="yellow">e</span><span class="orange">r</span><span class="green">s</span>
+    <span>&nbsp;</span>
+    <span class="orange">J</span><span class="green">e</span><span class="red">u</span><span class="blue">x</span>
+  </h2>
+
+  <% if @last_games.any? %>
+    <div class="row">
+      <% @last_games.each do |game| %>
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <%= link_to game_path(game), class: "game-card-link" do %>
+            <div class="game-card h-100">
+
+              <h2 class="game-title">
+                <%= game.title %>
+              </h2>
+
+              <%= image_tag game.picture,
+                            alt: game.title,
+                            class: "game-image img-fluid" %>
+
+              <p><strong>Catégorie :</strong> <%= game.category %></p>
+              <p><strong>Âge minimum :</strong> <%= game.age %> ans</p>
+              <p><strong>Nombre de joueurs :</strong> <%= game.player_number %></p>
+
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center">
+      <p>Aucun jeu disponible.</p>
+    </div>
+  <% end %>
+
+  <div class="text-center mt-5">
+    <%= link_to "Sign out",
+                destroy_user_session_path,
+                data: { turbo_method: :delete },
+                class: "btn btn-outline-secondary" %>
+  </div>
+
+</div>
