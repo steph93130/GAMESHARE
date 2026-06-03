@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_02_161319) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_03_103920) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "bookings", force: :cascade do |t|
+    t.bigint "chat_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "game_id", null: false
+    t.float "rating_preteur"
+    t.float "rating_user"
+    t.boolean "report"
+    t.integer "status"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["chat_id"], name: "index_bookings_on_chat_id"
+    t.index ["game_id"], name: "index_bookings_on_game_id"
+    t.index ["user_id"], name: "index_bookings_on_user_id"
+  end
 
   create_table "chats", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -39,6 +54,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_02_161319) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_games_on_user_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_locations_on_user_id"
   end
 
   create_table "solid_cable_messages", force: :cascade do |t|
@@ -199,9 +223,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_02_161319) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bookings", "chats"
+  add_foreign_key "bookings", "games"
+  add_foreign_key "bookings", "users"
   add_foreign_key "chats", "games"
   add_foreign_key "chats", "users"
   add_foreign_key "games", "users"
+  add_foreign_key "locations", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
