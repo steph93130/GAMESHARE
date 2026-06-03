@@ -1,4 +1,4 @@
 <h1>Games#show</h1>
 <p>Find me in app/views/games/show.html.erb</p>
 
-<%= link_to "Démarrer conversation",  game_chat_index_path(@game) %>
+<%= link_to "Démarrer conversation",  game_chats_path(@game), data: { turbo_method: :post } %>
