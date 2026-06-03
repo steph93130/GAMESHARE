@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :games do
     resources :chats, only: [:create] do
-      resources :bookings, only: [:create]
+      resources :bookings, only: [:create, :edit]
     end
   end
   resources :chats, only: [:show]
