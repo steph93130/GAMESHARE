@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_03_103920) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_03_121555) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -67,6 +67,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_103920) do
 
   create_table "messages", force: :cascade do |t|
     t.bigint "chat_id", null: false
+    t.string "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -240,7 +241,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_103920) do
   add_foreign_key "games", "users"
   add_foreign_key "locations", "users"
   add_foreign_key "messages", "chats"
-  add_foreign_key "messages", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
