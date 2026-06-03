@@ -7,12 +7,9 @@ class BookingPolicy < ApplicationPolicy
 
   
   def create?
-    true
+    # Il faut que le current_user soit l'emprunteur !!
+    user == record.chat.user
   end
-
-  def new
-    create?
-  end 
 
   def update?
     true
