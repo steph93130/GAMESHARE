@@ -1,6 +1,12 @@
 class GamesController < ApplicationController
   def index
     @games = policy_scope(Game)
+    @markers = @games.where.not(lat: nil, lng: nil).map do |game|
+      {
+        lat: game.lat,
+        lng: game.lng
+      }
+    end
   end
 
   def show

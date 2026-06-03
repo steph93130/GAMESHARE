@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :games, dependent: :destroy
-  has_many :chats
+  has_many :chats, dependent: :destroy
 
   geocoded_by :address, latitude: :lat, longitude: :lng
   after_validation :geocode, if: :will_save_change_to_address?
@@ -21,6 +21,5 @@ class User < ApplicationRecord
 
   def cascade_location_to_games
     games.update_all(lat: lat, lng: lng)
-    puts "coucou"
   end
 end

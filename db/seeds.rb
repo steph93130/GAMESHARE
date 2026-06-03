@@ -24,53 +24,44 @@ DEPOSIT = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150]
     "Splendor" => "https://joueclub-joueclub-fr-storage.omn.proximis.com/Imagestorage/imagesSynchro/0/0/c6559d12ec8729ac0a79820be58f6c29cddb2fa1_06024261_03.jpeg"
   }
 
-puts "suppression des prêteurs et des emprenteurs"
+puts "nettoyage de la db"
 User.destroy_all
 
-puts "Création des prêteurs"
+puts "Création des users"
 
 
 bruno = User.create!(
-username: "Bruno#preteur",
+username: "Bruno",
 email: "bruno@wagon.fr",
 password: "123456",
 rating: rand(0.0..5),
-city: "Tourcoing",
-postalcode: 59200,
+address: "130 avenue sainte marguerite, nice"
 )
 
 
 celine = User.create!(
-username: "Céline#preteur",
+username: "Céline",
 email: "celine@wagon.fr",
 password: "123456",
 rating: rand(0.0..5),
-city: "Nice",
-postalcode: 06000,
+address: "197 promenade des anglais, nice"
 )
 
 stephane = User.create!(
-username: "Stephane#preteur",
+username: "Stephane",
 email: "stephane@wagon.fr",
 password: "123456",
 rating: rand(0.0..5),
-city: "Noisy-le-Sec",
-postalcode: 93130,
+address: "7 rue barberis, nice"
 )
 
 patrice = User.create!(
-username: "patrice#preteur",
+username: "patrice",
 email: "patrice@wagon.fr",
 password: "123456",
 rating: rand(0.0..5),
-city: "Noisy-le-Sec",
-postalcode: 93130,
+address: "31 boulevard franck pilatte, nice"
 )
-
-
-puts "Cleaning database... Games"
-Game.destroy_all
-
 
 puts "Creating des games..."
 
@@ -270,111 +261,33 @@ Game.create!(
   RULES
 )
 
-Game.create!(
-  title: "Splendor",
-  user:celine,
-  condition: CONDITIONS.sample,
-  player_number: 4,
-  picture: IMAGES_GAME["Splendor"],
-  rent_duration: rand(2..15),
-  age: AGE.sample,
-  category: CATEGORY.sample,
-  description: "",
-  available: true,
-  deposit: DEPOSIT.sample,
-  rules: <<~RULES
-    ## But du jeu
+# Game.create!(
+#   title: "Splendor",
+#   user:celine,
+#   condition: CONDITIONS.sample,
+#   player_number: 4,
+#   picture: IMAGES_GAME["Splendor"],
+#   rent_duration: rand(2..15),
+#   age: AGE.sample,
+#   category: CATEGORY.sample,
+#   description: "",
+#   available: true,
+#   deposit: DEPOSIT.sample,
+#   rules: <<~RULES
+#     ## But du jeu
 
-    Devenir le marchand le plus prestigieux en achetant des cartes de développement.
+#     Devenir le marchand le plus prestigieux en achetant des cartes de développement.
 
-    ## Résumé des règles
+#     ## Résumé des règles
 
-    - À son tour, un joueur prend des jetons, réserve une carte ou achète une carte.
-    - Les jetons servent à payer les cartes de développement.
-    - Les cartes achetées donnent des bonus permanents pour les prochains achats.
-    - Certaines cartes rapportent des points de prestige.
-    - Les nobles peuvent rejoindre un joueur qui possède les bons bonus.
-    - La partie se termine quand un joueur atteint le seuil de points requis.
-  RULES
-)
+#     - À son tour, un joueur prend des jetons, réserve une carte ou achète une carte.
+#     - Les jetons servent à payer les cartes de développement.
+#     - Les cartes achetées donnent des bonus permanents pour les prochains achats.
+#     - Certaines cartes rapportent des points de prestige.
+#     - Les nobles peuvent rejoindre un joueur qui possède les bons bonus.
+#     - La partie se termine quand un joueur atteint le seuil de points requis.
+#   RULES
+# )
 
-puts "8 jeux créés - ok."
-
-
-puts " Creation des emprunteurs"
-
-
-User.create!(
-username: "Michel#Emprunteur",
-email: "Michel@wagon.fr",
-password: "123456",
-rating: rand(0.0..5),
-city: "Tourcoing",
-postalcode: 59200,
-)
-
-User.create!(
-username: "Johnny#Emprunteur",
-email: "Johnny@wagon.fr",
-password: "123456",
-rating: rand(0.0..5),
-city: "Nice",
-postalcode: 06000,
-)
-
-User.create!(
-username: "Patrick#Emprunteur",
-email: "patrick@wagon.fr",
-password: "123456",
-rating: rand(0.0..5),
-city: "Noisy-le-Sec",
-postalcode: 93130,
-)
-
-User.create!(
-username: "JeanJacques#Emprunteur",
-email: "jj@wagon.fr",
-password: "123456",
-rating: rand(0.0..5),
-city: "Noisy-le-Sec",
-postalcode: 93130,
-)
-
-User.create!(
-username: "Stéphaniel#Emprunteur",
-email: "stephanie@wagon.fr",
-password: "123456",
-rating: rand(0.0..5),
-city: "Tourcoing",
-postalcode: 59200,
-)
-
-User.create!(
-username: "Jeanne#Emprunteur",
-email: "Jeanne@wagon.fr",
-password: "123456",
-rating: rand(0.0..5),
-city: "Nice",
-postalcode: 06000,
-)
-
-User.create!(
-username: "Elsa#Emprunteur",
-email: "elsa@wagon.fr",
-password: "123456",
-rating: rand(0.0..5),
-city: "Noisy-le-Sec",
-postalcode: 93130,
-)
-
-User.create!(
-username: "Petula#Emprunteur",
-email: "petula@wagon.fr",
-password: "123456",
-rating: rand(0.0..5),
-city: "Noisy-le-Sec",
-postalcode: 93130,
-)
-
-puts "8 emprunteurs créés"
+puts "#{Game.count} jeux créés - ok."
 puts "Seed Finished!"
