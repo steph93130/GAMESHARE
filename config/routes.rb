@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   get "profile", to: "profiles#show", as: :profile
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :games do
-    resources :chats, only: [:create]
+    resources :chats, only: [:create] do
+      resources :bookings only: [:create]
+    end
   end
 
 
