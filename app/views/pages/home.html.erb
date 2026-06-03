@@ -1,5 +1,5 @@
 <div class="container my-5">
-
+  <%= link_to "index", games_path %>
   <div class="d-flex justify-content-center mb-4">
     <%= image_tag "logomax.png", alt: "GameShare", class: "logo" %>
   </div>
@@ -31,7 +31,7 @@
   </span>
           <%= f.text_field :query,
                            class: "form-control",
-                           placeholder: "Rechercher un jeu..." %>
+                           placeholder: "19 promenade des anglais, Nice" %>
 
           <button class="btn btn-primary" type="submit">
             Rechercher
