@@ -7,19 +7,15 @@ class BookingsController < ApplicationController
     end
 
     def create
-        # raise
         @game = Game.find(params[:game_id])
         @chat = Chat.find(params[:chat_id])
         @booking = Booking.new(game: @game, user: current_user, chat: @chat )
         authorize @booking
         if @booking.save
-            # raise
             redirect_to edit_game_chat_booking_path(@game, @chat, @booking)
         else
-            # raise
             render "chat/show", status: :unprocessable_entity
         end
-
     end
 
     def edit
@@ -28,6 +24,7 @@ class BookingsController < ApplicationController
     end
 
     def update
-
+        @booking = Booking.find(params[:id])
+        authorize @booking
     end
 end
