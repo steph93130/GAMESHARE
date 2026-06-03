@@ -1,16 +1,14 @@
 Rails.application.routes.draw do
-  get "games/index"
-  get "games/show"
-  get "games/new"
-  get "games/create"
-  get "games/edit"
-  get "games/update"
-  get "games/destroy"
   devise_for :users
   root to: "pages#home"
   get "profile", to: "profiles#show", as: :profile
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  resources :games
+  resources :games do
+    resources :chats, only: [:create]
+  end
+
+
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
