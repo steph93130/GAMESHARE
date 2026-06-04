@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_04_070301) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_04_070038) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -48,7 +48,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_070301) do
     t.decimal "deposit"
     t.text "description"
     t.float "lat"
-    t.float "lgt"
+    t.float "lng"
     t.string "picture"
     t.integer "player_number"
     t.integer "rent_duration"
@@ -216,8 +216,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_070301) do
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.float "lat"
-    t.float "lgt"
     t.float "rating"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
