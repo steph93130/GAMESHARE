@@ -12,8 +12,7 @@
     <!-- <span class="blue">x</span> -->
   </h1>
 
-
-<%= link_to "Démarrer conversation",  game_chats_path(@game), data: { turbo_method: :post }, class:"btn btn-primary rounded-sm" %>
-
+<%= button_to "Démarrer conversation", game_chats_path(@game), method: :post, form: { target: "_blank" }, class: "button" %>
+<%# <%= link_to "Démarrer conversation",  game_chats_path(@game), data: { turbo_method: :post }, target: "_blank", class:"btn btn-primary rounded-sm" %>
+<%= link_to "← Retour", games_path(query: params[:query]), class: "button" %>
 </div>
-<%= link_to "← Retour", games_path %>
