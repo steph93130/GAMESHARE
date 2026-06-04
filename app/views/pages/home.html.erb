@@ -54,7 +54,7 @@
                 <%= game.title %>
               </h2>
 
-              <%= image_tag game.picture,
+              <%= cl_image_tag game.picture.key,
                             alt: game.title,
                             class: "game-image img-fluid" %>
 
