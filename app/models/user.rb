@@ -13,6 +13,7 @@ class User < ApplicationRecord
   private
 
   def cascade_location_to_games
-    games.update_all(address: address)
+    games.each { |game| game.update(address: address) }
+    # games.update_all(address: address)
   end
 end
