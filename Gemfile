@@ -33,6 +33,9 @@ gem "bootsnap", require: false
 # geocoder
 gem "geocoder"
 
+# Faker
+gem "faker"
+
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", require: false
 
