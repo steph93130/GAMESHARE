@@ -2,35 +2,12 @@
 
 <h1 id="titre" class="mt-2 ms-3">Chat avec <%= @other_user.username %> pour le jeu <%= @game.title %></h1>
 
-<div id="messages" class="d-flex align-items-start flex-column" >
-    <% @messages.each do |message| %>
-      <% if message.user.username == current_user.username %>
-        <div class="emprunteur  fs-3 fst-italic text-light bg-primary text-end rounded-3 mb-auto p-2 col-8" >
-          <%= message.content %>
-        </div>
-      <% else %>
-        <div class="preteur fs-4 text fw-bold text-primary bg-success  text-light col-8 rounded-3 my-2 p-2 ">
-          <%= message.content %>
-        </div>
-      <% end %>
-      <% end %>
+<div id="messages">
+  <%= render "messages/messages", messages: @chat.messages %>
 </div>
 
-<div class="form-input-message">
-
-  <%= simple_form_for [@chat, @message] do |f| %>
-  <%= f.input :content,
-              label: "Poser une question" ,
-              required: true,
-              placeholder: "Echanger ici avec #{ @other_user.username}." ,
-              input_html: { class:"input_ask",
-                            data: {
-                              action:"keyup->stopbutton#call",
-                              stopbutton_target: "input"
-                              }
-                            } %>
-  <%= f.button :submit, 'Discuter', class:'btn btn-outline-secondary' %>
-  <% end %>
+<div id="new_message_container">
+  <%= render "messages/form", chat: @chat, message: @message %>
 </div>
 <div class="col-12 col-lg-6">
   <!-- ######################################################################################################-->
@@ -53,7 +30,7 @@
     <!-- On vérifie qu'un bokking a bien été crée -->
     <% if @chat.booking.present? %>
       <!-- Si oui on affiche les lien accepter et refuser -->
-      <%= link_to "accepter l'emprunt", chat_booking_path(@chat, @chat.booking), data: { turbo_method: :patch } %> | 
+      <%= link_to "accepter l'emprunt", chat_booking_path(@chat, @chat.booking), data: { turbo_method: :patch } %> |
       <%= link_to "refuser l'emprunt", chat_bookings_path(@chat), data: { turbo_method: :post } %>
     <% end %>
     <!-- Sinon on affiche rien -->
@@ -71,3 +48,7 @@
 <!-- </div> -->
 
 <%#= link_to "← Retour", game_path, class: "bouton-sign mt-2" %>
+<div class="QuiSuisJe my-3">
+  Je suis loggé en tant que en tant que : <%= current_user.username %> et je discute avec <%= @other_user.username %>
+</div>
+<%= link_to "← #{@game.title}", game_path(@game) %>

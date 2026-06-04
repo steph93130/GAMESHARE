@@ -14,7 +14,7 @@
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-    <%= favicon_link_tag 'favicon.ico'%>
+    <%= favicon_link_tag 'favicon.ico' %>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "application", "data-turbo-track": Rails.env.production? ? "reload" : "" %>
@@ -22,6 +22,9 @@
   </head>
 
   <body>
+<div class="connected">
+<%= current_user == nil ? " " : "Connecté en tant que : #{current_user.username}" %>
+</div>
     <%= yield %>
 
   <p class="notice"><%= notice %></p>

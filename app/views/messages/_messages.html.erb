@@ -1,0 +1,16 @@
+
+<% messages.each do |message| %>
+  <% if message.user.username == current_user.username %>
+    <div class="d-flex justify-content-end mb-2">
+      <div class="bg-success px-3 pb-0 pt-3 rounded-pill">
+        <%= message.content %>
+      </div>
+    </div>
+  <% else message.user.username == "owner" %>
+    <div class="d-flex justify-content-start mb-5">
+      <div class="px-3 pb-0 pt-3 bg-info rounded-pill">
+        <%= message.content %>
+      </div>
+    </div>
+  <% end %>
+ <% end %>
