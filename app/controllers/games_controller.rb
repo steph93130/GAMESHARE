@@ -1,9 +1,12 @@
 class GamesController < ApplicationController
   def index
     @address = params[:query]
+    result = Geocoder.search(@address).first
+    @user_markers = [{ lat: result.latitude, lng: result.longitude }]
+
     @games = policy_scope(Game).where(available: true).near(@address, 5)
     # @games = Game.near(address, 0.3)
-    @markers = @games.where.not(lat: nil, lng: nil).map do |game|
+    @game_markers = @games.where.not(lat: nil, lng: nil).map do |game|
       {
         lat: game.lat,
         lng: game.lng
@@ -14,7 +17,6 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     authorize @game
-
   end
 
   def new
