@@ -1,5 +1,17 @@
 
-<%= simple_form_for messages do |f| %>
-<%= f.input :content, label: "Poser une question" , required: true, placeholder: "Echanger ici." , input_html: { class:"input_ask", data: {action:"keyup->stopbutton#call", stopbutton_target: "input"} } %>
-<%= f.button :submit , "Echanger" , class: "btn btn-primary" , data: { stopbutton_target: "button" } %>
+<%= simple_form_for [chat, message] do |f| %>
+<%= f.input :content,
+            label: "Poser une question" ,
+            required: true,
+            placeholder: "Echanger ici." ,
+            input_html: { class:"input_ask",
+                          data: {action:"keyup->stopbutton#call",
+                          stopbutton_target: "input"}
+                        }
+%>
+<%= f.button :submit, "Echanger",
+              class: "btn  btn-outline-secondary rounded-pill",
+              title:"Lancer le chat" ,
+              data: { stopbutton_target: "button" }
+%>
 <% end %>
