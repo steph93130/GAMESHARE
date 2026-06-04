@@ -18,6 +18,14 @@ class BookingPolicy < ApplicationPolicy
   def edit?
     update?
   end
+  
+  def validate?
+    true
+  end
+
+  def accept?
+    user == record.game.user
+  end
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!

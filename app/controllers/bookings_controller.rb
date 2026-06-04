@@ -1,11 +1,6 @@
 class BookingsController < ApplicationController
-
+    before_action :set_booking, only: [:accept, :validate]
     
-    def new
-        @booking = Booking.new()
-        authorize @booking
-    end
-
     def create
         @chat = Chat.find(params[:chat_id])
         @booking = Booking.new(game: @chat.game, user: current_user, chat: @chat )
@@ -17,15 +12,38 @@ class BookingsController < ApplicationController
         end
     end
 
-    def edit
-        @booking = Booking.find(params[:id])
+    # preteur
+    def accept
+        # raise
         authorize @booking
+        @booking.update(status: :accepted)
+        # preteur redirection au profil et visuel de la notification dans sa ludo!! a chaque action
+        # emprunteur message chat system allez voir votre profil section emprunt et notification
+    end
+    
+    def decline
+        #annulation du booking
+    end
+    
+    # emprunteur
+    def validate
+        authorize @booking
+        @booking.update(status: :validated)
     end
 
-    def update
+    # emprunteur
+    def give_back
+    
+    end
+
+    # preteur
+    def close
+
+    end
+    
+    private
+
+    def set_booking
         @booking = Booking.find(params[:id])
-        raise
-        authorize @booking
-        @booking.update(status: :enprunting)
     end
 end

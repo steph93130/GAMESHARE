@@ -8,7 +8,14 @@ Rails.application.routes.draw do
   end
   
   resources :chats, only: [:show] do
-    resources :bookings, only: [:create, :update, :edit]
+    resources :bookings, only: [:create] 
+  end
+  
+  resources :bookings do
+    member do
+        patch "accept", to: "bookings#accept", as: :accept
+        patch "validate", to: "bookings#validate", as: :validate
+      end
   end
   resources :chats, only: [:show] do
     resources :messages, only: [:create, :index, :show]
