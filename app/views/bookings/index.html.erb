@@ -1,0 +1,41 @@
+<%= render "shared/logo_and_name" %>
+
+<div class="container my-4">
+  <div class="border rounded-4 p-4">
+    <div class="d-flex gap-3 mb-4 justify-content-center">
+      <%= link_to "Ma ludothèque", profile_path, class: "btn btn-outline-primary rounded-pill" %>
+      <div class="btn btn-primary rounded-pill">Mes emprunts</div>
+    </div>
+    <h2 class="text-center text-primary mb-4">Mes emprunts</h2>
+
+    <% if @bookings.empty? %>
+      <p class="text-muted text-center py-5">Tu n'as pas encore d'emprunt en cours.</p>
+    <% else %>
+      <div class="row row-cols-3 g-3">
+        <% @bookings.each do |booking| %>
+          <div class="col">
+            <div class="border rounded-3 p-2 d-flex align-items-center gap-2 h-100">
+              <div class="flex-shrink-0" style="width: 56px; height: 56px; background-color: #d9d9d9; border-radius: 8px; overflow: hidden;">
+                <% if booking.game.picture.present? %>
+                  <%= cl_image_tag booking.game.picture, width: 56, height: 56, crop: :fill, class: "w-100 h-100 object-fit-cover" %>
+                <% end %>
+              </div>
+              <div class="flex-grow-1 small">
+                <div class="fw-semibold text-truncate"><%= booking.game.title %></div>
+                <div class="text-muted">
+                  <span class="badge rounded-pill
+                    <%= booking.pending?    ? 'bg-warning text-dark' :
+                        booking.enprunting? ? 'bg-success' :
+                        booking.reporting?  ? 'bg-danger'  : 'bg-secondary' %>">
+                    <%= t("booking.status.#{booking.status}", default: booking.status.humanize) %>
+                  </span>
+                </div>
+                <div class="text-muted"><%= booking.game.available? ? "Disponible" : "Indisponible" %></div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
