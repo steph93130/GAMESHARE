@@ -1,22 +1,29 @@
 class GamesController < ApplicationController
   def index
-    if params[:profile_id]
-      @profile_user = User.find(params[:profile_id])
-      @games = policy_scope(Game).where(user: @profile_user)
-    else
+    @games = policy_scope(Game).where(available: true)
+    if params[:query].present?
       @address = params[:query]
-      result = Geocoder.search(@address).first if @address.present?
-      @user_markers = result ? [{ lat: result.latitude, lng: result.longitude }] : []
-      @games = policy_scope(Game).where(available: true).near(@address, 5)
-      @game_markers = @games.where.not(lat: nil, lng: nil).map do |game|
-        { lat: game.lat, lng: game.lng }
-      end
+      result = Geocoder.search(@address).first
+      @user_markers = [{
+        lat: result.latitude,
+        lng: result.longitude,
+        marker_html: render_to_string(partial: "marker_user")
+      }]
+
+      @games = @games.near(@address, 5)
+      # @games = Game.near(address, 0.3)
+    end
+    @game_markers = @games.where.not(lat: nil, lng: nil).map do |game|
+      { lat: game.lat, lng: game.lng,
+        info_window_html: render_to_string(partial: "info_window", locals: { game: game }),
+        marker_html: render_to_string(partial: "marker_game") }
     end
   end
 
   def show
     @game = Game.find(params[:id])
     authorize @game
+    @address = params[:query]
   end
 
   def new
