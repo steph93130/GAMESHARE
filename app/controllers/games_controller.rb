@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  beforeaction :game_set, only: [:show, :destroy]
   def index
     @games = policy_scope(Game).where(available: true)
     if params[:query].present?
@@ -44,7 +45,16 @@ class GamesController < ApplicationController
     end
   end
 
+  def destroy
+    @game.destroy
+    redirect_to profile_path, status: :see_other
+  end
+
   private
+
+  def game_set
+    @game = Game.find(params[:id])
+  end
 
   def game_params
     params.require(:game).permit(
