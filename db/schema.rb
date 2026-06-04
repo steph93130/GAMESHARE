@@ -39,6 +39,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_070038) do
   end
 
   create_table "games", force: :cascade do |t|
+    t.string "address"
     t.integer "age"
     t.boolean "available"
     t.string "category"

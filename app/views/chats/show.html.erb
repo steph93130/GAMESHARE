@@ -2,11 +2,11 @@
 
 <h1 id="titre" class="mt-2 ms-3">Chat avec <%= @other_user.username %> pour le jeu <%= @game.title %></h1>
 
-<div id="messages">
+<div id="messages" class="col-10 col-lg-6 mx-auto">
   <%= render "messages/messages", messages: @chat.messages %>
 </div>
 
-<div id="new_message_container">
+<div id="new_message_container" class="col-10 col-lg-6 mx-auto">
   <%= render "messages/form", chat: @chat, message: @message %>
 </div>
 <div class="col-12 col-lg-6">
