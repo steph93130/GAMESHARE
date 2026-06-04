@@ -1,22 +1,22 @@
+<%= render "shared/logo_and_name" %>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-6">
-            <h2>Bienvenu sur ton profil <%= @user.username %></h2>
-            <div class="row">
-                <div class="col-12">
-                    <h3>Info Perso</h3>
-                    <p><%= @user.email %></p>
-                </div>
-
-                <div class="col-12">
-                    <h3>Ma ludo</h3>
-                </div>
-                <div class="my-chats">
-
-
-                </div>
-
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-6">
+      <h2>Bienvenue sur ton profile <%= @user.username %></h2>
+          <div class="row">
+            <div class="col-12">
+              <h3>Info Perso</h3>
+              <p><%= @user.email %></p>
             </div>
+          <div class="border rounded-4 p-4">
+            <div class="d-flex gap-3 mb-4 justify-content-center">
+              <%= link_to "Ma ludothèque", "#", class: "btn btn-primary rounded-pill" %>
+              <%= link_to "Mes emprunts", profile_bookings_path(@user), class: "btn btn-outline-primary rounded-pill" %>
+            </div>
+          </div>
         </div>
+      <div class="my-chats">
+      </div>
     </div>
+  </div>
 </div>

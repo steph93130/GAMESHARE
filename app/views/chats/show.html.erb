@@ -1,4 +1,4 @@
-<%#= turbo_stream_from @chat %>
+<% turbo_stream_from @chat %>
 
 <h1 id="titre" class="mt-2 ms-3">Chat avec <%= @other_user.username %> pour le jeu <%= @game.title %></h1>
 
@@ -52,4 +52,5 @@
 <div class="QuiSuisJe my-3">
   Je suis loggé en tant que en tant que : <%= current_user.username %> et je discute avec <%= @other_user.username %>
 </div>
-<%= link_to "← #{@game.title}", game_path(@game) %>
+<%# <%= link_to "← #{@game.title}", game_path(@game) %> # remplacer par bouton qui ferme l'onglet %
+<button class="button" onclick="window.close()">← <%= @game.title %></button>
