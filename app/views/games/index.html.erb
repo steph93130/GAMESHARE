@@ -14,11 +14,14 @@
     <span class="red">u</span>
     <span class="blue">x</span>
   </h1>
+
+
   <div class ="map" style="width: 100%; height: 600px;"
-  data-controller="map"
-  data-map-markers-value="<%= @markers.to_json %>"
-  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"
-  data-map-address-value="<%= @address %>"></div>
+    data-controller="map"
+    data-map-game-markers-value="<%= @game_markers.to_json %>"
+    data-map-user-markers-value="<%= @user_markers.to_json %>"
+    data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+  </div>
 
   <% if @games.any? %>
 
