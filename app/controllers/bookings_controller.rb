@@ -11,7 +11,6 @@ class BookingsController < ApplicationController
             render "chat/show", status: :unprocessable_entity
         end
     end
-  end
 
     # preteur
     def accept
