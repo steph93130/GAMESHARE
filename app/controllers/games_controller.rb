@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  beforeaction :game_set, only: [:show, :destroy]
+  before_action :game_set, only: [:show, :destroy]
   def index
     @games = policy_scope(Game).where(available: true)
     if params[:query].present?
