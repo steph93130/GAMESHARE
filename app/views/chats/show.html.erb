@@ -32,3 +32,42 @@
   <%= f.button :submit, 'Discuter', class:'btn btn-outline-secondary' %>
   <% end %>
 </div>
+<div class="col-12 col-lg-6">
+  <!-- ######################################################################################################-->
+  <!-- ON Ajoute un message dans le chat qui spécifie que le jeux est demandé -->
+  <% if @chat.booking.present? %>
+    <p>Emplunt demandé !!</p>
+  <% end %>
+
+  <!-- ######################################################################################################-->
+  <!-- Faire apparaitre ce buton pour l'emprunter !! ! modifier ma policy pour que si le booking sui existe n'est pas persisted ! !! -->
+
+  <!-- Si l'utilisateur est l'emprunteur -->
+  <% if @chat.game.user != current_user %>
+    <!-- Si aucun booking n'est présent on affiche le lien pour en crée un -->
+    <% if !@chat.booking.present? %>
+      <%= link_to "emprunté le jeux",  chat_bookings_path(@chat), data: { turbo_method: :post } %>
+    <% end %>
+  <!-- Sinonn c'est que c'est l'emprunteur qui est connecté -->
+  <% else %>
+    <!-- On vérifie qu'un bokking a bien été crée -->
+    <% if @chat.booking.present? %>
+      <!-- Si oui on affiche les lien accepter et refuser -->
+      <%= link_to "accepter l'emprunt", chat_booking_path(@chat, @chat.booking), data: { turbo_method: :patch } %> | 
+      <%= link_to "refuser l'emprunt", chat_bookings_path(@chat), data: { turbo_method: :post } %>
+    <% end %>
+    <!-- Sinon on affiche rien -->
+  <% end %>
+
+  <!-- ######################################################################################################-->
+</div>
+
+
+  <%#= render @chat.messages, messages: @chat.messages %>
+<!-- </div> -->
+
+<!-- <div id="new_message_container" data-controller="stopbutton"> -->
+  <%#= render "messages/form", conversation: @chat, message: @message %>
+<!-- </div> -->
+
+<%#= link_to "← Retour", game_path, class: "bouton-sign mt-2" %>
