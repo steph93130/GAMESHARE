@@ -1,12 +1,5 @@
 <div class="container my-5">
-  <%= link_to "index", games_path %>
-  <div class="d-flex justify-content-center mb-4">
-    <%= image_tag "logomax.png", alt: "GameShare", class: "logo" %>
-  </div>
-
-  <h1 class="mb-5 text-center">
-    <span class="red">G</span><span class="blue">a</span><span class="yellow">m</span><span class="red">e</span><span class="blue">S</span><span class="yellow">h</span><span class="red">a</span><span class="blue">r</span><span class="yellow">e</span>
-  </h1>
+ <%= render "shared/logo_and_name" %>
 
   <h2 class="mb-4 text-center">
     <span class="red">T</span><span class="blue">r</span><span class="yellow">o</span><span class="red">u</span><span class="blue">v</span><span class="yellow">e</span><span class="red">r</span>
@@ -53,8 +46,9 @@
     <div class="row">
       <% @last_games.each do |game| %>
         <div class="col-12 col-md-6 col-lg-4 mb-4">
-          <%= link_to game_path(game), class: "game-card-link" do %>
+
             <div class="game-card h-100">
+              <%= link_to game_path(game), class: "game-card-link" do %>
 
               <h2 class="game-title">
                 <%= game.title %>

@@ -1,0 +1,10 @@
+<% colors = %w[red blue yellow orange green] %>
+<h3>
+  <% game.title.chars.each_with_index do |char, i| %>
+    <% if char == " " %>
+      <span>&nbsp;</span>
+    <% else %>
+      <span class="<%= colors[i % colors.length] %>"><%= char %></span>
+    <% end %>
+  <% end %>
+</h3>

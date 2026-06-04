@@ -1,19 +1,18 @@
 <div class="container my-5">
+  <h1 class="mb-5 text-center"><%= @game.title %></h1>
+  <img src="<%= @game.picture %>" alt="<%= @game.title %>" class="game-image img-fluid">
+  <p><i class="fa-solid fa-crown"></i> : <%= @game.user.username %></p>
+  <p><%= @game.rules %></p>
+  <i class="fa-regular fa-message"></i> <p><%= @game.description %></p>
+  <p class="rounded-pill bg-danger text-light px-2"><%= @game.category %></p>
+  <p><i class="fa-solid fa-dice"></i> <%= @game.category %></p>
+  <p><i class="fa-solid fa-dice-d20"></i> <%= @game.age %> ans</p>
+  <p><i class="fa-solid fa-chess-knight"></i> <%= @game.player_number %> joueur<%= @game.player_number > 1 ? 's' : "" %></p>
+  <p><i class="fa-solid fa-dungeon"></i> Durée du prêt :  <%= @game.rent_duration %> jour<%= @game.rent_duration.to_i > 1 ?  :'s' : "" %> </p>
+<p><i class="fa-solid fa-map-location-dot"></i> <%= @game.address.upcase.split(",").last %></p>
 
-  <h1 class="mb-5 text-center">
-    <%= @game.title %> by <%= @game.user.username %>
-    <!-- <span class="red">L</span> -->
-    <!-- <span class="blue">e</span> -->
-    <!-- <span class="yellow">s</span> -->
-    <!-- <span>&nbsp;</span> -->
-    <!-- <span class="orange">J</span> -->
-    <!-- <span class="green">e</span> -->
-    <!-- <span class="red">u</span> -->
-    <!-- <span class="blue">x</span> -->
-  </h1>
 
-
-<%= link_to "Démarrer conversation",  game_chats_path(@game), data: { turbo_method: :post }, class:"btn btn-primary rounded-sm" %>
-
+<%= button_to "Démarrer conversation", game_chats_path(@game), method: :post, form: { target: "_blank" }, class: "button" %>
+<%# <%= link_to "Démarrer conversation",  game_chats_path(@game), data: { turbo_method: :post }, target: "_blank", class:"btn btn-primary rounded-sm" %>
+<%= link_to "← Retour", games_path(query: params[:query]), class: "button" %>
 </div>
-<%= link_to "← Retour", games_path %>
