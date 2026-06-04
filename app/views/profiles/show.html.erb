@@ -3,19 +3,60 @@
   <div class="row justify-content-center">
     <div class="col-12 col-lg-6">
       <h2>Bienvenue sur ton profile <%= @user.username %></h2>
-          <div class="row">
-            <div class="col-12">
-              <h3>Info Perso</h3>
-              <p><%= @user.email %></p>
-            </div>
+      <!--############################################################### -->
+      <!-- Notification des bookings provisoire -->
+      <% if flash[:notice] %>
+        <div class="notice"><h3 style="color:green"><%= flash[:notice] %></h3></div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="alert"><h3 style="color:red"><%= flash[:alert] %></h3></div>
+      <% end %>
+      <!--############################################################### -->
+
+        <div class="row">
+          <div class="col-12">
+            <h3>Info Perso</h3>
+            <p><%= @user.email %></p>
+          </div>
           <div class="border rounded-4 p-4">
             <div class="d-flex gap-3 mb-4 justify-content-center">
               <%= link_to "Ma ludothèque", "#", class: "btn btn-primary rounded-pill" %>
-              <%= link_to "Mes emprunts", profile_bookings_path(@user), class: "btn btn-outline-primary rounded-pill" %>
+              <%= link_to "Mes emprunts", profiles_show2, class: "btn btn-outline-primary rounded-pill" %>
             </div>
           </div>
         </div>
       <div class="my-chats">
+        <div class="col-12">
+          <!--############################################################### -->
+          <!--Determine l'emprunteur -->
+          <% if !@user.chats.last.nil? %>
+            <h3>Enprunteur : <%= @user.chats.last.booking.status %></h3>
+            <p>array vide : <%= @user.chats.empty?  %></p>
+            <% @user.chats.each do |chat| %>
+              <p><%= chat.id %></p>
+              <ol>
+                <% chat.messages.each do |message| %>
+                  <li><%= message.content %></li>
+                <% end %>
+              </ol>
+            <% end %>
+          <% else %>
+          <!--############################################################### -->
+          <!--determine le prêteur -->
+            <h3>prêteur : <%= @user.games.last.available %> // <%= @user.games.last.title %></h3>
+            <p>array vide <%= @user.chats.empty?  %></p>
+            <h3>acces au chat : <%= @user.games.last.chats.last.booking.status%></h3>
+            
+            <% @user.games.last.chats.each do |chat| %>
+              <p><%= chat.id %></p>
+              <ol>
+                <% chat.messages.each do |message| %>
+                  <li><%= message.content %></li>
+                <% end %>
+              </ol>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

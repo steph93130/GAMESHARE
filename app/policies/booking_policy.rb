@@ -10,21 +10,19 @@ class BookingPolicy < ApplicationPolicy
     # Il faut que le current_user soit l'emprunteur !!
     user == record.chat.user
   end
-
-  def update?
-    true
-  end
-
-  def edit?
-    update?
-  end
   
+  def accept?
+    # Il faut que le current_user soit le preteur !!
+    user == record.game.user
+  end
+
+  def decline?
+    # Il faut que le current_user soit le preteur !!
+    user == record.game.user
+  end
+
   def validate?
     true
-  end
-
-  def accept?
-    user == record.game.user
   end
 
   class Scope < ApplicationPolicy::Scope

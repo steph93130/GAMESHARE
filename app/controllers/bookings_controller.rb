@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-    before_action :set_booking, only: [:accept, :validate]
+    before_action :set_booking, only: [:accept, :decline, :validate]
     
     def create
         @chat = Chat.find(params[:chat_id])
@@ -12,17 +12,30 @@ class BookingsController < ApplicationController
         end
     end
 
-    # preteur
+    # prêteur
     def accept
-        # raise
+        # preteur redirection au profil et visuel de la notification dans sa ludo!! ==OK==
         authorize @booking
         @booking.update(status: :accepted)
-        # preteur redirection au profil et visuel de la notification dans sa ludo!! a chaque action
-        # emprunteur message chat system allez voir votre profil section emprunt et notification
+        @booking.game.update(available: false)
+        # Ajout du message dans le chat
+        @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: @booking.game.user, content: "SYSTEM MESSAGE /=> Le preteur accepte le pret")
+        # envoie d'une notice a la page de redirection
+        flash[:notice] = "vous avez accepter de preter votre jeux"
+        redirect_to profile_path # (@booking.game.user)
     end
-    
+
+    # prêteur
     def decline
         #annulation du booking
+        # preteur redirection au profil et visuel de la notification dans sa ludo!! ==OK==
+        authorize @booking
+        @booking.update(status: :declined)
+        # Ajout du message dans le chat
+        @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: @booking.game.user, content: "SYSTEM MESSAGE /=> Le preteur refuse le pret")
+        # envoie d'une notice a la page de redirection
+        flash[:alert] = "vous n'avez accepter de preter votre jeux"
+        redirect_to profile_path # (@booking.game.user)
     end
     
     # emprunteur

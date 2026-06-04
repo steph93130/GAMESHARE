@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   
   resources :bookings do
     member do
-        patch "accept", to: "bookings#accept", as: :accept
-        patch "validate", to: "bookings#validate", as: :validate
+        patch "accepted", to: "bookings#accept", as: :accept
+        patch "declined", to: "bookings#decline", as: :decline
+        patch "validated", to: "bookings#validate", as: :validate
       end
   end
   resources :chats, only: [:show] do
