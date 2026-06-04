@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  beforeaction :game_set, only: [:show, :destroy]
   def index
     if params[:profile_id]
       @profile_user = User.find(params[:profile_id])
@@ -37,7 +38,16 @@ class GamesController < ApplicationController
     end
   end
 
+  def destroy
+    @game.destroy
+    redirect_to profile_path, status: :see_other
+  end
+
   private
+
+  def game_set
+    @game = Game.find(params[:id])
+  end
 
   def game_params
     params.require(:game).permit(
