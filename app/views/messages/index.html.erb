@@ -1,0 +1,24 @@
+<%#= turbo_stream_from @chat %>
+
+<h1 id="titre" class="mt-2 ms-3">Chat avec <%= @other_user.username %> pour le jeu <%= @game.title %></h1>
+
+<div id="messages">
+
+</div>
+
+<div class="form-input-message">
+
+  <%= simple_form_for [@chat, @message] do |f| %>
+  <%= f.input :content,
+              label: "Poser une question" ,
+              required: true,
+              placeholder: "Echanger ici." ,
+              input_html: { class:"input_ask",
+                            data: {
+                              action:"keyup->stopbutton#call",
+                              stopbutton_target: "input"
+                              }
+                            } %>
+  <%= f.button :submit, 'Create chat', class: 'btn btn-primary' %>
+  <% end %>
+</div>
