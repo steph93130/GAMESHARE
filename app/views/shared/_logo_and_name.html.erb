@@ -1,5 +1,14 @@
- <%= link_to "index", games_path %>
-  <div class="d-flex justify-content-center mb-4">
+<% if user_signed_in? %>
+<nav class=" fixed-top text-md-end p-2 border-bottom bg-light">
+  <div class="text-md-end my-0 d-flex justify-content-between">
+    <%= image_tag "logomax.png", alt: "GameShare", class: "logo", height:"35px" %>
+    <p class="navbar-brand text-md-end fs-6 text my-0"> <i class="fa-solid fa-user fs-6 text"></i> Bienvenue <%= current_user.username %></p>
+  </div>
+</nav>
+ <% end %>
+
+ <%#= link_to "index", games_path %>
+  <div class="d-flex justify-content-center m-5">
     <%= image_tag "logomax.png", alt: "GameShare", class: "logo" %>
   </div>
 
