@@ -1,6 +1,6 @@
 <% turbo_stream_from @chat %>
 
-<h1 id="titre" class="mt-2 ms-3">Chat avec <%= @other_user.username %> pour le jeu <%= @game.title %></h1>
+<h1 id="titre" class="my-4 ms-3">Chat avec <%= @other_user.username %> pour le jeu <%= @game.title %></h1>
 
 <div id="messages" class="col-10 col-lg-6 mx-auto">
   <%= render "messages/messages", messages: @chat.messages %>
@@ -12,10 +12,11 @@
 <div class="col-12 col-lg-6">
   <!-- ######################################################################################################-->
   <!-- ON Ajoute un message dans le chat qui spécifie que le jeux est demandé -->
-  <% if @chat.booking.present? %>
-    <p>Emplunt demandé !!</p>
+  <div class="col-10 col-lg-6 mx-auto">
+  <% if @chat.booking.present? && @chat.game.user != current_user %>
+    <p class="text-success fs-4 text fw-semibold w-100">Demande d'emprunt envoyée.</p>
   <% end %>
-
+  </div>
   <!-- ######################################################################################################-->
   <!-- Faire apparaitre ce buton pour l'emprunter !! ! modifier ma policy pour que si le booking sui existe n'est pas persisted ! !! -->
 
@@ -23,7 +24,7 @@
   <% if @chat.game.user != current_user %>
     <!-- Si aucun booking n'est présent on affiche le lien pour en crée un -->
     <% if !@chat.booking.present? %>
-      <%= link_to "emprunté le jeux",  chat_bookings_path(@chat), data: { turbo_method: :post } %>
+      <%= link_to "Je valide l'emprunt de #{@chat.game.title}",  chat_bookings_path(@chat), data: { turbo_method: :post }, class:"button col-10 col-lg-6 mx-auto my-2 w-50" %>
     <% end %>
     <%# if booking.accept? %>
   <!-- Sinonn c'est que c'est l'emprunteur qui est connecté -->
@@ -31,8 +32,10 @@
     <!-- On vérifie qu'un bokking a bien été crée -->
     <% if @chat.booking.present? %>
       <!-- Si oui on affiche les lien accepter et refuser -->
-      <%= link_to "accepter l'emprunt", accept_booking_path(@chat.booking), data: { turbo_method: :patch } %> |
-      <%= link_to "refuser l'emprunt", decline_booking_path(@chat.booking), data: { turbo_method: :patch } %>
+      <div class="accept-denied col-12 col-lg-10 mx-auto my-3">
+      <%= link_to "Accepter la demande d'emprunt", accept_booking_path(@chat.booking), data: { turbo_method: :patch }, class:"fs-5 text fw-semibold text-success" %> |
+      <%= link_to "Refuser la demande d'emprunt", decline_booking_path(@chat.booking), data: { turbo_method: :patch }, class:"fs-5 text fw-semibold text-danger" %>
+      </div>
     <% end %>
     <!-- Sinon on affiche rien -->
   <% end %>

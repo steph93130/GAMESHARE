@@ -1,20 +1,19 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
+  # Les routes du profile
   get "profile", to: "profiles#show", as: :profile
   get "borrow", to: "profiles#borrow", as: :borrow
   get "owner", to: "profiles#owner", as: :owner
-  
-
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :games do
     resources :chats, only: [:create]
   end
 
   resources :chats, only: [:show] do
-    resources :bookings, only: [:create] 
+    resources :bookings, only: [:create]
   end
-  
+
   resources :bookings do
     member do
         patch "accepted", to: "bookings#accept", as: :accept
@@ -27,8 +26,8 @@ Rails.application.routes.draw do
   end
 # resources :profile, only: [:show] do
 #   resources :bookings, only: [:index]
-  
-#   end
+
+
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
