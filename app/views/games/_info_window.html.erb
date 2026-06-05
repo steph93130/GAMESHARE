@@ -1,10 +1,8 @@
 <% colors = %w[red blue yellow orange green] %>
 <h3>
-  <% game.title.chars.each_with_index do |char, i| %>
-    <% if char == " " %>
-      <span>&nbsp;</span>
-    <% else %>
-      <span class="<%= colors[i % colors.length] %>"><%= char %></span>
-    <% end %>
+  <% char_index = 0 %>
+  <% game.title.split(" ").each_with_index do |word, word_index| %>
+    <% char_index += 1 if word_index > 0 %>
+    <%= " " if word_index > 0 %><span style="white-space: nowrap"><% word.chars.each do |char| %><span class="<%= colors[char_index % colors.length] %>"><%= char %></span><% char_index += 1 %><% end %></span>
   <% end %>
 </h3>
