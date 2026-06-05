@@ -1,13 +1,10 @@
 class MessagesController < ApplicationController
   def create
-
     @chat = Chat.find(params[:chat_id])
     @message = Message.new(message_params)
     authorize @message
     @message.chat = @chat
     @message.user = current_user
-
-
     if @message.save
       # build_conversation_history
       respond_to do |format|
@@ -16,16 +13,19 @@ class MessagesController < ApplicationController
       end
     else
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.update("new_message_container",
-                                                                        partial: "messages/form",
-                                                                        locals: {
-                                                                          chat: @chat,
-                                                                          message: @message,
-                                                                          other: @other_user })
-                            }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update(
+            "new_message_container",
+            partial: "messages/form",
+            locals: {
+              chat: @chat,
+              message: @message,
+              other: @other_user
+            }
+          )
+        end
         format.html { render "chats/show", status: :unprocessable_entity }
       end
-      # render :index, status: :unprocessable_entity
     end
   end
 
@@ -40,5 +40,4 @@ class MessagesController < ApplicationController
   def message_params
     params.require(:message).permit(:content)
   end
-
 end
