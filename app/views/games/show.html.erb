@@ -1,18 +1,109 @@
 <div class="container my-5">
-  <h1 class="mb-5 text-center"><%= @game.title %></h1>
-  <!-- <%#= cl_img_tag @game.picture.key %>" alt="<%#= @game.title %>" class="game-image img-fluid"> -->
-  <p><i class="fa-solid fa-crown"></i> : <%= @game.user.username %></p>
-  <p><%= @game.rules %></p>
-  <i class="fa-regular fa-message"></i> <p><%= @game.description %></p>
-  <p class="rounded-pill bg-danger text-light px-2"><%= @game.category %></p>
-  <p><i class="fa-solid fa-dice"></i> <%= @game.category %></p>
-  <p><i class="fa-solid fa-dice-d20"></i> <%= @game.age %> ans</p>
-  <p><i class="fa-solid fa-chess-knight"></i> <%= @game.player_number %> joueur<%= @game.player_number > 1 ? 's' : "" %></p>
-  <p><i class="fa-solid fa-dungeon"></i> Durée du prêt :  <%= @game.rent_duration %> jour<%= @game.rent_duration.to_i > 1 ?  :'s' : "" %> </p>
-<p><i class="fa-solid fa-map-location-dot"></i> <%= @game.address.upcase.split(",").last %></p>
+
+  <h1 class="mb-5 text-center game-title">
+    <%= @game.title %> de <%= @game.user.username %>
+  </h1>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+
+      <div class="game-card-big h-100">
+
+        <% if @game.picture.attached? %>
+          <%= cl_image_tag @game.picture.key,
+            alt: @game.title,
+            class: "game-image-big img-fluid mb-4" %>
+        <% else %>
+          <div class="bg-secondary d-flex align-items-center justify-content-center rounded mb-4"
+               style="height: 180px;">
+            Aucune image
+          </div>
+        <% end %>
+
+        <p>
+          <i class="fa-solid fa-crown yellow"></i>
+          <strong>Proposé par :</strong>
+          <%= @game.user.username %>
+        </p>
+
+        <p>
+          <i class="fa-regular fa-message blue"></i>
+          <%= @game.description %>
+        </p>
+
+        <p>
+          <i class="fa-solid fa-dice red"></i>
+          <%= @game.category %>
+        </p>
+
+        <p>
+          <i class="fa-solid fa-user blue"></i>
+          <%= @game.age %> ans
+        </p>
 
 
-<%= button_to "Démarrer conversation", game_chats_path(@game), method: :post, form: { target: "_blank" }, class: "button" %>
-<%# <%= link_to "Démarrer conversation",  game_chats_path(@game), data: { turbo_method: :post }, target: "_blank", class:"btn btn-primary rounded-sm" %>
-<%= link_to "← Retour", games_path(query: params[:query]), class: "button" %>
+        <p>
+          <i class="fa-solid fa-chess-knight orange"></i>
+          <%= @game.player_number %>
+          joueur<%= @game.player_number > 1 ? "s" : "" %>
+        </p>
+
+        <p>
+          <i class="fa-solid fa-dungeon green"></i>
+          Durée du prêt :
+          <%= @game.rent_duration %>
+          jour<%= @game.rent_duration.to_i > 1 ? "s" : "" %>
+        </p>
+
+        <p>
+          <i class="fa-solid fa-map-location-dot red"></i>
+          <%= @game.address.upcase.split(",").last %>
+        </p>
+
+        <div class="mt-4">
+          <h3 class="game-title">Règles du jeu</h3>
+          <div class="game-rules text-start">
+            <%= simple_format(@game.rules) %>
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center mt-4 gap-3">
+
+          <%= link_to "← Retour",
+                      games_path(query: params[:query]),
+                      class: "btn btn-outline-secondary rounded-5 px-4" %>
+
+          <% if user_signed_in? && current_user == @game.user %>
+
+            <%= link_to edit_game_path(@game),
+                        class: "btn btn-warning rounded-5 px-4" do %>
+              <i class="fa-solid fa-pen"></i>
+              Modifier
+            <% end %>
+
+            <%= button_to game_path(@game),
+                          method: :delete,
+                          data: {
+                            turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce jeu ?"
+                          },
+                          class: "btn btn-danger rounded-5 px-4" do %>
+              <i class="fa-solid fa-trash"></i>
+              Supprimer
+            <% end %>
+
+          <% end %>
+
+          <%= button_to "Démarrer conversation",
+                        game_chats_path(@game),
+                        method: :post,
+                        form: { target: "_blank" },
+                        class: "btn btn-primary rounded-5 px-4" %>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
 </div>
