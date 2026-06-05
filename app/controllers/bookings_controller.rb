@@ -2,7 +2,8 @@ class BookingsController < ApplicationController
   def index
     @bookings = policy_scope(Booking)
     @user = current_user
-    @incoming_chats = Chat.joins(:game).where(games: { user_id: current_user.id })
+    
+    # @incoming_chats = Chat.joins(:game).where(games: { user_id: current_user.id })
   end
 
   def new
