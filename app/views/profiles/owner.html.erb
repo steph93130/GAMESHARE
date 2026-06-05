@@ -1,1 +1,23 @@
-<h1>Profile owner</h1>
+<p>
+<% if @user.chats.empty? %>
+  je suis un prêteur
+<% else %>
+  je suis un emprunteur
+<% end %>
+</p>
+
+<p>Mes jeux en cours de prêt.</p>
+<div class="global-main d-flex gap-3 w-75 mx-auto">
+
+<% @games.each do |game| %>
+  <% @bookings.each do|booking| %>
+  <% if booking.status == "accepted" && booking.game.title == game.title %>
+    <div class="game-card p-4 w-50 mx-auto d-flex flex-column bg-success-emphasis ">
+      <p class="text-danger fw-semibold"><i class="fa-solid fa-crown yellow"></i> <%= booking.game.title %></p>
+      <p class="text-success">Statut :  <%= booking.status %> </p>
+      <p class="text-success">Emprunté par :  <%= booking .chat.user.username %></p>
+    </div>
+  <% end %>
+  <% end %>
+<% end %>
+</div>
