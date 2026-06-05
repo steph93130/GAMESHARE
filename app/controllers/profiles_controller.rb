@@ -11,6 +11,9 @@ class ProfilesController < ApplicationController
     @game = Game.new
     @user = current_user
     authorize :profile
+    @chats = current_user.chats.all
+    @bookings = borrow_booking
+    
   end
 
   def owner # prêteur
@@ -20,4 +23,18 @@ class ProfilesController < ApplicationController
     @user = current_user
     authorize :profile
   end
+
+  private 
+
+  def borrow_booking
+    bookings = []
+    @chats.each do |chat|
+      if chat.booking.nil? == false
+        bookings << chat.booking
+      end
+    
+    end
+    bookings
+  end
+
 end

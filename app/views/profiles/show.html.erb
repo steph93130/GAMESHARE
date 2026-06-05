@@ -59,38 +59,6 @@
             <%= render"shared/form_add_game" %>
         </div>
       <div class="my-chats">
-        <div class="col-12">
-          <!--############################################################### -->
-          <!--Determine l'emprunteur -->
-          <% if !@user.chats.last.nil? %>
-            <h3>Enprunteur : <%= @user.chats.last.booking.status %></h3>
-            <p>array vide : <%= @user.chats.empty? %></p>
-            <% @user.chats.each do |chat| %>
-              <p><%= chat.id %></p>
-              <ol>
-                <% chat.messages.each do |message| %>
-                  <li><%= message.content %></li>
-                <% end %>
-              </ol>
-            <% end %>
-          <% else %>
-          <!--############################################################### -->
-          <!--determine le prêteur -->
-            <h3>prêteur : <%= @user.games.last.available %> // <%= @user.games.last.title %></h3>
-            <p>array vide <%= @user.chats.empty? %></p>
-            <h3>acces au chat : <%= @user.games.last.chats.last.booking.status %></h3>
-
-            <% @user.games.last.chats.each do |chat| %>
-              <p><%= chat.id %></p>
-              <ol>
-                <% chat.messages.each do |message| %>
-                  <li><%= message.content %></li>
-                <% end %>
-              </ol>
-            <% end %>
-          <% end %>
-          <!--############################################################### -->
-        </div>
       </div>
     </div>
   </div>
