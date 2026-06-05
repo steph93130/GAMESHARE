@@ -37,13 +37,20 @@
                 <%= game.title %>
               </h2>
 
-              <%#= cl_image_tag game.picture.key,
-                            alt: game.title,
-                            class: "game-image img-fluid" %>
+                   <% if game.picture.attached? %>
+                <%= cl_image_tag game.picture.key,
+                  alt: game.title,
+                  class: "game-image img-fluid" %>
+              <% else %>
+                <div class="bg-secondary d-flex align-items-center justify-content-center rounded"
+                     style="height: 120px;">
+                  Aucune image
+                </div>
+              <% end %>
 
-              <p><i class="fa-solid fa-dice"></i> <%= game.category %></p>
-              <p><i class="fa-solid fa-dice-d20"></i> <%= game.age %> ans</p>
-              <p><i class="fa-solid fa-chess-knight"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : "" %></p>
+              <p><i class="fa-solid fa-dice red"></i> <%= game.category %></p>
+              <p><i class="fa-solid fa-dice-d20 blue"></i> <%= game.age %> ans</p>
+              <p><i class="fa-solid fa-chess-knight orange"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : "" %></p>
 
 
            </div>

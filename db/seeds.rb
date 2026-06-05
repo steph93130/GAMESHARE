@@ -1,4 +1,5 @@
 require "faker"
+require "open-uri"
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
@@ -65,40 +66,12 @@ address: "31 boulevard franck pilatte, nice"
 
 puts "Creating des games..."
 
-Game.create!(
-  title: "Monopoly",
-  user: bruno,
-  condition: CONDITIONS.sample,
-  player_number: 6,
-  picture: IMAGES_GAME["monopoly"],
-  rent_duration: rand(2..15),
-  age: AGE.sample,
-  category: CATEGORY.sample,
-  description: Faker::Lorem.paragraphs(number: 1),
-  available: true,
-  deposit: DEPOSIT.sample,
-  rules: <<~RULES
-    ## But du jeu
 
-    Acheter des propriétés, construire des maisons et hôtels, puis faire payer des loyers aux autres joueurs.
-
-    ## Résumé des règles
-
-    - Chaque joueur lance les dés et avance son pion.
-    - Si une propriété libre est atteinte, le joueur peut l'acheter.
-    - Si la propriété appartient à un autre joueur, il faut payer un loyer.
-    - Les groupes de couleur complets permettent de construire.
-    - Un joueur est éliminé s'il ne peut plus payer ses dettes.
-    - Le dernier joueur encore en jeu gagne la partie.
-  RULES
-)
-
-Game.create!(
+skyjo = Game.create!(
   title: "Skyjo",
   user: celine,
   condition: CONDITIONS.sample,
   player_number: 6,
-  picture: IMAGES_GAME["skyjo"],
   rent_duration: rand(2..15),
   age: AGE.sample,
   category: CATEGORY.sample,
@@ -121,12 +94,64 @@ Game.create!(
   RULES
 )
 
-Game.create!(
+file = URI.open(
+  "https://res.cloudinary.com/dzzss6x1d/image/upload/v1780654697/skyjo_bb5vfn.webp"
+)
+
+skyjo.picture.attach(
+  io: file,
+  filename: "skyjo.webp",
+  content_type: "image/webp"
+)
+
+
+monopoly =Game.create!(
+  title: "Monopoly",
+  user: bruno,
+  condition: CONDITIONS.sample,
+  player_number: 6,
+  # picture: IMAGES_GAME["monopoly"],
+  rent_duration: rand(2..15),
+  age: AGE.sample,
+  category: CATEGORY.sample,
+  description: Faker::Lorem.paragraphs(number: 1),
+  available: true,
+  deposit: DEPOSIT.sample,
+  rules: <<~RULES
+    ## But du jeu
+
+    Acheter des propriétés, construire des maisons et hôtels, puis faire payer des loyers aux autres joueurs.
+
+    ## Résumé des règles
+
+    - Chaque joueur lance les dés et avance son pion.
+    - Si une propriété libre est atteinte, le joueur peut l'acheter.
+    - Si la propriété appartient à un autre joueur, il faut payer un loyer.
+    - Les groupes de couleur complets permettent de construire.
+    - Un joueur est éliminé s'il ne peut plus payer ses dettes.
+    - Le dernier joueur encore en jeu gagne la partie.
+  RULES
+)
+
+
+file = URI.open(
+  "https://res.cloudinary.com/dzzss6x1d/image/upload/v1780654691/monopoly_xpwelj.webp"
+)
+
+monopoly.picture.attach(
+  io: file,
+  filename: "monopoly_xpwelj.webp",
+  content_type: "image/webp"
+)
+
+
+
+uno = Game.create!(
   title: "Uno",
   user: stephane,
   condition: CONDITIONS.sample,
   player_number: 8,
-  picture: IMAGES_GAME["uno"],
+  # picture: IMAGES_GAME["uno"],
   rent_duration: rand(2..15),
   age: AGE.sample,
   category: CATEGORY.sample,
@@ -149,12 +174,23 @@ Game.create!(
   RULES
 )
 
-Game.create!(
+file = URI.open(
+  "https://res.cloudinary.com/dzzss6x1d/image/upload/v1780654702/uno_uufeck.webp"
+)
+
+uno.picture.attach(
+  io: file,
+  filename: "uno_uufeck.webp",
+  content_type: "image/webp"
+)
+
+
+scrabble=Game.create!(
   title: "Scrabble",
   user: patrice,
   condition: CONDITIONS.sample,
   player_number: 4,
-  picture: IMAGES_GAME["scrabble"],
+  # picture: IMAGES_GAME["scrabble"],
   rent_duration: rand(2..15),
   age: AGE.sample,
   category: CATEGORY.sample,
@@ -177,12 +213,23 @@ Game.create!(
   RULES
 )
 
-Game.create!(
+file = URI.open(
+  "https://res.cloudinary.com/dzzss6x1d/image/upload/v1780654708/scrabble_cbnfgg.webp"
+)
+
+scrabble.picture.attach(
+  io: file,
+  filename: "scrabble_cbnfgg.webp",
+  content_type: "image/webp"
+)
+
+
+wonders = Game.create!(
   title: "7 Wonders Duel",
   user: patrice,
   condition: CONDITIONS.sample,
   player_number: 6,
-  picture: IMAGES_GAME["7 Wonders Duel"],
+  # picture: IMAGES_GAME["7 Wonders Duel"],
   rent_duration: rand(2..15),
   age: AGE.sample,
   category: CATEGORY.sample,
@@ -205,12 +252,23 @@ Game.create!(
   RULES
 )
 
-Game.create!(
+
+file = URI.open(
+  "https://res.cloudinary.com/dzzss6x1d/image/upload/v1780654713/duel_mwplyy.webp"
+)
+
+wonders.picture.attach(
+  io: file,
+  filename: "duel_mwplyy.webp",
+  content_type: "image/webp"
+)
+
+anarchy = Game.create!(
   title: "Dobble Anarchy Pancakes",
   user: stephane,
   condition: CONDITIONS.sample,
   player_number: 6,
-  picture: IMAGES_GAME["Dobble Anarchy Pancakes"],
+  # picture: IMAGES_GAME["Dobble Anarchy Pancakes"],
   rent_duration: rand(2..15),
   age: AGE.sample,
   category: CATEGORY.sample,
@@ -233,12 +291,22 @@ Game.create!(
   RULES
 )
 
-Game.create!(
+file = URI.open(
+  "https://res.cloudinary.com/dzzss6x1d/image/upload/v1780656050/anarchy_li7ns3.webp"
+)
+
+anarchy.picture.attach(
+  io: file,
+  filename: "anarchy_li7ns3.webp",
+  content_type: "image/webp"
+)
+
+catan = Game.create!(
   title: "Catan Duel",
   user: bruno,
   condition: CONDITIONS.sample,
   player_number: 2,
-  picture: IMAGES_GAME["Catan Duel"],
+  # picture: IMAGES_GAME["Catan Duel"],
   rent_duration: rand(2..15),
   age: AGE.sample,
   category: "à deux",
@@ -261,33 +329,54 @@ Game.create!(
   RULES
 )
 
-# Game.create!(
-#   title: "Splendor",
-#   user:celine,
-#   condition: CONDITIONS.sample,
-#   player_number: 4,
-#   picture: IMAGES_GAME["Splendor"],
-#   rent_duration: rand(2..15),
-#   age: AGE.sample,
-#   category: CATEGORY.sample,
-#   description: "",
-#   available: true,
-#   deposit: DEPOSIT.sample,
-#   rules: <<~RULES
-#     ## But du jeu
+file = URI.open(
+  "https://res.cloudinary.com/dzzss6x1d/image/upload/v1780656359/catan_sluoaz.webp"
+)
 
-#     Devenir le marchand le plus prestigieux en achetant des cartes de développement.
+catan.picture.attach(
+  io: file,
+  filename: "catan_sluoaz.webp",
+  content_type: "image/webp"
+)
 
-#     ## Résumé des règles
+splendor=Game.create!(
+  title: "Splendor",
+  user:celine,
+  condition: CONDITIONS.sample,
+  player_number: 4,
+  # picture: IMAGES_GAME["Splendor"],
+  rent_duration: rand(2..15),
+  age: AGE.sample,
+  category: CATEGORY.sample,
+  description: "",
+  available: true,
+  deposit: DEPOSIT.sample,
+  rules: <<~RULES
+    ## But du jeu
 
-#     - À son tour, un joueur prend des jetons, réserve une carte ou achète une carte.
-#     - Les jetons servent à payer les cartes de développement.
-#     - Les cartes achetées donnent des bonus permanents pour les prochains achats.
-#     - Certaines cartes rapportent des points de prestige.
-#     - Les nobles peuvent rejoindre un joueur qui possède les bons bonus.
-#     - La partie se termine quand un joueur atteint le seuil de points requis.
-#   RULES
-# )
+    Devenir le marchand le plus prestigieux en achetant des cartes de développement.
+
+    ## Résumé des règles
+
+    - À son tour, un joueur prend des jetons, réserve une carte ou achète une carte.
+    - Les jetons servent à payer les cartes de développement.
+    - Les cartes achetées donnent des bonus permanents pour les prochains achats.
+    - Certaines cartes rapportent des points de prestige.
+    - Les nobles peuvent rejoindre un joueur qui possède les bons bonus.
+    - La partie se termine quand un joueur atteint le seuil de points requis.
+  RULES
+)
+
+
+file = URI.open(
+  "https://res.cloudinary.com/dzzss6x1d/image/upload/v1780656489/splendor_kk9den.webp"
+)
+
+splendor.picture.attach(
+  io: file,
+  filename: "splendor_kk9den.webp",
+  content_type: "image/webp"
+)
 
 puts "#{Game.count} jeux créés - ok."
 puts "Seed Finished!"
