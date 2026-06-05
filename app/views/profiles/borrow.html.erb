@@ -1,5 +1,7 @@
-<% if @user.chats.empty %>
-    <p>je suis un prêteur</p>
-<% else %>
-    <p>je suis un emprunteur</p>
-    <% end %>
+<p>
+  <% if @user.chats.empty? %>
+    je suis un prêteur
+  <% else %>
+    je suis un emprunteur
+  <% end %>
+</p>
