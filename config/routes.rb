@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   root to: "pages#home"
   # Les routes du profile
   get "profile", to: "profiles#show", as: :profile
-  get "profile", to: "profiles#borrow", as: :borrow
-  get "profile", to: "profiles#owner", as: :owner
+  get "borrow", to: "profiles#borrow", as: :borrow
+  get "owner", to: "profiles#owner", as: :owner
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :games do
     resources :chats, only: [:create]
@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 # resources :profile, only: [:show] do
 #   resources :bookings, only: [:index]
 
-  
+
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

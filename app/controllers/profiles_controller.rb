@@ -19,5 +19,4 @@ class ProfilesController < ApplicationController
     @user = current_user
     authorize :profile
   end
-
 end
