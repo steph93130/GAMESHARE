@@ -6,6 +6,7 @@ class BookingsController < ApplicationController
         @booking = Booking.new(game: @chat.game, user: current_user, chat: @chat )
         authorize @booking
         if @booking.save
+            @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: current_user, content: "SYSTEM MESSAGE /=> #{current_user.username} demande le prêt de votre jeux")
             redirect_to @chat
         else
             render "chat/show", status: :unprocessable_entity
@@ -22,7 +23,7 @@ class BookingsController < ApplicationController
         @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: @booking.game.user, content: "SYSTEM MESSAGE /=> Le preteur accepte le pret")
         # envoie d'une notice a la page de redirection
         flash[:notice] = "vous avez accepter de preter votre jeux"
-        redirect_to profile_path # (@booking.game.user)
+        redirect_to owner_path # (@booking.game.user)
     end
 
     # prêteur
@@ -35,7 +36,7 @@ class BookingsController < ApplicationController
         @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: @booking.game.user, content: "SYSTEM MESSAGE /=> Le preteur refuse le pret")
         # envoie d'une notice a la page de redirection
         flash[:alert] = "vous n'avez accepter de preter votre jeux"
-        redirect_to profile_path # (@booking.game.user)
+        redirect_to owner_path # (@booking.game.user)
     end
     
     # emprunteur
