@@ -6,6 +6,8 @@ class Game < ApplicationRecord
   before_validation :inherit_user_address
   after_validation :geocode, if: :will_save_change_to_address?
 
+  has_one_attached :picture
+
   private
 
   def inherit_user_address
