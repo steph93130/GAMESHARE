@@ -1,36 +1,62 @@
 class BookingsController < ApplicationController
-  def index
-    @bookings = policy_scope(Booking)
-    @user = current_user
+    before_action :set_booking, only: [:accept, :decline, :validate]
     
-    # @incoming_chats = Chat.joins(:game).where(games: { user_id: current_user.id })
-  end
-
-  def new
-    @booking = Booking.new
-    authorize @booking
-  end
-
-  def create
-    @chat = Chat.find(params[:chat_id])
-    @booking = Booking.new(game: @chat.game, user: current_user, chat: @chat)
-    authorize @booking
-    if @booking.save
-      redirect_to @chat
-    else
-      render "chat/show", status: :unprocessable_entity
+    def create
+        @chat = Chat.find(params[:chat_id])
+        @booking = Booking.new(game: @chat.game, user: current_user, chat: @chat )
+        authorize @booking
+        if @booking.save
+            redirect_to @chat
+        else
+            render "chat/show", status: :unprocessable_entity
+        end
     end
-  end
 
-  def edit
-    @booking = Booking.find(params[:id])
-    authorize @booking
-  end
+    # prêteur
+    def accept
+        # preteur redirection au profil et visuel de la notification dans sa ludo!! ==OK==
+        authorize @booking
+        @booking.update(status: :accepted)
+        @booking.game.update(available: false)
+        # Ajout du message dans le chat
+        @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: @booking.game.user, content: "SYSTEM MESSAGE /=> Le preteur accepte le pret")
+        # envoie d'une notice a la page de redirection
+        flash[:notice] = "vous avez accepter de preter votre jeux"
+        redirect_to profile_path # (@booking.game.user)
+    end
 
-  def update
-    @booking = Booking.find(params[:id])
-    raise
-    authorize @booking
-    @booking.update(status: :enprunting)
-  end
+    # prêteur
+    def decline
+        #annulation du booking
+        # preteur redirection au profil et visuel de la notification dans sa ludo!! ==OK==
+        authorize @booking
+        @booking.update(status: :declined)
+        # Ajout du message dans le chat
+        @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: @booking.game.user, content: "SYSTEM MESSAGE /=> Le preteur refuse le pret")
+        # envoie d'une notice a la page de redirection
+        flash[:alert] = "vous n'avez accepter de preter votre jeux"
+        redirect_to profile_path # (@booking.game.user)
+    end
+    
+    # emprunteur
+    def validate
+        authorize @booking
+        @booking.update(status: :validated)
+    end
+
+    # emprunteur
+    def give_back
+    
+    end
+
+    # preteur
+    def close
+
+    end
+    
+    private
+
+    def set_booking
+        @booking = Booking.find(params[:id])
+    end
 end
