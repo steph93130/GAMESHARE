@@ -1,5 +1,5 @@
 <div class="container my-5">
- <%= render "shared/logo_and_name" %>
+
 
   <h2 class="mb-4 text-center">
     <span class="red">T</span><span class="blue">r</span><span class="yellow">o</span><span class="red">u</span><span class="blue">v</span><span class="yellow">e</span><span class="red">r</span>
@@ -54,13 +54,13 @@
                 <%= game.title %>
               </h2>
 
-              <%= cl_image_tag game.picture.key,
-                            alt: game.title,
+              <%#= cl_image_tag game.picture.key,
+                            <!-- alt: game.title, -->
                             class: "game-image img-fluid" %>
 
-              <p><strong>Catégorie :</strong> <%= game.category %></p>
-              <p><strong>Âge minimum :</strong> <%= game.age %> ans</p>
-              <p><strong>Nombre de joueurs :</strong> <%= game.player_number %></p>
+              <p><i class="fa-solid fa-dice"></i> <%= game.category %></p>
+              <p><i class="fa-solid fa-dice-d20"></i> <%= game.age %> ans</p>
+              <p><i class="fa-solid fa-chess-knight"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : "" %></p>
 
             </div>
           <% end %>
