@@ -25,7 +25,11 @@ DEPOSIT = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150]
     "Splendor" => "https://joueclub-joueclub-fr-storage.omn.proximis.com/Imagestorage/imagesSynchro/0/0/c6559d12ec8729ac0a79820be58f6c29cddb2fa1_06024261_03.jpeg"
   }
 
-puts "nettoyage de la db"
+puts "nettoyage de la db booking message chat game user"
+Booking.destroy_all
+Message.destroy_all
+Chat.destroy_all
+Game.destroy_all
 User.destroy_all
 
 puts "Création des users"
