@@ -26,6 +26,10 @@ DEPOSIT = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150]
   }
 
 puts "nettoyage de la db"
+Booking.destroy_all
+Message.destroy_all
+Chat.destroy_all
+Game.destroy_all
 User.destroy_all
 
 puts "Création des users"
