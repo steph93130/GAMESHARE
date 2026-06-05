@@ -1,6 +1,4 @@
-<h1>Games#index</h1>
-<p>Find me in app/views/games/index.html.erb</p>
-<%= link_to "home", root_path %>
+
 
 <div class="container my-5">
 
@@ -16,7 +14,7 @@
   </h1>
 
 
-  <div class ="map" style="width: 100%; height: 600px;"
+  <div class="map" style="width: 100%; height: 600px;"
     data-controller="map"
     data-map-game-markers-value="<%= @game_markers.to_json %>"
     data-map-user-markers-value="<%= @user_markers.to_json %>"
@@ -39,17 +37,16 @@
                 <%= game.title %>
               </h2>
 
-              <%= image_tag game.picture,
+              <%#= cl_image_tag game.picture.key,
                             alt: game.title,
                             class: "game-image img-fluid" %>
 
-              <p><strong>Catégorie :</strong> <%= game.category %></p>
-              <p><strong>Âge minimum :</strong> <%= game.age %> ans</p>
-              <p><strong>Nombre de joueurs :</strong> <%= game.player_number %></p>
+              <p><i class="fa-solid fa-dice"></i> <%= game.category %></p>
+              <p><i class="fa-solid fa-dice-d20"></i> <%= game.age %> ans</p>
+              <p><i class="fa-solid fa-chess-knight"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : "" %></p>
 
 
-
-            </div>
+           </div>
 
           <% end %>
 

@@ -25,6 +25,7 @@ class ApplicationController < ActionController::Base
     root_path
   end
 
+
   private
 
   def skip_pundit?

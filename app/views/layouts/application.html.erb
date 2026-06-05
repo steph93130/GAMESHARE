@@ -22,14 +22,13 @@
   </head>
 
   <body>
-<div class="connected">
-<%= current_user == nil ? " " : "Connecté en tant que : #{current_user.username}" %>
-</div>
+<%= render "shared/logo_and_name" %>
     <%= yield %>
 
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
   <%= render "shared/flashes" %>
+  <%= render "shared/navbar", user:@user %>
 
   </body>
 </html>
