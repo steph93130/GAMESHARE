@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-    before_action :set_booking, only: [:accept, :decline, :validate]
+    before_action :set_booking, only: [:accept, :decline, :validate, :deposit]
 
     def create
         @chat = Chat.find(params[:chat_id])
