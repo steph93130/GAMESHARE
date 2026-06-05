@@ -1,12 +1,20 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+.fa-solid {
+  font-size: 1.5em;
+
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+#home{
+    color: purple;
+  }
+#ludo{
+  color: red;
+}
+#emprunt{
+  color:green;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.mentions {
+  font-size: 0.75em;
+  color: dimgray;
+  font-style: italic;
 }

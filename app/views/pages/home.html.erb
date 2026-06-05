@@ -54,13 +54,13 @@
                 <%= game.title %>
               </h2>
 
-              <%= image_tag game.picture,
+              <%#= cl_image_tag game.picture.key,
                             alt: game.title,
                             class: "game-image img-fluid" %>
 
-              <p><strong>Catégorie :</strong> <%= game.category %></p>
-              <p><strong>Âge minimum :</strong> <%= game.age %> ans</p>
-              <p><strong>Nombre de joueurs :</strong> <%= game.player_number %></p>
+              <p><i class="fa-solid fa-dice"></i> <%= game.category %></p>
+              <p><i class="fa-solid fa-dice-d20"></i> <%= game.age %> ans</p>
+              <p><i class="fa-solid fa-chess-knight"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : "" %></p>
 
             </div>
           <% end %>

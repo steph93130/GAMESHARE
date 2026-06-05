@@ -3,32 +3,22 @@
     <div class="row align-items-center text-center text-md-start">
 
       <div class="col-12 col-md-6 mb-3 mb-md-0">
-        <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3">
-          <a href="https://github.com/Celinedesdes" class="text-decoration-none">
-            <i class="fab fa-github"></i><span> Céline</span>
-          </a>
+        <div class="d-flex flex-wrap justify-content-around justify-content-md-start gap-2">
+          <%= link_to "", root_path, class:"text-decoration-none fa-solid fa-house", id:"home", title:"Accueil", alt:"Icône de retour à l'accueil du site" %>
 
-          <a href="#" class="text-decoration-none">
-            <i class="fab fa-github"></i><span> Stéphane</span>
-          </a>
+          <%= link_to "", root_path, class:"fa-solid fa-dice", id:"ludo", title:"Mes jeux", alt:"Ma ludothèque" %>
 
-          <a href="#" class="text-decoration-none">
-            <i class="fab fa-github"></i><span> Florian</span>
-          </a>
+          <%= link_to "", root_path, class:"fa-solid fa-list-check", id:"emprunt", title:"Mes emprunts", alt:"Liste de mes emprunts" %>
 
-          <a href="#" class="text-decoration-none">
-            <i class="fab fa-github"></i><span> Bruno</span>
-          </a>
-
-          <a href="https://github.com/Patrice-BERNARD" class="text-decoration-none">
-            <i class="fab fa-github"></i><span> Patrice</span>
-          </a>
         </div>
       </div>
 
-      <div class="col-12 col-md-6">
-        <p class="mb-0 text-center text-md-end">
-          GameShare <i class="fa-solid fa-face-grin-beam-sweat"></i> at Le Wagon 2026
+      <div class="col-12 col-md-6 mt-1">
+        <p class="mb-0 my-0 text-center text-md-end d-flex flex-columns  align-items-center mentions">
+          <p class="mentions m-0">Contact</p>
+          <p class="mentions m-0">Qui sommes-nous ?</p>
+          <p class="mentions m-0">Mentions légales.</p>
+          <p class="site-name my-1">GameShare <i class="fa-regular fa-copyright"></i> Le Wagon-#2278 /2026</p>
         </p>
       </div>
 
