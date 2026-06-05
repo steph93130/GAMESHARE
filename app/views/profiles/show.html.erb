@@ -20,9 +20,43 @@
           <div class="border rounded-4 p-4">
             <div class="d-flex gap-3 mb-4 justify-content-center">
               <%= link_to "Ma ludothèque", "#", class: "btn btn-primary rounded-pill" %>
-              <%= link_to "Mes emprunts", profiles_show2, class: "btn btn-outline-primary rounded-pill" %>
+              <%= link_to "Ajouter un jeu", "#ajout", class: "btn btn-outline-primary rounded-pill" %>
+              <%= link_to "Mes emprunts", profile_bookings_path(@user), class: "btn btn-outline-primary rounded-pill" %>
             </div>
-          </div>
+              <% if @games.any? %>
+                <div class="row">
+                  <% @games.each do |game| %>
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-2 mb-4">
+                      <div class="mini-card">
+                        <%= link_to game_path(game), class: "mini-card-link" do %>
+                          <h2 class="game-title">
+                            <%= game.title %>
+                          </h2>
+                          <% if game.picture.attached? %>
+                          <%= cl_image_tag game.picture.key,
+                              alt: game.title,
+                              class: "game-image img-fluid" %>
+                          <% else %>
+                          <div class="bg-secondary d-flex align-items-center justify-content-center rounded"
+                                style="height: 220px;">
+                              Aucune image
+                          </div>
+                          <% end %>
+                          <p><i class="fa-solid fa-dice"></i> <%= game.category %></p>
+                          <p><i class="fa-solid fa-dice-d20"></i> <%= game.age %> ans</p>
+                          <p><i class="fa-solid fa-chess-knight"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : "" %></p>
+                        <% end %>
+                        </div>
+                      </div>
+                  <% end %>
+                  </div>
+              <% else %>
+                <div class="text-center">
+                <p>Aucun jeu ajouté pour le moment.</p>
+                </div>
+              <% end %>
+            </div>
+            <%= render"shared/form_add_game" %>
         </div>
       <div class="my-chats">
         <div class="col-12">
