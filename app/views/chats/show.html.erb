@@ -52,8 +52,6 @@
 <!-- </div> -->
 
 <%#= link_to "← Retour", game_path, class: "bouton-sign mt-2" %>
-<div class="QuiSuisJe my-3">
-  Je suis loggé en tant que en tant que : <%= current_user.username %> et je discute avec <%= @other_user.username %>
-</div>
-<%# <%= link_to "← #{@game.title}", game_path(@game) %> # remplacer par bouton qui ferme l'onglet %
+
+<%# <%= link_to "← #{@game.title}", game_path(@game) %> 
 <button class="button" onclick="window.close()">← <%= @game.title %></button>
