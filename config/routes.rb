@@ -1,16 +1,19 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
+  # Les routes du profile
   get "profile", to: "profiles#show", as: :profile
+  get "profile", to: "profiles#borrow", as: :borrow
+  get "profile", to: "profiles#owner", as: :owner
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :games do
     resources :chats, only: [:create]
   end
 
   resources :chats, only: [:show] do
-    resources :bookings, only: [:create] 
+    resources :bookings, only: [:create]
   end
-  
+
   resources :bookings do
     member do
         patch "accepted", to: "bookings#accept", as: :accept
@@ -21,16 +24,16 @@ Rails.application.routes.draw do
   resources :chats, only: [:show] do
     resources :messages, only: [:create, :index, :show]
   end
-resources :profile, only: [:show] do
-  resources :bookings, only: [:index]
+# resources :profile, only: [:show] do
+#   resources :bookings, only: [:index]
+
   
-  end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  get "profiles/show2", to: "profiles#show2"
+  # get "profiles/show2", to: "profiles#show2"
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

@@ -6,10 +6,18 @@ class ProfilesController < ApplicationController
     authorize :profile
   end
 
-  # def show2
-  #   @games = current_user.games
-  #   @game = Game.new
-  #   @user = current_user
-  #   authorize :profile
-  # end
+  def borrow
+    @games = current_user.games
+    @game = Game.new
+    @user = current_user
+    authorize :profile
+  end
+
+  def owner
+    @games = current_user.games
+    @game = Game.new
+    @user = current_user
+    authorize :profile
+  end
+
 end
