@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         patch "accepted", to: "bookings#accept", as: :accept
         patch "declined", to: "bookings#decline", as: :decline
         patch "validated", to: "bookings#validate", as: :validate
+        get "deposit", to: "bookings#deposit", as: :deposit
       end
   end
   resources :chats, only: [:show] do

@@ -40,11 +40,16 @@ class BookingsController < ApplicationController
         flash[:alert] = "#{@booking.game.user.username}, tu as refusé de prêter ton jeux #{@booking.game.title}."
         redirect_to owner_path # (@booking.game.user)
     end
+    def deposit
+        # raise
+        authorize @booking
 
+    end
     # emprunteur
     def validate
         authorize @booking
         @booking.update(status: :validated)
+        
     end
 
     # emprunteur
