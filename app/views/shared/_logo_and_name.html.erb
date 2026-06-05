@@ -1,17 +1,63 @@
-<% if user_signed_in? %>
-<nav class=" fixed-top text-md-end p-2 border-bottom bg-light">
-  <div class="text-md-end my-0 d-flex justify-content-between">
-    <%= image_tag "logomax.png", alt: "GameShare", class: "logo", height:"35px" %>
-    <p class="navbar-brand text-md-end fs-6 text my-0"> <i class="fa-solid fa-user fs-6 text"></i> Bienvenue <%= current_user.username %></p>
+<nav class="fixed-top p-2 border-bottom bg-body-secondary">
+
+  <div class="d-flex justify-content-between align-items-center">
+
+    <%= link_to root_path do %>
+      <%= image_tag "logomax.png",
+          alt: "GameShare",
+          class: "logo2",
+          height: "35px" %>
+    <% end %>
+
+
+
+      <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="d-flex flex-wrap justify-content-around justify-content-md-start gap-2">
+          <%= link_to "", profile_path, class:"fa-solid fa-dice red", id:"ludo", title:"Mes jeux", alt:"Ma ludothèque" %>
+
+          <%= link_to "", "#", class:"fa-solid fa-list-check", id:"emprunt", title:"Mes emprunts", alt:"Liste de mes emprunts" %>
+
+        </div>
+      </div>
+
+    <% if user_signed_in? %>
+
+      <div class="d-flex align-items-center gap-3">
+
+        <p class="navbar-brand fs-6 my-0">
+          <i class="fa-solid fa-user"></i>
+          Bienvenue <%= current_user.username %>
+        </p>
+
+        <%= link_to "Sign out",
+            destroy_user_session_path,
+            data: { turbo_method: :delete },
+            class: "btn btn-outline-danger rounded-5 btn-sm" %>
+
+      </div>
+
+    <% else %>
+
+      <%= link_to "Login",
+          new_user_session_path,
+          class: "btn btn-primary rounded-5 btn-sm" %>
+
+    <% end %>
+
   </div>
+
 </nav>
- <% end %>
 
- <%#= link_to "index", games_path %>
-  <div class="d-flex justify-content-center m-5">
-    <%= image_tag "logomax.png", alt: "GameShare", class: "logo" %>
-  </div>
+<div class="d-flex justify-content-center m-5">
 
-  <h1 class="mb-5 text-center">
-    <span class="red">G</span><span class="blue">a</span><span class="yellow">m</span><span class="red">e</span><span class="blue">S</span><span class="yellow">h</span><span class="red">a</span><span class="blue">r</span><span class="yellow">e</span>
-  </h1>
+  <%= link_to root_path do %>
+    <%= image_tag "logomax.png",
+        alt: "GameShare",
+        class: "logo" %>
+  <% end %>
+
+</div>
+
+<h1 class="mb-5 text-center">
+  <span class="red">G</span><span class="blue">a</span><span class="yellow">m</span><span class="red">e</span><span class="blue">S</span><span class="yellow">h</span><span class="red">a</span><span class="blue">r</span><span class="yellow">e</span>
+</h1>
