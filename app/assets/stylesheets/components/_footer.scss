@@ -1,8 +1,19 @@
 footer {
- min-height: 50px;
+color: $red-light;
+ min-height: 10px;
  margin-bottom: 0;
+ background-color:$bg-footer;
+ min-height: 150px;
+}
+
+.mentions {
+  color: white;
+}
+
+.site-name {
+  color: white;
 }
 
 body {
   min-height: 100vh;
-}
+  }
