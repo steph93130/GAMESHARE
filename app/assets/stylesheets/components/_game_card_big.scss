@@ -8,8 +8,15 @@ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 border: solid 1px $purple;
 }
 
+.rules-chevron {
+  transition: transform 0.3s ease;
+  font-size: 0.85rem;
+  color: $purple;
+}
 
-
+[aria-expanded="true"] .rules-chevron {
+  transform: rotate(180deg);
+}
 
 .game-image-big {
   max-width: 450px;
