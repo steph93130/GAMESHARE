@@ -1,0 +1,175 @@
+<nav class="fixed-top p-2 border-bottom bg-nav justify-content-around d-none d-md-flex" id="desktop-nav">
+
+ <%= link_to root_path class: "mobile-nav-item" do %>
+      <%= image_tag "logomax.png",
+          alt: "GameShare",
+          class: "logo2",
+          height: "35px" %>
+    <% end %>
+
+
+  <%= link_to owner_path, class: "mobile-nav-item c1" do %>
+    <i class="fa-solid fa-dice red-light"></i>
+    <span>Mes jeux</span>
+  <% end %>
+
+  <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
+    <i class="fa-solid fa-list-check blue-light"></i>
+    <span>Emprunts</span>
+  <% end %>
+
+ <% if user_signed_in? %>
+
+  <div class="dropdown">
+    <a href="#"
+       class="mobile-nav-item dropdown-toggle"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+      <i class="fa-solid fa-user c3"></i>
+      <span>Profil</span>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li>
+        <%= link_to "Mon profil",
+            profile_path,
+            class: "dropdown-item" %>
+      </li>
+
+      <li><hr class="dropdown-divider"></li>
+
+      <li>
+        <%= link_to "Déconnexion",
+            destroy_user_session_path,
+            data: { turbo_method: :delete },
+            class: "dropdown-item text-danger" %>
+      </li>
+    </ul>
+  </div>
+
+<% else %>
+
+  <div class="dropdown">
+    <a href="#"
+      class="mobile-nav-item dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-expanded="false">
+      <i class="fa-solid fa-user"></i>
+      <span>Compte</span>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li>
+        <%= link_to "Connexion",
+            new_user_session_path,
+            class: "dropdown-item" %>
+      </li>
+
+      <li>
+        <%= link_to "Inscription",
+            new_user_registration_path,
+            class: "dropdown-item" %>
+      </li>
+    </ul>
+  </div>
+
+<% end %>
+
+  </div>
+
+</nav>
+
+<div class="d-flex justify-content-center m-5">
+
+  <%= link_to root_path do %>
+    <%= image_tag "logomax.png",
+        alt: "GameShare",
+        class: "logo" %>
+  <% end %>
+
+</div>
+
+<h1 class="mb-5 text-center">
+  <span class="red">G</span><span class="blue">a</span><span class="yellow">m</span><span class="red">e</span><span class="blue">S</span><span class="yellow">h</span><span class="red">a</span><span class="blue">r</span><span class="yellow">e</span>
+</h1>
+
+
+
+<nav class="mobile-nav d-md-none">
+
+   <%= link_to root_path class: "mobile-nav-item" do %>
+      <%= image_tag "logomax.png",
+          alt: "GameShare",
+          class: "logo2",
+          height: "35px" %>
+    <% end %>
+
+
+  <%= link_to owner_path, class: "mobile-nav-item c1" do %>
+    <i class="fa-solid fa-dice red-light"></i>
+    <span>Mes jeux</span>
+  <% end %>
+
+  <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
+    <i class="fa-solid fa-list-check blue-light"></i>
+    <span>Emprunts</span>
+  <% end %>
+
+ <% if user_signed_in? %>
+
+  <div class="dropdown">
+    <a href="#"
+       class="mobile-nav-item dropdown-toggle"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+      <i class="fa-solid fa-user c3"></i>
+      <span>Profil</span>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li>
+        <%= link_to "Mon profil",
+            profile_path,
+            class: "dropdown-item" %>
+      </li>
+
+      <li><hr class="dropdown-divider"></li>
+
+      <li>
+        <%= link_to "Déconnexion",
+            destroy_user_session_path,
+            data: { turbo_method: :delete },
+            class: "dropdown-item text-danger" %>
+      </li>
+    </ul>
+  </div>
+
+<% else %>
+
+  <div class="dropdown">
+    <a href="#"
+       class="mobile-nav-item dropdown-toggle"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+      <i class="fa-solid fa-user"></i>
+      <span>Compte</span>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li>
+        <%= link_to "Connexion",
+            new_user_session_path,
+            class: "dropdown-item" %>
+      </li>
+
+      <li>
+        <%= link_to "Inscription",
+            new_user_registration_path,
+            class: "dropdown-item" %>
+      </li>
+    </ul>
+  </div>
+
+<% end %>
+
+</nav>
