@@ -75,7 +75,7 @@
           <div class="col-12 col-md-6 col-lg-4 mb-4 link">
 
 
-            <%= link_to game_path(game, query: params[:query]) do %>
+            <%= link_to game_path(game, query: params[:query]), data: { turbo_frame: "_top" } do %>
 
               <div class="game-card h-100">
 
