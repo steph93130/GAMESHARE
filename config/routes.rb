@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   get "owner", to: "profiles#owner", as: :owner
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :games do
+    collection do
+      post :fetch_rules
+    end
     resources :chats, only: [:create]
   end
 

@@ -1,13 +1,61 @@
-<p>Mes jeux en cours de prêt.</p>
+<p>OWNER.</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="border rounded-4 p-4">
+        <div class="d-flex gap-3 mb-4 justify-content-center">
+          <%= link_to "Ma ludothèque", "#ludo", class: "btn btn-primary rounded-pill" %>
+          <%= link_to "Ajouter un jeu", "#ajout", class: "btn btn-outline-primary rounded-pill" %>
+          <%= link_to "Mes emprunts", borrow_path, class: "btn btn-outline-primary rounded-pill" %>
+      </div>
+      <% if @games.any? %>
+        <div class="row" id="ludo">
+          <% @games.each do |game| %>
+            <div class="col-12 col-md-6 col-lg-4 col-xl-2 mb-4">
+              <div class="mini-card">
+                <%= link_to game_path(game), class: "mini-card-link" do %>
+                  <p class="fs-4 text" class="game-title">
+                    <%= game.title %>
+                  </p>
+                  <% if game.picture.attached? %>
+                    <%= cl_image_tag game.picture.key,
+                        alt: game.title,
+                        class: "game-image img-fluid" %>
+                    <% else %>
+                    <div class="bg-secondary d-flex align-items-center justify-content-start rounded"
+                          style="height: 220px;">
+                        Aucune image
+                    </div>
+                  <% end %>
+                  <p class="text-start"><i class="fa-solid fa-dice red"></i> <%= game.category %></p>
+                  <p class="text-start"><i class="fa-solid fa-dice-d20 blue"></i> <%= game.age %> ans</p>
+                  <p class="text-start"><i class="fa-solid fa-chess-knight orange"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : "" %></p>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center">
+        <p>Aucun jeu ajouté pour le moment.</p>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+<hr>
+<div class="form-new-game my-2">
+<%= render"shared/form_add_game", game:@game %>
+</div>
+</div>
 <div class="global-main d-flex gap-3 w-75 mx-auto">
-
 <% @games.each do |game| %>
   <% @bookings.each do|booking| %>
   <% if booking.status == "accepted" && booking.game.title == game.title %>
     <div class="game-card p-4 w-50 mx-auto d-flex flex-column bg-success-emphasis ">
       <p class="text-danger fw-semibold"><i class="fa-solid fa-crown yellow"></i> <%= booking.game.title %></p>
       <p class="text-success">Statut :  <%= booking.status %> </p>
-      <p class="text-success">Emprunté par :  <%= booking .chat.user.username %></p>
+      <p class="text-success">Emprunté par :  <%= booking.chat.user.username %></p>
     </div>
   <% end %>
   <% end %>

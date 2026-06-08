@@ -1,7 +1,6 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-12 col-lg-6">
-      <h2>Pages des emprunts de <%= @user.username %></h2>
       <!--############################################################### -->
       <!-- Notification des bookings provisoire -->
       <% if flash[:notice] %>
@@ -17,24 +16,36 @@
 
           <!-- Div Du menu profil -->
           <div class="d-flex gap-3 mb-4 justify-content-center">
-						<%= link_to "Ma ludothèque", "#", class: "btn btn-primary rounded-pill" %>
-						<%= link_to "Ajouter un jeu", "#ajout", class: "btn btn-outline-primary rounded-pill" %>
-						<%= link_to "Mes emprunts", "#", class: "btn btn-outline-primary rounded-pill" %>
-					</div>
-					<!-- FIN Div Du menu profil -->
+            <%= link_to "Ma ludothèque", owner_path, class: "btn btn-outline-primary rounded-pill" %>
+            <%= link_to "Ajouter un jeu", "#ajout", class: "btn btn-outline-primary rounded-pill" %>
+            <%= link_to "Mes emprunts", "#", class: "btn btn-primary rounded-pill" %>
+          </div>
+          <!-- FIN Div Du menu profil -->
         </div>
-
-      <div class="my-chats">
-        <div class="col-12">
-          <h3>status de mes demande</h3>
-					<% @bookings.each do |booking| %>
-						<p>title : <%= booking.game.title %></p>
-						<p>status : <%= booking.status %></p>
-						<% if booking.status == "accepted" %>
-							<%= link_to "Valider", deposit_booking_path(booking) %>
-						<% end %>
-					<% end %>
-        </div>
+        <!-- Debut de la liste des jeux empruntés avec leur statut -->
+        <% if @bookings.any? %>
+          <div class="row" id="ludo">
+            <% @bookings.each do |booking| %>
+              <div class="col-12 col-md-6 col-lg-4 col-xl-2 mb-4">
+                <div class="mini-card">
+                  <%= link_to "#", class: "mini-card-link" do %>
+                  <p class="fs-4 text booking-title"><%= booking.game.title %></p>
+                  <p  class="fs-4 text statut">Statut de la demande : <span><%= booking.status %></span> par <%= booking.game.user.username %></p>
+                  <% if booking.status == "accepted" %>
+                    <p><%= link_to "", deposit_booking_path(booking), class:"fa-solid fa-basket-shopping fs-1 green" %></p>
+                    <p><i class="fa-solid fa-chevron-up"></i></p>
+                    <p  class="fs-6 text confirmer"><%= booking.user.username %> clique ici pour valider définitivement.</p>
+                  <% end %>
+                  <% end %>
+                </div>
+              </div>
+          <% end %>
+          </div>
+        <% else %>
+          <div class="text-center">
+            <p><%= current_user.username %>, tu n'as aucun emprunt actuellement.</p>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
