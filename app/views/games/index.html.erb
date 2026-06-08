@@ -36,7 +36,7 @@
         </div>
         <div class="col-12 col-md-3">
           <label class="form-label fw-semibold d-flex align-items-center gap-1">
-            <i class="fa-solid fa-chess-knight orange"></i> Nombre de joueurs
+            <i class="fa-solid fa-chess-knight orange"></i> Nombre de joueurs minimum
           </label>
           <%= f.select :player_number,
             options_for_select([["Tous les joueurs", ""]] + @player_numbers.map { |n| ["#{n} joueur#{n > 1 ? 's' : ''}", n] }, params[:player_number]),
