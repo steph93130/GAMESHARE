@@ -34,7 +34,7 @@ class ProfilesController < ApplicationController
       end
     
     end
-    bookings
+    bookings.sort_by { |b| b.created_at }.reverse
   end
 
 end
