@@ -5,6 +5,7 @@ padding:25px;
 border-radius: 25px;
 margin-bottom: 25px;
 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+border: solid 1px $purple;
 }
 
 
@@ -31,13 +32,13 @@ p {
 @media (max-width: 576px) {
 
    .game-card-big{
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   .game-card-link {
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   .game-image-big {
