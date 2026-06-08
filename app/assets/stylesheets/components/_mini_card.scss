@@ -6,6 +6,15 @@ border-radius: 15px;
 margin-bottom: 15px;
 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 cursor: pointer;
+position: relative;
+}
+
+.mini-card .availability-toggle {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  line-height: 1;
 }
 
 
@@ -38,6 +47,7 @@ p {
     margin-left: 10px;
     margin-right: 10px;
     max-height: 250px;
+    overflow: hidden;
   }
 
   .mini-card-link {
