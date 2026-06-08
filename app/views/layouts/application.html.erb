@@ -22,8 +22,8 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-<%= render "shared/logo_and_name" %>
+  <body class="<%= ['bg-red-light', 'bg-blue-light', 'bg-yellow-light', 'bg-orange-light', 'bg-green-light', 'bg-purple-light'].sample %>"">
+<%= render "shared/nav" %>
     <%= yield %>
 
   <p class="notice"><%= notice %></p>

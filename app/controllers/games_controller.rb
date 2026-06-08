@@ -1,18 +1,21 @@
 class GamesController < ApplicationController
-  before_action :game_set, only: [:show, :destroy]
+  before_action :game_set, only: %i[show edit update destroy]
+
   def index
     @games = policy_scope(Game).where(available: true).where.not(user: current_user)
     if params[:query].present?
       @address = params[:query]
       result = Geocoder.search(@address).first
-      @user_markers = [{
-        lat: result.latitude,
-        lng: result.longitude,
-        marker_html: render_to_string(partial: "marker_user")
-      }]
 
-      @games = @games.near(@address, 5)
-      # @games = Game.near(address, 0.3)
+      if result
+        @user_markers = [{
+          lat: result.latitude,
+          lng: result.longitude,
+          marker_html: render_to_string(partial: "marker_user")
+        }]
+
+        @games = @games.near(@address, 5)
+      end
     end
 
     @categories      = Game.where(available: true).where.not(user: current_user).distinct.pluck(:category).compact.sort
@@ -24,14 +27,16 @@ class GamesController < ApplicationController
     @games = @games.where("age >= ?", params[:age].to_i)        if params[:age].present?
 
     @game_markers = @games.where.not(lat: nil, lng: nil).map do |game|
-      { lat: game.lat, lng: game.lng,
+      {
+        lat: game.lat,
+        lng: game.lng,
         info_window_html: render_to_string(partial: "info_window", locals: { game: game }),
-        marker_html: render_to_string(partial: "marker_game") }
+        marker_html: render_to_string(partial: "marker_game")
+      }
     end
   end
 
   def show
-    @game = Game.find(params[:id])
     authorize @game
     @address = params[:query]
   end
@@ -44,7 +49,6 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     @game.user = current_user
-    # @game.address = current_user.address
     authorize @game
 
     if @game.save
@@ -54,7 +58,22 @@ class GamesController < ApplicationController
     end
   end
 
+  def edit
+    authorize @game
+  end
+
+  def update
+    authorize @game
+
+    if @game.update(game_params)
+      redirect_to game_path(@game), notice: "Jeu modifié avec succès"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def destroy
+    authorize @game
     @game.destroy
     redirect_to profile_path, status: :see_other
   end

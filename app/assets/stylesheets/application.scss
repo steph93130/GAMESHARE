@@ -17,3 +17,33 @@
 @import "components/_logo";
 @import "components/_map";
 @import "components/_footer";
+
+
+
+body.bg-red-light {
+  background-color: #FAF0F2;
+}
+
+body.bg-blue-light {
+  background-color: #EEF7FC;
+}
+
+body.bg-yellow-light {
+  background-color: #FBF7EA;
+}
+
+body.bg-orange-light {
+  background-color: #FAF3EB;
+}
+
+body.bg-green-light {
+  background-color: #F1F8ED;
+}
+
+body.bg-purple-light {
+  background-color: #F4F0FA;
+}
+
+body {
+  min-height: 100vh;
+}

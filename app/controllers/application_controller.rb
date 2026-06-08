@@ -10,13 +10,12 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
-
   def configure_permitted_parameters
     # For additional fields in app/views/devise/registrations/new.html.erb
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :address])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[username address])
 
     # For additional in app/views/devise/registrations/edit.html.erb
-    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :address])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[username address])
   end
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
@@ -25,11 +24,9 @@ class ApplicationController < ActionController::Base
     root_path
   end
 
-
   private
 
   def skip_pundit?
     devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)|(^chats$)/
   end
-
 end
