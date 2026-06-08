@@ -21,7 +21,7 @@
             <div class="d-flex gap-3 mb-4 justify-content-center">
               <%= link_to "Ma ludothèque", "#", class: "btn btn-primary rounded-pill" %>
               <%= link_to "Ajouter un jeu", "#ajout", class: "btn btn-outline-primary rounded-pill" %>
-              <%= link_to "Mes emprunts", profile_bookings_path(@user), class: "btn btn-outline-primary rounded-pill" %>
+              <%= link_to "Mes emprunts", "#", class: "btn btn-outline-primary rounded-pill" %>
             </div>
               <% if @games.any? %>
                 <div class="row">
@@ -59,38 +59,6 @@
             <%= render"shared/form_add_game" %>
         </div>
       <div class="my-chats">
-        <div class="col-12">
-          <!--############################################################### -->
-          <!--Determine l'emprunteur -->
-          <% if !@user.chats.last.nil? %>
-            <h3>Enprunteur : <%= @user.chats.last.booking.status %></h3>
-            <p>array vide : <%= @user.chats.empty?  %></p>
-            <% @user.chats.each do |chat| %>
-              <p><%= chat.id %></p>
-              <ol>
-                <% chat.messages.each do |message| %>
-                  <li><%= message.content %></li>
-                <% end %>
-              </ol>
-            <% end %>
-          <% else %>
-          <!--############################################################### -->
-          <!--determine le prêteur -->
-            <h3>prêteur : <%= @user.games.last.available %> // <%= @user.games.last.title %></h3>
-            <p>array vide <%= @user.chats.empty?  %></p>
-            <h3>acces au chat : <%= @user.games.last.chats.last.booking.status%></h3>
-            
-            <% @user.games.last.chats.each do |chat| %>
-              <p><%= chat.id %></p>
-              <ol>
-                <% chat.messages.each do |message| %>
-                  <li><%= message.content %></li>
-                <% end %>
-              </ol>
-            <% end %>
-          <% end %>
-          <!--############################################################### -->
-        </div>
       </div>
     </div>
   </div>

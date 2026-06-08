@@ -6,10 +6,35 @@ class ProfilesController < ApplicationController
     authorize :profile
   end
 
-  # def show2
-  #   @games = current_user.games
-  #   @game = Game.new
-  #   @user = current_user
-  #   authorize :profile
-  # end
+  def borrow # emprunteur
+    @games = current_user.games
+    @game = Game.new
+    @user = current_user
+    authorize :profile
+    @chats = current_user.chats.all
+    @bookings = borrow_booking
+    
+  end
+
+  def owner # prêteur
+    @games = current_user.games
+    @game = Game.new
+    @bookings = Booking.all
+    @user = current_user
+    authorize :profile
+  end
+
+  private 
+
+  def borrow_booking
+    bookings = []
+    @chats.each do |chat|
+      if chat.booking.nil? == false
+        bookings << chat.booking
+      end
+    
+    end
+    bookings
+  end
+
 end

@@ -6,7 +6,9 @@
             <p>**** **** **** 5834</p>
             <p>Voulez vous utilisez cette carte ?</p>
             <p>
-                <%= link_to "Valider la transaction", validate_booking_path(@booking), data: { turbo_method: :patch }, class: "btn btn-primary"  %>
+                <%#= link_to "Valider la transaction", validate_booking_path(@booking), data: { turbo_method: :patch }, class: "btn btn-primary"  %>
+                <button class="btn btn-danger">accepter</button>
+
                 <button class="btn btn-danger">non</button>
             </p>
 

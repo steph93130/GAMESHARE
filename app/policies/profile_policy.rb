@@ -9,7 +9,19 @@ class ProfilePolicy < ApplicationPolicy
     true
   end
 
-  def show2?
+  def owner?
+    true
+  end
+
+  def borrow?
+    true
+  end
+
+  def borrow?
+    true
+  end
+
+  def owner?
     true
   end
 
