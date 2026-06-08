@@ -76,9 +76,8 @@
           <% if user_signed_in? && current_user == @game.user %>
 
             <%= link_to edit_game_path(@game),
-                        class: "btn btn-warning rounded-5 px-4" do %>
+                        class: "modified button" do %>
               <i class="fa-solid fa-pen"></i>
-              Modifier
             <% end %>
 
             <%= button_to game_path(@game),
@@ -86,18 +85,19 @@
                           data: {
                             turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce jeu ?"
                           },
-                          class: "btn btn-danger rounded-5 px-4" do %>
+                          class: "decline button" do %>
               <i class="fa-solid fa-trash"></i>
-              Supprimer
             <% end %>
 
           <% end %>
 
-          <%= button_to "Démarrer conversation",
-                        game_chats_path(@game),
-                        method: :post,
-                        form: { target: "_blank" },
-                        class: "btn btn-primary rounded-5 px-4" %>
+          <% if current_user != @game.user %>
+            <%= button_to "Démarrer conversation",
+                          game_chats_path(@game),
+                          method: :post,
+                          form: { target: "_blank" },
+                          class: "button" %>
+          <% end %>
 
         </div>
 

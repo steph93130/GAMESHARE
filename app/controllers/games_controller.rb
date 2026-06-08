@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :game_set, only: %i[show edit update destroy]
+  before_action :game_set, only: %i[show edit update destroy toggle_availability]
   skip_after_action :verify_authorized, only: :fetch_rules
 
   def index
@@ -15,7 +15,7 @@ class GamesController < ApplicationController
           marker_html: render_to_string(partial: "marker_user")
         }]
 
-        @games = @games.near(@address, 5)
+        @games = @games.near(@address, 10)
       end
     end
 
@@ -71,6 +71,12 @@ class GamesController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def toggle_availability
+    authorize @game, :update?
+    @game.update!(available: !@game.available)
+    redirect_to owner_path, status: :see_other
   end
 
   def destroy
