@@ -4,12 +4,12 @@
     <div class="col-12 col-lg-8">
       <div class="border rounded-4 p-4">
         <div class="d-flex gap-3 mb-4 justify-content-center">
-          <%= link_to "Ma ludothèque", "#", class: "btn btn-primary rounded-pill" %>
+          <%= link_to "Ma ludothèque", "#ludo", class: "btn btn-primary rounded-pill" %>
           <%= link_to "Ajouter un jeu", "#ajout", class: "btn btn-outline-primary rounded-pill" %>
-          <%= link_to "Mes emprunts", "#", class: "btn btn-outline-primary rounded-pill" %>
+          <%= link_to "Mes emprunts", borrow_path, class: "btn btn-outline-primary rounded-pill" %>
       </div>
       <% if @games.any? %>
-        <div class="row">
+        <div class="row" id="ludo">
           <% @games.each do |game| %>
             <div class="col-12 col-md-6 col-lg-4 col-xl-2 mb-4">
               <div class="mini-card">
@@ -41,9 +41,12 @@
         </div>
       <% end %>
       </div>
-      <%= render"shared/form_add_game" %>
     </div>
   </div>
+<hr>
+<div class="form-new-game my-2">
+<%= render"shared/form_add_game", game:@game %>
+</div>
 </div>
 <div class="global-main d-flex gap-3 w-75 mx-auto">
 <% @games.each do |game| %>
@@ -52,7 +55,7 @@
     <div class="game-card p-4 w-50 mx-auto d-flex flex-column bg-success-emphasis ">
       <p class="text-danger fw-semibold"><i class="fa-solid fa-crown yellow"></i> <%= booking.game.title %></p>
       <p class="text-success">Statut :  <%= booking.status %> </p>
-      <p class="text-success">Emprunté par :  <%= booking .chat.user.username %></p>
+      <p class="text-success">Emprunté par :  <%= booking.chat.user.username %></p>
     </div>
   <% end %>
   <% end %>

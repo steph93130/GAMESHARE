@@ -50,6 +50,39 @@ class GamesController < ApplicationController
     redirect_to profile_path, status: :see_other
   end
 
+  def fetch_rules
+    title = params[:title].to_s.strip
+    image = params[:image] # ActionDispatch::Http::UploadedFile ou nil
+
+    return render json: { error: "Le titre du jeu est requis." }, status: :bad_request if title.blank?
+
+    prompt = <<~PROMPT
+      Tu es un expert en jeux de société. Donne-moi les règles de base du jeu "#{title}" en français.
+      Réponds UNIQUEMENT en HTML, sans balises <html>, <head> ou <body>.
+      Structure ta réponse ainsi :
+      - <h3> pour chaque section (Objectif, Mise en place, Déroulement d'un tour, Fin de partie, Conseils)
+      - <p> pour les paragraphes explicatifs
+      - <ul><li> pour les listes d'actions ou de matériel
+      - <strong> pour les termes-clés
+      Sois concis mais suffisamment complet pour qu'un débutant puisse jouer.
+    PROMPT
+
+    chat = RubyLLM.chat(model: "gpt-4o")
+
+    response = if image.present?
+                chat.ask(prompt, with: { image: image.path })
+              else
+                chat.ask(prompt)
+              end
+
+    render json: { rules: response.content }, content_type: "application/json"
+
+  rescue RubyLLM::Error => e
+    render json: { error: "L'IA n'a pas pu répondre : #{e.message}" }, status: :unprocessable_entity
+  rescue StandardError => e
+    render json: { error: "Erreur inattendue : #{e.message}" }, status: :internal_server_error
+  end
+
   private
 
   def game_set

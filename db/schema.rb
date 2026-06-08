@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_04_135038) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_08_085612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -69,7 +69,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_135038) do
   create_table "games", force: :cascade do |t|
     t.string "address"
     t.integer "age"
-    t.boolean "available"
+    t.boolean "available", default: true
     t.string "category"
     t.string "condition"
     t.datetime "created_at", null: false
