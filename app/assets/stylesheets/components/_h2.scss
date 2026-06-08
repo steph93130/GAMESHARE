@@ -9,3 +9,14 @@
   text-align: center;
   text-transform: uppercase;
 }
+
+.slogan {
+  text-align: center;
+  text-transform: uppercase;
+
+  span {
+    color: $purple;
+    font-style: italic;
+  }
+
+}
