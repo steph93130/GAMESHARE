@@ -1,8 +1,3 @@
-<% colors = %w[red blue yellow orange green] %>
-<h3>
-  <% char_index = 0 %>
-  <% game.title.split(" ").each_with_index do |word, word_index| %>
-    <% char_index += 1 if word_index > 0 %>
-    <%= " " if word_index > 0 %><span style="white-space: nowrap"><% word.chars.each do |char| %><span class="<%= colors[char_index % colors.length] %>"><%= char %></span><% char_index += 1 %><% end %></span>
-  <% end %>
-</h3>
+<%= link_to game_path(game), style: "text-decoration: none;" do %>
+  <h3 style="color: white; background-color: black; padding: 4px 8px; margin: 0;"><%= game.title %></h3>
+<% end %>
