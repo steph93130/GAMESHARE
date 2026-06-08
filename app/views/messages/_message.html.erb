@@ -1,5 +1,9 @@
 <div class="d-flex mb-2 chat-message <%= mine ? 'justify-content-end' : 'justify-content-start' %>">
   <div class="message-bubble px-3 py-2 rounded-pill <%= mine ? 'bg-white' : 'bg-primary text-white' %>">
-    <%= sanitize message.content, tags: ["a"], attributes: ["href"] %>
+    <% if message.content.include?("<a ") %>
+      <%= raw message.content %>
+    <% else %>
+      <%= sanitize message.content, tags: ["a"], attributes: ["href"] %>
+    <% end %>
   </div>
 </div>

@@ -1,23 +1,23 @@
 class BookingsController < ApplicationController
     before_action :set_booking, only: [:accept, :decline, :validate, :deposit, :close, :give_back, :returned]
 
-    def create
-        @chat = Chat.find(params[:chat_id])
-        @booking = Booking.new(game: @chat.game, user: current_user, chat: @chat )
-        authorize @booking
-        if @booking.save
-            @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: current_user, content: "SYSTEM MESSAGE /=> #{current_user.username} demande le prêt de votre jeux")
-            Turbo::StreamsChannel.broadcast_replace_to(
-                "chat_#{@chat.id}_booking_actions",
-                target: "booking_actions",
-                partial: "chats/booking_actions",
-                locals: { chat: @chat, booking: @booking, is_owner: true }
-            )
-            redirect_to @chat
-        else
-            render "chat/show", status: :unprocessable_entity
-        end
+  def create
+    @chat = Chat.find(params[:chat_id])
+    @booking = Booking.new(game: @chat.game, user: current_user, chat: @chat )
+    authorize @booking
+    if @booking.save
+      @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: current_user, content: "SYSTEM MESSAGE /=> #{current_user.username} demande le prêt de votre jeux")
+      Turbo::StreamsChannel.broadcast_replace_to(
+        "chat_#{@chat.id}_booking_actions",
+        target: "booking_actions",
+        partial: "chats/booking_actions",
+        locals: { chat: @chat, booking: @booking, is_owner: true }
+      )
+      redirect_to @chat
+    else
+      render "chat/show", status: :unprocessable_entity
     end
+  end
 
     # prêteur
     def accept
@@ -83,16 +83,16 @@ class BookingsController < ApplicationController
 
     private
 
-    def set_booking
-        @booking = Booking.find(params[:id])
-    end
+  def set_booking
+    @booking = Booking.find(params[:id])
+  end
 
-    def broadcast_message_to_chat(chat, message)
-        [chat.user, chat.game.user].each do |user|
-            ActionCable.server.broadcast(
-                "chat_#{chat.id}_user_#{user.id}",
-                render_to_string(partial: "messages/message", locals: { message: message, mine: message.user == user })
-            )
-        end
+  def broadcast_message_to_chat(chat, message)
+    [chat.user, chat.game.user].each do |user|
+      ActionCable.server.broadcast(
+        "chat_#{chat.id}_user_#{user.id}",
+        render_to_string(partial: "messages/message", locals: { message: message, mine: message.user == user })
+      )
     end
+  end
 end
