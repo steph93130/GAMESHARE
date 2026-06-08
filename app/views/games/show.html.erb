@@ -67,14 +67,8 @@
           </div>
         </div>
 
-        <div class="d-flex flex-wrap justify-content-between align-items-center mt-4 gap-3">
-
-          <%= link_to "← Retour",
-                      games_path(query: params[:query]),
-                      class: "btn btn-outline-secondary rounded-5 px-4" %>
-
-          <% if user_signed_in? && current_user == @game.user %>
-
+        <% if user_signed_in? && current_user == @game.user %>
+          <div class="d-flex justify-content-center gap-2 mt-4">
             <%= link_to edit_game_path(@game),
                         class: "modified button" do %>
               <i class="fa-solid fa-pen"></i>
@@ -88,8 +82,14 @@
                           class: "decline button" do %>
               <i class="fa-solid fa-trash"></i>
             <% end %>
+          </div>
+        <% end %>
 
-          <% end %>
+        <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-3">
+
+          <%= link_to "← Retour",
+                      games_path(query: params[:query]),
+                      class: "btn btn-outline-secondary rounded-5 px-4" %>
 
           <% if current_user != @game.user %>
             <%= button_to "Démarrer conversation",
