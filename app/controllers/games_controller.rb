@@ -14,7 +14,7 @@ class GamesController < ApplicationController
           marker_html: render_to_string(partial: "marker_user")
         }]
 
-        @games = @games.near(@address, 5)
+        @games = @games.near(@address, 10)
       end
     end
 
