@@ -21,7 +21,7 @@
             <div class="d-flex gap-3 mb-4 justify-content-center">
               <%= link_to "Ma ludothèque", "#", class: "btn btn-primary rounded-pill" %>
               <%= link_to "Ajouter un jeu", "#ajout", class: "btn btn-outline-primary rounded-pill" %>
-              <%= link_to "Mes emprunts", "#", class: "btn btn-outline-primary rounded-pill" %>
+              <%= link_to "Mes emprunts", borrow_path, class: "btn btn-outline-primary rounded-pill" %>
             </div>
               <% if @games.any? %>
                 <div class="row">
