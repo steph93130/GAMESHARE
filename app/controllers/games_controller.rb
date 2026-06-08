@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   before_action :game_set, only: [:show, :destroy]
   def index
-    @games = policy_scope(Game).where(available: true)
+    @games = policy_scope(Game).where(available: true).where.not(user: current_user)
     if params[:query].present?
       @address = params[:query]
       result = Geocoder.search(@address).first
