@@ -14,13 +14,15 @@
     <%= render "messages/form", chat: @chat, message: @message %>
   </div>
 
-  <div class="col-12 col-lg-6">
-    <% is_owner = @chat.game.user == current_user %>
+  <% is_owner = @chat.game.user == current_user %>
+  <div class="d-flex justify-content-center align-items-center gap-3">
     <% if is_owner %>
       <%= turbo_stream_from "chat_#{@chat.id}_booking_actions" %>
     <% end %>
+    <% unless is_owner %>
+      <button class="button" onclick="window.close()">← <%= @game.title %></button>
+    <% end %>
+
     <%= render "chats/booking_actions", chat: @chat, booking: @chat.booking, is_owner: is_owner %>
   </div>
-
-  <button class="button" onclick="window.close()">← <%= @game.title %></button>
 </div>
