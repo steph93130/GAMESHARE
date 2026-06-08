@@ -29,6 +29,19 @@ class BookingPolicy < ApplicationPolicy
     true
   end
 
+  def returned?
+    true
+  end
+  
+  def give_back?
+    true
+  end
+
+  def close?
+    true
+  end
+
+
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve

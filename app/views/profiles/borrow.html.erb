@@ -31,17 +31,25 @@
               <div class="col-12 col-md-6 col-lg-4 col-xl-2 mb-4">
                 <div class="mini-card">
                   <%= link_to "#", class: "mini-card-link" do %>
-                  <p class="fs-4 text booking-title"><%= booking.game.title %></p>
-                  <p  class="fs-4 text statut">Statut de la demande : <span><%= booking.status %></span> par <%= booking.game.user.username %></p>
-                  <% if booking.status == "accepted" %>
-                    <p><%= link_to "", deposit_booking_path(booking), class:"fa-solid fa-basket-shopping fs-1 green" %></p>
-                    <p><i class="fa-solid fa-chevron-up"></i></p>
-                    <p  class="fs-6 text confirmer"><%= booking.user.username %> clique ici pour valider définitivement.</p>
-                  <% end %>
+                    <p class="fs-4 text booking-title"><%= booking.game.title %></p>
+                    <p  class="fs-4 text statut">Statut de la demande : <span><%= booking.status %></span></p>
+                    <% if booking.status == "accepted" %>
+                      <p><%=  "par #{booking.game.user.username}" %></p>
+                      <p><%= link_to "", deposit_booking_path(booking), class:"fa-solid fa-basket-shopping fs-1 green" %></p>
+                      <p><i class="fa-solid fa-chevron-up"></i></p>
+                      <p  class="fs-6 text confirmer"><%= booking.user.username %> clique ici pour valider définitivement.</p>
+                    <% elsif booking.status == "returned" %>
+                      <p><%=  "par #{booking.game.user.username}" %></p>
+                      <p><%= link_to "", give_back_booking_path(booking), class:"fa-solid fa-euro-sign fs-1 green" %></p>
+                      <p><i class="fa-solid fa-chevron-up"></i></p>
+                      <p  class="fs-6 text confirmer"><%= booking.user.username %> clique ici pour récupéré ta caution.</p>
+                    <% else %>
+                      <%=  "par #{current_user.username}" %>
+                    <% end %>
                   <% end %>
                 </div>
               </div>
-          <% end %>
+            <% end %>
           </div>
         <% else %>
           <div class="text-center">

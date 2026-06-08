@@ -17,8 +17,11 @@
             <p><i class="fa-brands fa-cc-visa"></i> **** **** **** 5834</p>
             <p>Voulez vous utilisez cette carte ?</p>
             <p>
-                <%= link_to "Accepter", profile_path, class: "btn btn-success rounded-pill" %>
-                <button class="btn btn-danger rounded-pill">non</button>
+                <%= link_to "Valider la transaction", validate_booking_path(@booking), data: { turbo_method: :patch }, class: "button"  %>
+                <button class="button">accepter</button>
+            
+
+                <button class="btn btn-danger">non</button>
             </p>
 
               </div>
