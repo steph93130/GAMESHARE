@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     collection do
       post :fetch_rules
     end
+    member do
+      patch :toggle_availability
+    end
     resources :chats, only: [:create]
   end
 

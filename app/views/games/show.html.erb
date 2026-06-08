@@ -93,11 +93,13 @@
 
           <% end %>
 
-          <%= button_to "Démarrer conversation",
-                        game_chats_path(@game),
-                        method: :post,
-                        form: { target: "_blank" },
-                        class: "btn btn-primary rounded-5 px-4" %>
+          <% if current_user != @game.user %>
+            <%= button_to "Démarrer conversation",
+                          game_chats_path(@game),
+                          method: :post,
+                          form: { target: "_blank" },
+                          class: "btn btn-primary rounded-5 px-4" %>
+          <% end %>
 
         </div>
 
