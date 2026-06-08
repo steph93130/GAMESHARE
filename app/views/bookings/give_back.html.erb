@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row">
         <div class="col-12 col-lg-6">
-            <h2>Validation de votre emprunt</h2>
+            <h2>Retour de votre emprunt</h2>
+            <p>Votre caution vas vous être restituer</p>
             <p>Carte bancaire associé au compte</p>
             <p>**** **** **** 5834</p>
-            <p>Voulez vous utilisez cette carte ?</p>
             <p>
-                <%= link_to "Valider la transaction", validate_booking_path(@booking), data: { turbo_method: :patch }, class: "button"  %>
+                <%= link_to "Clore la transaction", close_booking_path(@booking), data: { turbo_method: :patch }, class: "button"  %>
                 <button class="button">accepter</button>
             
 
