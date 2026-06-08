@@ -21,53 +21,100 @@
     data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
   </div>
 
-  <% if @games.any? %>
-
-    <div class="row">
-      <% @games.each do |game| %>
-
-        <div class="col-12 col-md-6 col-lg-4 mb-4 link">
-
-
-          <%= link_to game_path(game, query: params[:query]) do %>
-
-            <div class="game-card h-100">
-
-              <h2 class="game-title">
-                <%= game.title %>
-              </h2>
-
-                   <% if game.picture.attached? %>
-                <%= cl_image_tag game.picture.key,
-                  alt: game.title,
-                  class: "game-image img-fluid" %>
-              <% else %>
-                <div class="bg-secondary d-flex align-items-center justify-content-center rounded"
-                     style="height: 120px;">
-                  Aucune image
-                </div>
-              <% end %>
-
-              <p><i class="fa-solid fa-dice red"></i> <%= game.category %></p>
-              <p><i class="fa-solid fa-user blue"></i> <%= game.age %> ans</p>
-              <p><i class="fa-solid fa-chess-knight orange"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : "" %></p>
-
-
-           </div>
-
-          <% end %>
-
+  <div class="game-card my-4">
+    <%= form_with url: games_path, method: :get, local: true, data: { turbo_frame: "games_results" } do |f| %>
+      <%= f.hidden_field :query, value: params[:query] %>
+      <div class="row g-3 align-items-end">
+        <div class="col-12 col-md-4">
+          <label class="form-label fw-semibold">
+            <i class="fa-solid fa-dice red"></i> Catégorie
+          </label>
+          <%= f.select :category,
+            options_for_select([["Toutes les catégories", ""]] + @categories.map { |c| [c, c] }, params[:category]),
+            {},
+            class: "form-select", onchange: "this.form.submit()" %>
         </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label fw-semibold">
+            <i class="fa-solid fa-chess-knight orange"></i> Nombre de joueurs
+          </label>
+          <%= f.select :player_number,
+            options_for_select([["Tous les joueurs", ""]] + @player_numbers.map { |n| ["#{n} joueur#{n > 1 ? 's' : ''}", n] }, params[:player_number]),
+            {},
+            class: "form-select", onchange: "this.form.submit()" %>
+        </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label fw-semibold">
+            <i class="fa-solid fa-user blue"></i> Âge minimum
+          </label>
+          <%= f.select :age,
+            options_for_select([["Tous les âges", ""]] + @ages.map { |a| ["#{a}+", a] }, params[:age]),
+            {},
+            class: "form-select", onchange: "this.form.submit()" %>
+        </div>
+        <div class="col-12 col-md-2 d-flex align-items-end justify-content-center">
+          <% filters_active = params[:category].present? || params[:player_number].present? || params[:age].present? %>
+          <% if filters_active %>
+            <%= link_to games_path(query: params[:query]), class: "text-decoration-none", title: "Effacer les filtres" do %>
+              <i class="fa-solid fa-filter-circle-xmark fs-4 red"></i>
+            <% end %>
+          <% else %>
+            <i class="fa-solid fa-filter fs-4 text-muted opacity-50" title="Aucun filtre actif"></i>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
-      <% end %>
-    </div>
+  <%= turbo_frame_tag "games_results", data: { turbo_action: "advance" } do %>
+    <% if @games.any? %>
 
-  <% else %>
+      <div class="row">
+        <% @games.each do |game| %>
 
-    <div class="text-center">
-      <p>Aucun jeu disponible.</p>
-    </div>
+          <div class="col-12 col-md-6 col-lg-4 mb-4 link">
 
+
+            <%= link_to game_path(game, query: params[:query]), data: { turbo_frame: "_top" } do %>
+
+              <div class="game-card h-100">
+
+                <h2 class="game-title">
+                  <%= game.title %>
+                </h2>
+
+                     <% if game.picture.attached? %>
+                  <%= cl_image_tag game.picture.key,
+                    alt: game.title,
+                    class: "game-image img-fluid" %>
+                <% else %>
+                  <div class="bg-secondary d-flex align-items-center justify-content-center rounded"
+                       style="height: 120px;">
+                    Aucune image
+                  </div>
+                <% end %>
+
+                <p><i class="fa-solid fa-dice red"></i> <%= game.category %></p>
+                <p><i class="fa-solid fa-user blue"></i> <%= game.age %> ans</p>
+                <p><i class="fa-solid fa-chess-knight orange"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : "" %></p>
+
+
+             </div>
+
+            <% end %>
+
+          </div>
+
+        <% end %>
+      </div>
+
+    <% else %>
+
+      <div class="text-center">
+        <p>Aucun jeu disponible.</p>
+      </div>
+
+    <% end %>
   <% end %>
 
 </div>

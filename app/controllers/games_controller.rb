@@ -2,8 +2,7 @@ class GamesController < ApplicationController
   before_action :game_set, only: %i[show edit update destroy]
 
   def index
-    @games = policy_scope(Game).where(available: true)
-
+    @games = policy_scope(Game).where(available: true).where.not(user: current_user)
     if params[:query].present?
       @address = params[:query]
       result = Geocoder.search(@address).first
@@ -18,6 +17,14 @@ class GamesController < ApplicationController
         @games = @games.near(@address, 5)
       end
     end
+
+    @categories      = Game.where(available: true).where.not(user: current_user).distinct.pluck(:category).compact.sort
+    @player_numbers  = Game.where(available: true).where.not(user: current_user).distinct.pluck(:player_number).compact.sort
+    @ages            = Game.where(available: true).where.not(user: current_user).distinct.pluck(:age).compact.sort
+
+    @games = @games.where(category: params[:category])          if params[:category].present?
+    @games = @games.where("player_number >= ?", params[:player_number].to_i) if params[:player_number].present?
+    @games = @games.where("age >= ?", params[:age].to_i)        if params[:age].present?
 
     @game_markers = @games.where.not(lat: nil, lng: nil).map do |game|
       {
