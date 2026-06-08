@@ -6,9 +6,14 @@ class MessagesController < ApplicationController
     @message.chat = @chat
     @message.user = current_user
     if @message.save
-      # build_conversation_history
+      [@chat.user, @chat.game.user].each do |user|
+        ActionCable.server.broadcast(
+          "chat_#{@chat.id}_user_#{user.id}",
+          render_to_string(partial: "messages/message", locals: { message: @message, mine: @message.user == user })
+        )
+      end
       respond_to do |format|
-        format.turbo_stream # renders `app/views/messages/create.turbo_stream.erb`
+        format.turbo_stream
         format.html { redirect_to @chat }
       end
     else
@@ -19,8 +24,7 @@ class MessagesController < ApplicationController
             partial: "messages/form",
             locals: {
               chat: @chat,
-              message: @message,
-              other: @other_user
+              message: @message
             }
           )
         end
@@ -30,12 +34,6 @@ class MessagesController < ApplicationController
   end
 
   private
-
-  # def build_conversation_history
-  #   @chat.messages.each do |message|
-  #     @message.add_message(message)
-  #   end
-  # end
 
   def message_params
     params.require(:message).permit(:content)
