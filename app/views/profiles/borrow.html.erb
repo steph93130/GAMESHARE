@@ -17,7 +17,9 @@
           <!-- Div Du menu profil -->
           <div class="d-flex gap-3 mb-4 justify-content-center">
             <%= link_to "Ma ludothèque", owner_path, class: "btn btn-outline-primary rounded-pill" %>
-            <%= link_to "Ajouter un jeu", "#ajout", class: "btn btn-outline-primary rounded-pill" %>
+            <%= link_to "Ajouter un jeu", "#",
+                class: "btn btn-outline-primary rounded-pill",
+                data: { bs_toggle: "modal", bs_target: "#modalAddGame" } %>
             <%= link_to "Mes emprunts", "#", class: "btn btn-primary rounded-pill" %>
           </div>
           <!-- FIN Div Du menu profil -->
@@ -46,6 +48,24 @@
             <p><%= current_user.username %>, tu n'as aucun emprunt actuellement.</p>
           </div>
         <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalAddGame" tabindex="-1" aria-labelledby="modalAddGameLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalAddGameLabel">Ajouter un jeu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <%= render "shared/form_add_game", game: @game %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary rounded-pill"
+                  data-bs-dismiss="modal">Annuler</button>
+        </div>
       </div>
     </div>
   </div>

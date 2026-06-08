@@ -2,9 +2,9 @@
 
 <div class="container my-5">
 
-  <h1 class="mb-5 text-center">
-    <span class="red">L</span>
-    <span class="blue">e</span>
+  <h1 class="text-center">
+    <span class="red">N</span>
+    <span class="blue">o</span>
     <span class="yellow">s</span>
     <span>&nbsp;</span>
     <span class="orange">J</span>
@@ -12,6 +12,27 @@
     <span class="red">u</span>
     <span class="blue">x</span>
   </h1>
+  <h2 class="mb-5 text-center">
+  <span class="red">A</span>
+  <span>&nbsp;</span>
+  <span class="blue">c</span>
+  <span class="yellow">ô</span>
+  <span class="orange">t</span>
+  <span class="green">é</span>
+  <span>&nbsp;</span>
+  <span class="red">d</span>
+  <span class="blue">e</span>
+  <span>&nbsp;</span>
+  <span class="red">c</span>
+  <span class="blue">h</span>
+  <span class="yellow">e</span>
+  <span class="orange">z</span>
+  <span>&nbsp;</span>
+  <span class="green">t</span>
+  <span class="red">o</span>
+  <span class="blue">i</span>
+
+  </h2>
 
 
   <div class="map""
@@ -27,7 +48,7 @@
       <div class="row g-3 align-items-end">
         <div class="col-12 col-md-4">
           <label class="form-label fw-semibold d-flex align-items-center gap-1">
-            <i class="fa-solid fa-dice red"></i> Catégorie
+            <i class="fa-solid fa-dice red"></i> Catégorie du jeu
           </label>
           <%= f.select :category,
             options_for_select([["Toutes les catégories", ""]] + @categories.map { |c| [c, c] }, params[:category]),
@@ -36,16 +57,16 @@
         </div>
         <div class="col-12 col-md-3">
           <label class="form-label fw-semibold d-flex align-items-center gap-1">
-            <i class="fa-solid fa-chess-knight orange"></i> Nombre de joueurs minimum
+            <i class="fa-solid fa-chess-knight orange"></i> Nbe de compagnons de jeu (min)
           </label>
           <%= f.select :player_number,
-            options_for_select([["Tous les joueurs", ""]] + @player_numbers.map { |n| ["#{n} joueur#{n > 1 ? 's' : ''}", n] }, params[:player_number]),
+            options_for_select([["Nbre de joueurs", ""]] + @player_numbers.map { |n| ["#{n} joueur#{n > 1 ? 's' : ''}", n] }, params[:player_number]),
             {},
             class: "form-select", onchange: "this.form.submit()" %>
         </div>
         <div class="col-12 col-md-3">
           <label class="form-label fw-semibold d-flex align-items-center gap-1">
-            <i class="fa-solid fa-user blue"></i> Âge minimum
+            <i class="fa-solid fa-user blue"></i> Âge conseillé
           </label>
           <%= f.select :age,
             options_for_select([["Tous les âges", ""]] + @ages.map { |a| ["#{a}+", a] }, params[:age]),
