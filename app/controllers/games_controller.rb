@@ -14,6 +14,15 @@ class GamesController < ApplicationController
       @games = @games.near(@address, 5)
       # @games = Game.near(address, 0.3)
     end
+
+    @categories      = Game.where(available: true).where.not(user: current_user).distinct.pluck(:category).compact.sort
+    @player_numbers  = Game.where(available: true).where.not(user: current_user).distinct.pluck(:player_number).compact.sort
+    @ages            = Game.where(available: true).where.not(user: current_user).distinct.pluck(:age).compact.sort
+
+    @games = @games.where(category: params[:category])          if params[:category].present?
+    @games = @games.where("player_number >= ?", params[:player_number].to_i) if params[:player_number].present?
+    @games = @games.where("age >= ?", params[:age].to_i)        if params[:age].present?
+
     @game_markers = @games.where.not(lat: nil, lng: nil).map do |game|
       { lat: game.lat, lng: game.lng,
         info_window_html: render_to_string(partial: "info_window", locals: { game: game }),
