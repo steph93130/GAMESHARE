@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :game_set, only: %i[show edit update destroy]
+  skip_after_action :verify_authorized, only: :fetch_rules
 
   def index
     @games = policy_scope(Game).where(available: true).where.not(user: current_user)
