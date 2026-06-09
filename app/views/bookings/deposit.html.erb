@@ -8,21 +8,21 @@
               class: "btn btn-outline-primary rounded-pill",
               data: { bs_toggle: "modal", bs_target: "#modalAddGame" } %>
           <%= link_to "Mes emprunts", borrow_path, class: "btn btn-outline-primary rounded-pill" %>
-      </div>
+        </div>
 
             <div class="col-12 col-md-6 col-lg-4 col-xl-2 mb-4">
               <div class="mini-card">
- <h2>Validation de votre emprunt</h2>
-            <p>Carte bancaire associé au compte</p>
-            <p><i class="fa-brands fa-cc-visa"></i> **** **** **** 5834</p>
-            <p>Voulez vous utilisez cette carte ?</p>
-            <p>
-                <%= link_to "Valider la transaction", validate_booking_path(@booking), data: { turbo_method: :patch }, class: "button"  %>
-                <button class="button">accepter</button>
-            
+                <h2>Validation de votre emprunt</h2>
+                <p>Carte bancaire associé au compte</p>
+                <p><i class="fa-brands fa-cc-visa"></i> **** **** **** 5834</p>
+                <p>Voulez vous utilisez cette carte ?</p>
+                <p>
+                    <%= link_to "Valider la transaction", validate_booking_path(@booking), data: { turbo_method: :patch }, class: "button"  %>
+                    <button class="button">accepter</button>
+                
 
-                <button class="btn btn-danger">non</button>
-            </p>
+                    <button class="btn btn-danger">non</button>
+                </p>
 
               </div>
             </div>
