@@ -1,9 +1,15 @@
 <div class="header-profil">
-  <%= link_to edit_user_registration_path do %><%= image_tag "logo-game.png",
+  <div class="buttons-profil">
+    <%= link_to root_path do %>
+    <i class="fa-regular fa-circle-left white"></i>
+    <% end %>
+    <%= link_to edit_user_registration_path do %>
+      <i class="fa-regular fa-pen-to-square white"></i>
+    <% end %>
+  </div>
+  <%= image_tag "logo-game.png",
           alt: "Profile",
-          class: "logo2",
-          height: "35px" %>
-  <% end %>
+          class: "logo2" %>
   <p><%= user.username %></p>
   <p><%= user.email %></p>
   <p><i class="fa-solid fa-location-dot"></i> <%= user.address %></p>
@@ -86,9 +92,17 @@
     <% end %>
   </div>
 
+
 </nav>
 
 <nav class="mobile-nav d-md-none">
+
+  <%= link_to root_path class: "mobile-nav-item" do %>
+      <%= image_tag "logomax.png",
+          alt: "GameShare",
+          class: "logo2",
+          height: "35px" %>
+    <% end %>
 
   <%= link_to owner_path, class: "mobile-nav-item c1" do %>
     <i class="fa-solid fa-dice red-light"></i>
