@@ -13,7 +13,7 @@ class ProfilesController < ApplicationController
     authorize :profile
     @chats = current_user.chats.all
     @bookings = borrow_booking
-    
+    @bs = borrow_status
   end
 
   def owner # prêteur
@@ -22,6 +22,7 @@ class ProfilesController < ApplicationController
     @bookings = Booking.all
     @user = current_user
     authorize :profile
+    @bs = owner_status
   end
 
   private 
@@ -37,4 +38,56 @@ class ProfilesController < ApplicationController
     bookings.sort_by { |b| b.created_at }.reverse
   end
 
+  def borrow_status
+    accepted = []
+    validated = []
+    returned = []
+    closed = []
+    @chats.each do |chat|
+      if chat.booking.nil? == false
+        if chat.booking.status == "accepted"
+          accepted << chat.booking
+        elsif chat.booking.status == "validated"
+          validated << chat.booking
+        elsif chat.booking.status == "returned"
+          returned << chat.booking
+        elsif chat.booking.status == "closed"
+          closed << chat.booking
+        end
+      end
+    end
+    bookings = {
+      accepted: accepted,
+      validated: validated,
+      returned: returned,
+      closed: closed
+    }
+  end
+  def owner_status
+    accepted = []
+    validated = []
+    returned = []
+    closed = []
+    @games.each do |game|
+      @game.chats.each do |game|
+        if game.booking.nil? == false
+          if game.booking.status == "accepted"
+            accepted << game.booking
+          elsif game.booking.status == "validated"
+            validated << game.booking
+          elsif game.booking.status == "returned"
+            returned << game.booking
+          elsif game.booking.status == "closed"
+            closed << game.booking
+          end
+        end
+      end
+    end
+    bookings = {
+      accepted: accepted,
+      validated: validated,
+      returned: returned,
+      closed: closed
+    }
+  end
 end

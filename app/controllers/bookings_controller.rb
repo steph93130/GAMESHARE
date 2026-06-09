@@ -19,7 +19,7 @@ class BookingsController < ApplicationController
     end
   end
 
-    # prêteur
+    # prêteur accepte le prêt
     def accept
         authorize @booking
         @booking.update(status: :accepted)
@@ -34,7 +34,7 @@ class BookingsController < ApplicationController
         redirect_to owner_path
     end
 
-    # prêteur
+    # prêteur refuse le prêt
     def decline
         authorize @booking
         @booking.update(status: :declined)
@@ -51,18 +51,20 @@ class BookingsController < ApplicationController
         flash[:alert] = "#{@booking.game.user.username}, tu as refusé de prêter ton jeux #{@booking.game.title}."
         redirect_to owner_path
     end
-
-    # emprunteur
-    def validate
-        authorize @booking
-        @booking.update(status: :validated)
-        redirect_to borrow_path
-    end
-    # emprunteur apres validation pages de caution
+    
+    # emprunteur accede pages de caution
     def deposit
         # raise
         authorize @booking
     end
+    # emprunteur valide si accept
+    def validate
+        authorize @booking
+        @booking.update(status: :validated)
+        @booking.game.update(available: false)
+        redirect_to borrow_path
+    end
+    
     
     # prêteur valide le retour
     def returned
@@ -76,7 +78,7 @@ class BookingsController < ApplicationController
         authorize @booking
     end
 
-    # preteur
+    # Apres give back clodure le booking 
     def close
         authorize @booking
         @booking.update(status: :closed)
