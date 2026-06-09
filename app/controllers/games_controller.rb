@@ -40,6 +40,15 @@ class GamesController < ApplicationController
   def show
     authorize @game
     @address = params[:query]
+    inactive = %w[declined closed]
+    if current_user == @game.user
+      @inline_chat = @game.chats.includes(:booking).to_a
+                                .reject { |c| inactive.include?(c.booking&.status) }
+                                .max_by(&:created_at)
+    else
+      @inline_chat = @game.chats.includes(:booking).where(user: current_user).to_a
+                                .find { |c| !inactive.include?(c.booking&.status) }
+    end
   end
 
   def new
