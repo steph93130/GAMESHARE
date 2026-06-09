@@ -1,0 +1,33 @@
+<%
+  is_owner = chat.game.user == current_user
+  other_user = is_owner ? chat.user : chat.game.user
+%>
+<div id="inline_chat_container" class="row justify-content-center mt-4">
+  <%= turbo_stream_from "game_#{chat.game.id}_inline_chat" %>
+  <div class="col-12 col-md-8 col-lg-6">
+    <div class="container chat"
+      data-controller="chat-subscription"
+      data-chat-subscription-chat-id-value="<%= chat.id %>"
+    >
+      <h2 class="mt-2 ms-3 game-title">Chat avec <%= other_user.username %></h2>
+
+      <div id="messages" data-chat-subscription-target="messages" class="col-10 col-lg-6 mx-auto">
+        <% chat.messages.each do |message| %>
+          <%= render "messages/message", message: message, mine: message.user == current_user %>
+        <% end %>
+      </div>
+
+      <div id="new_message_container" class="col-10 col-lg-6 mx-auto">
+        <%= render "messages/form", chat: chat, message: Message.new %>
+      </div>
+
+      <% if is_owner %>
+        <%= turbo_stream_from "chat_#{chat.id}_booking_actions" %>
+      <% end %>
+
+      <div class="d-flex justify-content-center align-items-center gap-3 mt-2">
+        <%= render "chats/booking_actions", chat: chat, booking: chat.booking, is_owner: is_owner %>
+      </div>
+    </div>
+  </div>
+</div>

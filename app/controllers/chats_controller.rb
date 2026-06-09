@@ -4,8 +4,7 @@ class ChatsController < ApplicationController
     @chat = Chat.new(user: current_user, game: @game)
     authorize @chat
     if @chat.save
-      # Rails.logger.info "Chat bien créé avec l'ID #{@chat.id}."
-      redirect_to @chat # nouvelle fenetre/onglet
+      redirect_to game_path(@game, query: params[:query])
     else
       render "games/show", status: :unprocessable_entity
     end

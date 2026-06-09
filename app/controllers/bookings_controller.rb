@@ -13,7 +13,7 @@ class BookingsController < ApplicationController
         partial: "chats/booking_actions",
         locals: { chat: @chat, booking: @booking, is_owner: true }
       )
-      redirect_to @chat
+      redirect_back_or_to @chat
     else
       render "chat/show", status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class BookingsController < ApplicationController
         @system_message = @booking.chat.messages.create(
             chat_id: @booking.chat,
             user: @booking.game.user,
-            content: "#{@booking.game.user.username} vient d'accepter votre demande de prêt. <a href=\"#{borrow_path}\">Voir mes emprunts</a>"
+            content: "#{@booking.game.user.username} vient d'accepter votre demande de prêt. <a href=\"#{borrow_path}\" style=\"color: white; text-decoration: underline;\">Voir mes emprunts</a>"
         )
         broadcast_message_to_chat(@booking.chat, @system_message)
         flash[:notice] = "#{@booking.game.user.username}, tu as accepté de prêter ton jeux #{@booking.game.title}."
@@ -38,6 +38,10 @@ class BookingsController < ApplicationController
     def decline
         authorize @booking
         @booking.update(status: :declined)
+        Turbo::StreamsChannel.broadcast_remove_to(
+          "game_#{@booking.game.id}_inline_chat",
+          target: "inline_chat_container"
+        )
         @system_message = @booking.chat.messages.create(
             chat_id: @booking.chat,
             user: @booking.game.user,
@@ -77,6 +81,10 @@ class BookingsController < ApplicationController
         authorize @booking
         @booking.update(status: :closed)
         @booking.game.update(available: true)
+        Turbo::StreamsChannel.broadcast_remove_to(
+          "game_#{@booking.game.id}_inline_chat",
+          target: "inline_chat_container"
+        )
         redirect_to borrow_path
     end
 

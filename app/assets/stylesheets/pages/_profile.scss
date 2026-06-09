@@ -1,0 +1,51 @@
+.rating {
+  width: 65%;
+  text-align: center;
+  vertical-align: middle;
+  margin: auto;
+  border: 1px solid $bg-footer;
+  border-radius: 15px;
+  margin-top: 20px;
+  display: flexbox;
+  flex-direction: column;
+  background: $sweetgrey;
+
+    .fa-solid {
+      vertical-align: middle;
+    }
+    .text-rating {
+      margin-top: 1em;
+
+    }
+}
+
+.text-rating span {
+  font-style: italic;
+  font-size: smaller;
+  color: $gray;
+}
+
+.card-profil {
+  width: 95%;
+  margin: 1.5em auto 1.5em auto;
+  border: 1px solid $bg-footer;
+  border-radius: 4px;
+  display: flex;
+  align-items:flex-start;
+  justify-content: space-between;
+  box-shadow: 5px 5px 5px $bg-footer;
+
+    p {
+    padding-top: 1em;
+    margin-left: 25px;
+    margin-right: 25px;
+    }
+
+    .fa-solid {
+      padding-right: 15px ;
+    }
+
+    .fa-brands {
+      padding-right: 15px;
+    }
+}
