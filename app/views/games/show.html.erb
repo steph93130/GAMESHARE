@@ -101,11 +101,11 @@
                       games_path(query: params[:query]),
                       class: "btn btn-outline-secondary rounded-5 px-4" %>
 
-          <% if current_user != @game.user %>
+          <% if current_user != @game.user && @inline_chat.nil? %>
             <%= button_to "Démarrer conversation",
                           game_chats_path(@game),
                           method: :post,
-                          form: { target: "_blank" },
+                          params: { query: params[:query] },
                           class: "button" %>
           <% end %>
 
@@ -115,5 +115,9 @@
 
     </div>
   </div>
+
+  <% if @inline_chat %>
+    <%= render "chats/inline", chat: @inline_chat %>
+  <% end %>
 
 </div>
