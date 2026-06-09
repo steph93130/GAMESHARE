@@ -32,7 +32,7 @@ class GamesController < ApplicationController
     @player_numbers  = Game.where(available: true).where.not(user: current_user).distinct.pluck(:player_number).compact.sort
     @ages            = Game.where(available: true).where.not(user: current_user).distinct.pluck(:age).compact.sort
 
-    @games = @games.where(category: params[:category])          if params[:category].present?
+    @games = @games.where(category: params[:category]) if params[:category].present?
     @games = @games.where("player_number >= ?", params[:player_number].to_i) if params[:player_number].present?
     @games = @games.where("age >= ?", params[:age].to_i)        if params[:age].present?
 
@@ -52,11 +52,11 @@ class GamesController < ApplicationController
     inactive = %w[declined closed]
     if current_user == @game.user
       @inline_chat = @game.chats.includes(:booking).to_a
-                                .reject { |c| inactive.include?(c.booking&.status) }
-                                .max_by(&:created_at)
+                          .reject { |c| inactive.include?(c.booking&.status) }
+                          .max_by(&:created_at)
     else
       @inline_chat = @game.chats.includes(:booking).where(user: current_user).to_a
-                                .find { |c| !inactive.include?(c.booking&.status) }
+                          .find { |c| !inactive.include?(c.booking&.status) }
     end
   end
 
@@ -123,13 +123,12 @@ class GamesController < ApplicationController
     chat = RubyLLM.chat(model: "gpt-4o")
 
     response = if image.present?
-                chat.ask(prompt, with: { image: image.path })
-              else
-                chat.ask(prompt)
-              end
+                 chat.ask(prompt, with: { image: image.path })
+               else
+                 chat.ask(prompt)
+               end
 
     render json: { rules: response.content }, content_type: "application/json"
-
   rescue RubyLLM::Error => e
     render json: { error: "L'IA n'a pas pu répondre : #{e.message}" }, status: :unprocessable_entity
   rescue StandardError => e
