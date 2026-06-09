@@ -30,13 +30,24 @@
     <% end %>
     <%= yield %>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <% if current_page?(profile_path) %>
+    <%= render "shared/navbar_profil", user: @user %>
+  <% else %>
+    <%= render "shared/nav" %>
+  <% end %>
 
-    <%= render "shared/flashes" %>
+  <% if current_page?(root_path) %>
+    <%= render "shared/logo1" %>
+  <% else %>
+    <%= render "shared/logo0" %>
+  <% end %>
 
-    <%# <%= render "shared/navbar", user: @user %>
-    <%# <%= render "shared/footer" %>
+  <%= yield %>
 
-  </body>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+
+  <%= render "shared/flashes" %>
+
+</body>
 </html>
