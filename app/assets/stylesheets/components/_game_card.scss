@@ -1,39 +1,66 @@
 .game-card {
-text-align: center;
-background-color: white;
-padding:25px;
-border-radius: 25px;
-margin-bottom: 25px;
-// box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-// border: solid 1px $purple;
-box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6);
-cursor: pointer;
-}
-
-
-.game-card:hover {
-border: solid 5px $purple;
-box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6);
-}
-
-
-.game-image {
-  width:100%;
-  max-width: 150px;
-  max-height: 150px;
-  object-fit: contain;
-  margin-bottom: 25px;
+  position: relative;
+  min-height: 300px;
+  padding: 20px;
   border-radius: 15px;
+  overflow: hidden;
+  color: white;
+  background: $bg-footer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+.game-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 66.66%;
+  height: 100%;
+
+  background-image: var(--game-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  z-index: 0;
+}
+
+.game-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  transition: opacity 0.4s ease;
+}
+
+.game-card:hover::before {
+  opacity: 0;
+}
+
+.game-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+.game-title {
+  padding: 5px;
+  border-radius: 15px;
+  background: black;
+  margin-top: 70px;
+  text-align: center;
+  display: inline-block;
+}
+
+.txt {
+  color: white;
+}
 
 a {
   text-decoration: none;
 }
 
-p {
-  color: $Moderngrey;
-}
 
 @media (max-width: 576px) {
 

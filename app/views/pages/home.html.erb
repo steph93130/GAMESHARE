@@ -1,6 +1,6 @@
 <div class="container my-5">
 
-<!-- <h2 class="text-wrap text-center mb-3 slogan">Le seul site de prêt de jeu de sociétés entre <span>particuliers</span> totalement <span>gratuit</span> !</h2> -->
+  <%= render "shared/logo1" %>
 
   <h2 class="mb-4 text-center">
     <span class="red">T</span><span class="blue">r</span><span class="yellow">o</span><span class="red">u</span><span class="blue">v</span><span class="yellow">e</span>
@@ -9,13 +9,8 @@
     <span>&nbsp;</span>
     <span class="orange">J</span><span class="green">e</span><span class="red">u</span>
     <span>&nbsp;</span>
-    à côté  de chez toi ! 👇
+    à côté de chez toi ! 👇
   </h2>
-
-
-
-
-
 
   <div class="row justify-content-center mb-5">
     <div class="col-12 col-md-8 col-lg-6" data-controller="geolocation">
@@ -53,46 +48,43 @@
   <% if @last_games.any? %>
     <div class="row">
       <% @last_games.each do |game| %>
-        <div class="col-12 col-md-6 col-lg-4 mb-4">
 
-            <div class="game-card h-100">
-              <%= link_to game_path(game), class: "game-card-link" do %>
+        <div class="col-12 col-md-6 col-lg-4 mb-4 link">
+          <%= link_to game_path(game), class: "game-card-link" do %>
+
+            <div class="game-card h-100"
+                 style="--game-bg: url('<%= cl_image_path(game.picture.key) if game.picture.attached? %>');">
+
+              <p class="txt">
+                <i class="fa-solid fa-dice red"></i> <%= game.category %>
+              </p>
+
+              <p class="txt">
+                <i class="fa-solid fa-user blue"></i> <%= game.age %> ans
+              </p>
+
+              <p class="txt">
+                <i class="fa-solid fa-chess-knight orange"></i>
+                <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : '' %>
+              </p>
 
               <h2 class="game-title">
                 <%= game.title %>
               </h2>
 
-               <% if game.picture.attached? %>
-                <%= cl_image_tag game.picture.key,
-                  alt: game.title,
-                  class: "game-image img-fluid" %>
-              <% else %>
-                <div class="bg-secondary d-flex align-items-center justify-content-center rounded"
-                     style="height: 120px;">
-                  Aucune image
-                </div>
-              <% end %>
-
-              <p><i class="fa-solid fa-dice red"></i> <%= game.category %></p>
-              <p><i class="fa-solid fa-user blue"></i> <%= game.age %> ans</p>
-              <p><i class="fa-solid fa-chess-knight orange"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : "" %></p>
-
             </div>
+
           <% end %>
         </div>
+
       <% end %>
     </div>
   <% else %>
+
     <div class="text-center">
       <p>Aucun jeu disponible.</p>
     </div>
-  <% end %>
 
-  <div class="text-center mt-5">
-    <%# <%= link_to "Sign out",
-                destroy_user_session_path,
-                data: { turbo_method: :delete },
-                class: "btn btn-outline-secondary" %>
-  </div>
+  <% end %>
 
 </div>
