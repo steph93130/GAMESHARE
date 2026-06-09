@@ -27,7 +27,7 @@
 
 .card-profil {
   width: 95%;
-  margin: 1.5em auto 1.5em auto;
+  margin: 2.5em auto 2.5em auto;
   border: 1px solid $bg-footer;
   border-radius: 4px;
   display: flex;
@@ -56,4 +56,22 @@
     &[aria-expanded="true"] .chevron-toggle {
       transform: rotate(90deg);
     }
+}
+
+.main-profil {
+  padding-top: 50px;
+
+}
+
+.rating {
+  padding-top: 25px;
+}
+
+.buttons-profil {
+  display: flex;
+  align-items:flex-start;
+  justify-content: space-between;
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top:5px;
 }
