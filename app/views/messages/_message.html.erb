@@ -1,6 +1,13 @@
 <div class="d-flex mb-2 chat-message <%= mine ? 'justify-content-end' : 'justify-content-start' %>">
   <div class="message-bubble px-3 py-2 rounded-pill <%= mine ? 'bg-white' : 'bg-primary text-white' %>">
-    <% if message.content.include?("<a ") %>
+    <% if message.content.start_with?("BORROW_REQUEST|") %>
+      <% borrower_username = message.content.split("|").last %>
+      <% if mine %>
+        Tu as bien demandé l'emprunt!
+      <% else %>
+        <%= borrower_username %> vient de demander l'emprunt de ton jeu!
+      <% end %>
+    <% elsif message.content.include?("<a ") %>
       <%= raw message.content %>
     <% else %>
       <%= sanitize message.content, tags: ["a"], attributes: ["href"] %>

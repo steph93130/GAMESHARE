@@ -39,13 +39,16 @@ class ProfilesController < ApplicationController
   end
 
   def borrow_status
+    submited = []
     accepted = []
     validated = []
     returned = []
     closed = []
     @chats.each do |chat|
       if chat.booking.nil? == false
-        if chat.booking.status == "accepted"
+        if chat.booking.status == "submited"
+          submited << chat.booking
+        elsif chat.booking.status == "accepted"
           accepted << chat.booking
         elsif chat.booking.status == "validated"
           validated << chat.booking
@@ -57,6 +60,7 @@ class ProfilesController < ApplicationController
       end
     end
     bookings = {
+      submited: submited,
       accepted: accepted,
       validated: validated,
       returned: returned,
@@ -64,26 +68,30 @@ class ProfilesController < ApplicationController
     }
   end
   def owner_status
+    submited = []
     accepted = []
     validated = []
     returned = []
     closed = []
     @games.each do |game|
-      @game.chats.each do |game|
-        if game.booking.nil? == false
-          if game.booking.status == "accepted"
-            accepted << game.booking
-          elsif game.booking.status == "validated"
-            validated << game.booking
-          elsif game.booking.status == "returned"
-            returned << game.booking
-          elsif game.booking.status == "closed"
-            closed << game.booking
+      game.chats.each do |chat|
+        if chat.booking.nil? == false
+          if chat.booking.status == "submited"
+            submited << chat.booking
+          elsif chat.booking.status == "accepted"
+            accepted << chat.booking
+          elsif chat.booking.status == "validated"
+            validated << chat.booking
+          elsif chat.booking.status == "returned"
+            returned << chat.booking
+          elsif chat.booking.status == "closed"
+            closed << chat.booking
           end
         end
       end
     end
     bookings = {
+      submited: submited,
       accepted: accepted,
       validated: validated,
       returned: returned,
