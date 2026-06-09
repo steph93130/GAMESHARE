@@ -129,6 +129,10 @@
 
   <% if @inline_chat %>
     <%= render "chats/inline", chat: @inline_chat %>
+  <% elsif user_signed_in? && current_user == @game.user %>
+    <div id="inline_chat_placeholder">
+      <%= turbo_stream_from "game_#{@game.id}_new_chat" %>
+    </div>
   <% end %>
 
 </div>
