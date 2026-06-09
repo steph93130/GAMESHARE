@@ -48,4 +48,12 @@
     .fa-brands {
       padding-right: 15px;
     }
+
+    .chevron-toggle {
+      transition: transform 0.3s ease;
+    }
+
+    &[aria-expanded="true"] .chevron-toggle {
+      transform: rotate(90deg);
+    }
 }
