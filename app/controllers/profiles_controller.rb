@@ -67,6 +67,7 @@ class ProfilesController < ApplicationController
       closed: closed
     }
   end
+  
   def owner_status
     submited = []
     accepted = []

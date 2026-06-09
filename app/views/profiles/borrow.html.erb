@@ -1,63 +1,52 @@
+<p>mes prêts</p>
+<!-- liste des jeux prêter avec leur statut -->
+<% if !@bs.empty? %>
+  <div class="row" id="ludo">
 
-          <!-- Div Du menu profil -->
-          <div class="d-flex gap-3 mb-4 justify-content-center">
-            <%= link_to "Ma ludothèque", owner_path, class: "btn btn-outline-primary rounded-pill" %>
-            <%= link_to "Ajouter un jeu", "#",
-                class: "btn btn-outline-primary rounded-pill",
-                data: { bs_toggle: "modal", bs_target: "#modalAddGame" } %>
-            <%= link_to "Mes emprunts", "#", class: "btn btn-primary rounded-pill" %>
-          </div>
-          <!-- FIN Div Du menu profil -->
-        </div>
-<p>===================================</p>
-<p>borrow</p>
-<p>===================================</p>
-        <!-- liste des jeux empruntés avec leur statut -->
-        <!-- liste des jeux empruntés avec leur statut -->
-        <% if !@bs.empty? %>
-          <div class="row" id="ludo">
-            <% @bs[:submited].each do |booking| %>
-              <%= render "profiles/card_status", b: booking  %>
-            <% end %>
-            <% @bs[:validated].each do |booking| %>
-              <%= render "profiles/card_status", b: booking  %>
-            <% end %>
-            <% @bs[:accepted].each do |booking| %>
-              <%= render "profiles/card_status", b: booking  %>
-            <% end %>
-            <% @bs[:returned].each do |booking| %>
-              <%= render "profiles/card_status", b: booking  %>
-            <% end %>
-            <% @bs[:closed].each do |booking| %>
-              <%= render "profiles/card_status", b: booking  %>
-            <% end %>
-          </div>
-        <% else %>
-          <div class="text-center">
-            <p><%= current_user.username %>, tu n'as aucun emprunt actuellement.</p>
-          </div>
-        <% end %>
-        <%# raise %>
-        <!-- Fin test liste des jeux empruntés avec leur statut -->
-        <!-- Fin test liste des jeux empruntés avec leur statut -->
-      </div>
-    </div>
+    <% @bs[:submited].each do |booking| %>
+      <%= render "profiles/card_status", b: booking  %>
+    <% end %>
+
+    <% @bs[:returned].each do |booking| %>
+      <%= render "profiles/card_status", b: booking  %>
+    <% end %>
+    
   </div>
-  <div class="modal fade" id="modalAddGame" tabindex="-1" aria-labelledby="modalAddGameLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalAddGameLabel">Ajouter un jeu</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-        </div>
-        <div class="modal-body">
-          <%= render "shared/form_add_game", game: @game %>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary rounded-pill"
-                  data-bs-dismiss="modal">Annuler</button>
-        </div>
-      </div>
-    </div>
+<% else %>
+  <div class="text-center">
+    <p><%= current_user.username %>, tu n'as aucun emprunt actuellement.</p>
   </div>
-</div>
+<% end %>
+<%# raise %>
+<!-- Fin test liste des jeux prêter avec leur statut -->
+<p>mes emprunts</p>
+<!-- liste des jeux empruntés avec leur statut -->
+<% if !@bs.empty? %>
+  <div class="row" id="ludo">
+    
+    <% @bs[:accepted].each do |booking| %>
+      <%= render "profiles/card_status", b: booking  %>
+    <% end %>
+    
+    <% @bs[:validated].each do |booking| %>
+      <%= render "profiles/card_status", b: booking  %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center">
+    <p><%= current_user.username %>, tu n'as aucun emprunt actuellement.</p>
+  </div>
+<% end %>
+<%# raise %>
+<!-- Fin test liste des jeux empruntés avec leur statut -->
+
+<!-- Cloture -->
+<p>jeux cloturé</p>
+<% if !@bs.empty? %>
+  <% @bs[:closed].each do |booking| %>
+    <%= render "profiles/card_status", b: booking  %>
+  <% end %>
+<% end %>
+<!-- FIN cloture -->
+
+<%# raise %>
