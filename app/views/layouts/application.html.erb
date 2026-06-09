@@ -15,7 +15,7 @@
     <%= yield :head %>
 
     <%# Favicon - placer le fichier dans public/favicon.ico %>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <%= favicon_link_tag asset_path('favicon.ico') %>
 
     <%# Assets %>
     <%= stylesheet_link_tag "application", "data-turbo-track": Rails.env.production? ? "reload" : "" %>
