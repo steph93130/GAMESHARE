@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="game-card p-4 col-12 col-lg-8" id="ajout">
+      <%= form_with model: user, local: true, html: { multipart: true }, class: "row g-3" do |f| %>
+       <div class="col-12">
+          <%= f.label :title, "rating", class: "form-label" %>
+          <%= f.float :title, class: "form-control", id: "rating" %>
+        </div>
+         <div class="col-12 text-center mt-4">
+          <%= f.submit "Créer le jeu", class: "btn button rounded-5 px-4" %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+</div>
