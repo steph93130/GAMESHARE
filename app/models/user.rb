@@ -7,6 +7,10 @@ class User < ApplicationRecord
   has_many :chats, dependent: :destroy
   has_many :messages, dependent: :destroy
 
+  validates :username, presence: true, uniqueness: { case_sensitive: false }
+  validates :email,    presence: true, uniqueness: { case_sensitive: false }
+  validates :address,  presence: true
+  validates :password, length: { minimum: 6 }, allow_nil: true
 
   after_validation :cascade_location_to_games, if: :will_save_change_to_address?
 

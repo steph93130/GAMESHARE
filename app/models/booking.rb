@@ -4,4 +4,6 @@ class Booking < ApplicationRecord
   belongs_to :game
   belongs_to :user
   belongs_to :chat
+
+  validates :status, presence: true
 end
