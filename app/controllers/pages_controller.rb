@@ -5,5 +5,7 @@ class PagesController < ApplicationController
                   .where(available: true)
                   .order(created_at: :desc)
                   .limit(3)
+    @game = Game.new
   end
+
 end
