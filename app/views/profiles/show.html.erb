@@ -1,25 +1,10 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-12 col-lg-6">
-      <h2 class="mb-4">Bienvenue sur ton profile <%= @user.username %></h2>
-      <div class="text-end mt-0">
-        <%= link_to edit_user_registration_path do %>
-          <i class="fa-solid fa-pen-to-square fs-5"></i>
-        <% end %>
-      </div>
-      <!--############################################################### -->
-      <!-- Notification des bookings provisoire -->
-      <% if flash[:notice] %>
-        <div class="notice"><h3 style="color:green"><%= flash[:notice] %></h3></div>
-      <% end %>
-      <% if flash[:alert] %>
-        <div class="alert"><h3 style="color:red"><%= flash[:alert] %></h3></div>
-      <% end %>
-      <!--############################################################### -->
 
-        <div class="row">
-          <div class="col-12">
+<div class="rating">
+  <div class="calcul-rating">
+    <% user_rating = @user.rating.round(1) %>
+    <% nb_rate_bad = 5 - user_rating.to_i %>
 
+<<<<<<< HEAD
             <% nb_rate_good = @user.rating.to_i %>
             <% nb_rate_bad = 5 - @user.rating.to_i %>
             <div class="table-responsive">
@@ -120,9 +105,50 @@
                 </div>
               </div>
             </div>
+=======
+    <% if user_rating == 5 %>
+      <% 5.times do %><i class="fa-solid fa-star purple"></i><% end %>
+    <% else %>
+      <% user_rating.to_i.times do %><i class="fa-solid fa-star purple fs-6"></i><% end %><% nb_rate_bad.times  do %><i class="fa-solid fa-star white fs-6"></i><% end %>
+    <% end %>
+  </div>
+<p class="text-rating"><i class="fa-solid fa-medal"></i> <%= @user.username %>, ta cotation sur GameShare depuis ton inscription <span>(<%= l(@user.created_at.to_date, format: :long, locale: :fr) %>)</span></p>
+</div>
+<div class="main-profil">
+  <%= link_to owner_path do %>
+  <div class="ma-ludo card-profil">
+    <p><i class="fa-solid fa-dice purple"></i> MA LUDOTHEQUE</p>
+    <p><i class="fa-solid fa-angle-right"></i></p>
+  </div>
+  <% end %>
+  <%= link_to "#modalAddGame", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
+  <div class="ajouter-jeu card-profil">
+    <p><i class="fa-brands fa-square-google-plus purple"></i> AJOUTER MON JEU</p>
+    <p><i class="fa-solid fa-angle-right"></i></p>
+  </div>
+<% end %>
+  <%= link_to borrow_path do %>
+  <div class="mes-emprunts card-profil">
+    <p><i class="fa-solid fa-euro-sign purple"></i> MES EMPRUNTS</p>
+    <p><i class="fa-solid fa-angle-right"></i></p>
+  </div>
+  <% end %>
+</div>
+<div class="modal fade" id="modalAddGame" tabindex="-1" aria-labelledby="modalAddGameLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalAddGameLabel"><%= @user .username.capitalize! %>, ajoute ton jeu.</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+>>>>>>> 32cd9af7cd134135e4debd417d581a27b541fad3
         </div>
-      <div class="my-chats">
+        <div class="modal-body">
+          <%= render "shared/form_add_game", game: @game %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary rounded-pill"
+                  data-bs-dismiss="modal">Annuler</button>
       </div>
     </div>
   </div>
-</div>
+  </div>
