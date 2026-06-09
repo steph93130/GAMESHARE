@@ -13,16 +13,39 @@
 <p class="text-rating"><i class="fa-solid fa-medal"></i> <%= @user.username %>, ta cotation sur GameShare depuis ton inscription <span>(<%= l(@user.created_at.to_date, format: :long, locale: :fr) %>)</span></p>
 </div>
 <div class="main-profil">
+  <%= link_to owner_path do %>
   <div class="ma-ludo card-profil">
     <p><i class="fa-solid fa-dice purple"></i> MA LUDOTHEQUE</p>
     <p><i class="fa-solid fa-angle-right"></i></p>
   </div>
+  <% end %>
+  <%= link_to "#modalAddGame", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
   <div class="ajouter-jeu card-profil">
     <p><i class="fa-brands fa-square-google-plus purple"></i> AJOUTER MON JEU</p>
     <p><i class="fa-solid fa-angle-right"></i></p>
   </div>
+<% end %>
+  <%= link_to borrow_path do %>
   <div class="mes-emprunts card-profil">
     <p><i class="fa-solid fa-euro-sign purple"></i> MES EMPRUNTS</p>
     <p><i class="fa-solid fa-angle-right"></i></p>
   </div>
+  <% end %>
 </div>
+<div class="modal fade" id="modalAddGame" tabindex="-1" aria-labelledby="modalAddGameLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalAddGameLabel"><%= @user .username.capitalize! %>, ajoute ton jeu.</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <%= render "shared/form_add_game", game: @game %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary rounded-pill"
+                  data-bs-dismiss="modal">Annuler</button>
+      </div>
+    </div>
+  </div>
+  </div>
