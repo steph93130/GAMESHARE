@@ -1,8 +1,10 @@
 
-
 <div class="container my-5">
 
-  <h1 class="text-center">
+<%= render "shared/logo0" %>
+
+
+  <h2 class="text-center">
     <span class="red">N</span>
     <span class="blue">o</span>
     <span class="yellow">s</span>
@@ -11,7 +13,7 @@
     <span class="green">e</span>
     <span class="red">u</span>
     <span class="blue">x</span>
-  </h1>
+  </h2>
   <h2 class="mb-5 text-center">
   <span class="red">A</span>
   <span>&nbsp;</span>
@@ -42,7 +44,7 @@
     data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
   </div>
 
-  <div class="game-card my-4">
+  <div class="my-4 search">
     <%= form_with url: games_path, method: :get, local: true, data: { turbo_frame: "games_results" } do |f| %>
       <%= f.hidden_field :query, value: params[:query] %>
       <div class="row g-3 align-items-end">
@@ -98,29 +100,18 @@
 
             <%= link_to game_path(game, query: params[:query]), data: { turbo_frame: "_top" } do %>
 
-              <div class="game-card h-100">
-
-                <h2 class="game-title">
-                  <%= game.title %>
-                </h2>
-
-                     <% if game.picture.attached? %>
-                  <%= cl_image_tag game.picture.key,
-                    alt: game.title,
-                    class: "game-image img-fluid" %>
-                <% else %>
-                  <div class="bg-secondary d-flex align-items-center justify-content-center rounded"
-                       style="height: 120px;">
-                    Aucune image
-                  </div>
-                <% end %>
-
-                <p><i class="fa-solid fa-dice red"></i> <%= game.category %></p>
-                <p><i class="fa-solid fa-user blue"></i> <%= game.age %> ans</p>
-                <p><i class="fa-solid fa-chess-knight orange"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : "" %></p>
+<div class="game-card h-100"
+     style="--game-bg: url('<%= cl_image_path(game.picture.key) if game.picture.attached? %>');">
 
 
-             </div>
+
+  <p class="txt"><i class="fa-solid fa-dice red"></i> <%= game.category %></p>
+  <p class="txt"><i class="fa-solid fa-user blue"></i> <%= game.age %> ans</p>
+  <p class="txt"><i class="fa-solid fa-chess-knight orange"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : '' %></p>
+
+   <h2 class="game-title"><%= game.title %></h2>
+
+</div>
 
             <% end %>
 
