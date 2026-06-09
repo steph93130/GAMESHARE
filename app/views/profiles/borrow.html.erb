@@ -24,20 +24,27 @@
           </div>
           <!-- FIN Div Du menu profil -->
         </div>
+<p>===================================</p>
+<p>borrow</p>
+<p>===================================</p>
         <!-- liste des jeux empruntés avec leur statut -->
-        <% if @bs.any? %>
+        <!-- liste des jeux empruntés avec leur statut -->
+        <% if !@bs.empty? %>
           <div class="row" id="ludo">
-            <% @bs[:accepted].each do |booking| %>
-              <%= render "profiles/card_borrow_status", b: booking  %>
+            <% @bs[:submited].each do |booking| %>
+              <%= render "profiles/card_status", b: booking  %>
             <% end %>
             <% @bs[:validated].each do |booking| %>
-              <%= render "profiles/card_borrow_status", b: booking  %>
+              <%= render "profiles/card_status", b: booking  %>
+            <% end %>
+            <% @bs[:accepted].each do |booking| %>
+              <%= render "profiles/card_status", b: booking  %>
             <% end %>
             <% @bs[:returned].each do |booking| %>
-              <%= render "profiles/card_borrow_status", b: booking  %>
+              <%= render "profiles/card_status", b: booking  %>
             <% end %>
             <% @bs[:closed].each do |booking| %>
-              <%= render "profiles/card_borrow_status", b: booking  %>
+              <%= render "profiles/card_status", b: booking  %>
             <% end %>
           </div>
         <% else %>
@@ -45,11 +52,12 @@
             <p><%= current_user.username %>, tu n'as aucun emprunt actuellement.</p>
           </div>
         <% end %>
+        <%# raise %>
+        <!-- Fin test liste des jeux empruntés avec leur statut -->
         <!-- Fin test liste des jeux empruntés avec leur statut -->
       </div>
     </div>
   </div>
-
   <div class="modal fade" id="modalAddGame" tabindex="-1" aria-labelledby="modalAddGameLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">

@@ -4,6 +4,7 @@
             <p class="text-danger fw-semibold"><i class="fa-solid fa-crown yellow"></i> <%= b.game.title %></p>
             <p class="text-success">Statut :  <%= b.status %> </p>
             <p class="text-success">Emprunté par :  <%= b.chat.user.username %></p>
+            
             <% if b.status == "accepted" %>
                 <p><%=  "par #{b.game.user.username}" %></p>
                 <p><%= link_to "", deposit_booking_path(b), class:"fa-solid fa-basket-shopping fs-1 green" %></p>

@@ -3,7 +3,7 @@ class BookingsController < ApplicationController
 
   def create
     @chat = Chat.find(params[:chat_id])
-    @booking = Booking.new(game: @chat.game, user: current_user, chat: @chat )
+    @booking = Booking.new(game: @chat.game, user: current_user, chat: @chat, status: :submited )
     authorize @booking
     if @booking.save
       @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: current_user, content: "SYSTEM MESSAGE /=> #{current_user.username} demande le prêt de votre jeux")
@@ -78,7 +78,7 @@ class BookingsController < ApplicationController
         authorize @booking
     end
 
-    # Apres give back clodure le booking 
+    # Apres give back clodure le booking  par l'enprunteur
     def close
         authorize @booking
         @booking.update(status: :closed)

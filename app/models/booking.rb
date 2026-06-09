@@ -1,5 +1,5 @@
 class Booking < ApplicationRecord
-  enum :status, { pending: 0, accepted: 1, validated: 2, returned: 3, closed: 4, declined: 5 }, default: 0
+  enum :status, { pending: 0, submited: 1, accepted: 2, validated: 3, returned: 4, closed: 5, declined: 6 }, default: 0
 
   belongs_to :game
   belongs_to :user
