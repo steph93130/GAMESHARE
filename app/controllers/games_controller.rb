@@ -6,16 +6,25 @@ class GamesController < ApplicationController
     @games = policy_scope(Game).where(available: true).where.not(user: current_user)
     if params[:query].present?
       @address = params[:query]
-      result = Geocoder.search(@address).first
 
-      if result
+      if @address.match?(/\A-?\d+\.?\d*,-?\d+\.?\d*\z/)
+        lat, lng = @address.split(",").map(&:to_f)
         @user_markers = [{
-          lat: result.latitude,
-          lng: result.longitude,
+          lat: lat,
+          lng: lng,
           marker_html: render_to_string(partial: "marker_user")
         }]
-
-        @games = @games.near(@address, 10)
+        @games = @games.near([lat, lng], 10)
+      else
+        result = Geocoder.search(@address).first
+        if result
+          @user_markers = [{
+            lat: result.latitude,
+            lng: result.longitude,
+            marker_html: render_to_string(partial: "marker_user")
+          }]
+          @games = @games.near(@address, 10)
+        end
       end
     end
 
