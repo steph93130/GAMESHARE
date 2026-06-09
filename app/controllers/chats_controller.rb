@@ -4,6 +4,12 @@ class ChatsController < ApplicationController
     @chat = Chat.new(user: current_user, game: @game)
     authorize @chat
     if @chat.save
+      Turbo::StreamsChannel.broadcast_replace_to(
+        "game_#{@game.id}_new_chat",
+        target: "inline_chat_placeholder",
+        partial: "chats/inline",
+        locals: { chat: @chat, is_owner: true, other_user: @chat.user }
+      )
       redirect_to game_path(@game, query: params[:query])
     else
       render "games/show", status: :unprocessable_entity

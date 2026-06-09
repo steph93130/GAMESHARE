@@ -14,7 +14,16 @@ class BookingsController < ApplicationController
         partial: "chats/booking_actions",
         locals: { chat: @chat, booking: @booking, is_owner: true }
       )
-      redirect_back_or_to @chat
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "booking_actions",
+            partial: "chats/booking_actions",
+            locals: { chat: @chat, booking: @booking, is_owner: false }
+          )
+        end
+        format.html { redirect_back_or_to @chat }
+      end
     else
       render "chat/show", status: :unprocessable_entity
     end
