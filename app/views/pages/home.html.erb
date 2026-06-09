@@ -18,17 +18,22 @@
 
 
   <div class="row justify-content-center mb-5">
-    <div class="col-12 col-md-8 col-lg-6">
-      <%= form_with url: games_path, method: :get, local: true do |f| %>
+    <div class="col-12 col-md-8 col-lg-6" data-controller="geolocation">
+      <%= form_with url: games_path, method: :get, local: true, data: { geolocation_target: "form" } do |f| %>
         <div class="input-group">
-
-            <span class="input-group-text">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </span>
+          <span class="input-group-text">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
           <%= f.text_field :query,
                            class: "form-control",
-                           placeholder: "19 promenade des anglais, Nice" %>
-
+                           placeholder: "19 promenade des anglais, Nice",
+                           data: { geolocation_target: "input" } %>
+          <button class="btn btn-outline-secondary" type="button"
+                  title="Me géolocaliser"
+                  data-geolocation-target="button"
+                  data-action="click->geolocation#locate">
+            <i class="fa-solid fa-location-crosshairs"></i>
+          </button>
           <button class="btn btn-primary" type="submit">
             Trouver
           </button>
