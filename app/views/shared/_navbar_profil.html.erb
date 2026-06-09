@@ -1,9 +1,15 @@
 <div class="header-profil">
-  <%= link_to edit_user_registration_path do %><%= image_tag "logo-game.png",
+  <div class="buttons-profil">
+    <%= link_to root_path do %>
+    <i class="fa-regular fa-circle-left white"></i>
+    <% end %>
+    <%= link_to edit_user_registration_path do %>
+      <i class="fa-regular fa-pen-to-square white"></i>
+    <% end %>
+  </div>
+  <%= image_tag "logo-game.png",
           alt: "Profile",
-          class: "logo2",
-          height: "35px" %>
-  <% end %>
+          class: "logo2" %>
   <p><%= user.username %></p>
   <p><%= user.email %></p>
   <p><i class="fa-solid fa-location-dot"></i> <%= user.address %></p>
@@ -14,12 +20,17 @@
 
   <%= link_to owner_path, class: "mobile-nav-item c1" do %>
     <i class="fa-solid fa-dice red-light"></i>
-    <span>Mes jeux</span>
+    <span>Tes jeux</span>
+  <% end %>
+
+  <%= link_to "#modalAddGame", class: "mobile-nav-item", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
+    <i class="fa-solid fa-square-plus red-light"></i>
+    <span>Ajoute un jeu</span>
   <% end %>
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
     <i class="fa-solid fa-list-check blue-light"></i>
-    <span>Emprunts</span>
+    <span>Tes Share</span>
   <% end %>
 
   <div class="dropdown">
@@ -81,18 +92,31 @@
     <% end %>
   </div>
 
+
 </nav>
 
 <nav class="mobile-nav d-md-none">
 
+  <%= link_to root_path class: "mobile-nav-item" do %>
+      <%= image_tag "logomax.png",
+          alt: "GameShare",
+          class: "logo2",
+          height: "35px" %>
+    <% end %>
+
   <%= link_to owner_path, class: "mobile-nav-item c1" do %>
     <i class="fa-solid fa-dice red-light"></i>
-    <span>Mes jeux</span>
+    <span>Tes jeux</span>
+  <% end %>
+
+  <%= link_to "#modalAddGame", class:"mobile-nav-item", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
+    <i class="fa-solid fa-square-plus red-light"></i>
+    <span>Ajoute un jeu</span>
   <% end %>
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
     <i class="fa-solid fa-list-check blue-light"></i>
-    <span>Emprunts</span>
+    <span>Tes Share</span>
   <% end %>
 
   <div class="dropdown">
@@ -104,7 +128,7 @@
        data-bs-toggle="dropdown"
        aria-expanded="false">
         <i class="fa-solid fa-user c3"></i>
-        <span>Profil</span>
+        <span>Profile</span>
       </a>
 
       <ul class="dropdown-menu dropdown-menu-end">
@@ -155,3 +179,5 @@
   </div>
 
 </nav>
+
+<%= render "shared/modal_ajout_jeu", game:@game %>

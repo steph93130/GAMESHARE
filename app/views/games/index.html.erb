@@ -109,7 +109,7 @@
   <p class="txt"><i class="fa-solid fa-user blue"></i> <%= game.age %> ans</p>
   <p class="txt"><i class="fa-solid fa-chess-knight orange"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : '' %></p>
 
-   <h2 class="game-title"><%= game.title %></h2>
+   <h2 class="game-title bg-title-<%= %w[red blue yellow orange green purple].sample %>"><%= game.title %></h2>
 
 </div>
 

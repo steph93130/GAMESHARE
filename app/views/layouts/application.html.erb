@@ -22,21 +22,19 @@
     <%= javascript_importmap_tags %>
   </head>
 
-<body class="<%= ['bg-red-light', 'bg-blue-light', 'bg-yellow-light', 'bg-orange-light', 'bg-green-light', 'bg-purple-light'].sample %> min-vh-100">
-
-  <% if current_page?(profile_path) %>
-    <%= render "shared/navbar_profil", user: @user %>
-  <% else %>
-    <%= render "shared/nav" %>
-  <% end %>
+  <body class="<%= ['bg-red-light', 'bg-blue-light', 'bg-yellow-light', 'bg-orange-light', 'bg-green-light', 'bg-purple-light'].sample %> min-vh-100">
 
   <% if current_page?(root_path) %>
     <%= render "shared/logo1" %>
+    <%= render "shared/nav" %>
+  <% elsif current_page?(profile_path) %>
+    <%= render "shared/navbar_profil", game: @game, user: @user %>
+  <% elsif current_page?(edit_user_registration_path) %>
+    <%= render "shared/logo1" %>
   <% else %>
     <%= render "shared/logo0" %>
+    <%= render "shared/nav" %>
   <% end %>
-
-  <%= yield %>
 
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
