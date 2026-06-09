@@ -26,23 +26,16 @@
     <% if current_page?(profile_path) %>
       <%= render "shared/navbar_profil", game: @game, user: @user %>
     <% else %>
-      <%= render "shared/nav", game:@game %>
+      <%= render "shared/nav", game: @game %>
     <% end %>
-    <%= yield %>
 
-  <% if current_page?(profile_path) %>
-    <%= render "shared/navbar_profil", user: @user %>
-  <% else %>
-    <%= render "shared/nav" %>
-  <% end %>
+    <%= yield %>
 
   <% if current_page?(root_path) %>
     <%= render "shared/logo1" %>
   <% else %>
     <%= render "shared/logo0" %>
   <% end %>
-
-  <%= yield %>
 
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>

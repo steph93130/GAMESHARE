@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  before_action :set_game_for_modal
   include Pundit::Authorization
 
   # Pundit: allow-list approach
@@ -28,5 +29,9 @@ class ApplicationController < ActionController::Base
 
   def skip_pundit?
     devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)|(^chats$)/
+  end
+
+  def set_game_for_modal
+    @game ||= Game.new
   end
 end
