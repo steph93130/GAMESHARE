@@ -1,113 +1,125 @@
 <div class="container my-5">
 
-  <h1 class="mb-5 text-center game-title">
-    <%= @game.title %> de <%= @game.user.username %>
+  <%= render "shared/logo0" %>
+
+  <h1 class="mb-5 text-center">
+    <span class="red"><%= @game.title %></span>
+    <span>&nbsp;</span>
+    <span class="blue">de</span>
+    <span>&nbsp;</span>
+    <span class="yellow"><%= @game.user.username %></span>
   </h1>
 
   <div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-6">
+    <div class="col-12 col-md-10 col-lg-8">
 
-      <div class="game-card-big h-100">
+      <div class="game-card-big">
 
         <% if @game.picture.attached? %>
           <%= cl_image_tag @game.picture.key,
             alt: @game.title,
-            class: "game-image-big img-fluid mb-4" %>
+            class: "game-image-big" %>
         <% else %>
-          <div class="bg-secondary d-flex align-items-center justify-content-center rounded mb-4"
-               style="height: 180px;">
+          <div class="game-image-big bg-secondary d-flex align-items-center justify-content-center">
             Aucune image
           </div>
         <% end %>
 
-        <p>
-          <i class="fa-solid fa-crown yellow"></i>
-          <strong>Proposé par :</strong>
-          <%= @game.user.username %>
-        </p>
+        <div class="game-content">
 
-        <p>
-          <i class="fa-regular fa-message blue"></i>
-          <%= @game.description %>
-        </p>
+          <h2 class="game-title-big mb-4">
+            <%= @game.title %>
+          </h2>
 
-        <p>
-          <i class="fa-solid fa-dice red"></i>
-          <%= @game.category %>
-        </p>
+          <p class="txt">
+            <i class="fa-solid fa-crown yellow"></i>
+            <strong>Proposé par :</strong>
+            <%= @game.user.username %>
+          </p>
 
-        <p>
-          <i class="fa-solid fa-user blue"></i>
-          <%= @game.age %> ans
-        </p>
+          <p class="txt">
+            <i class="fa-regular fa-message blue"></i>
+            <%= @game.description %>
+          </p>
 
+          <p class="txt">
+            <i class="fa-solid fa-dice red"></i>
+            <%= @game.category %>
+          </p>
 
-        <p>
-          <i class="fa-solid fa-chess-knight orange"></i>
-          <%= @game.player_number %>
-          joueur<%= @game.player_number > 1 ? "s" : "" %>
-        </p>
+          <p class="txt">
+            <i class="fa-solid fa-user blue"></i>
+            <%= @game.age %> ans
+          </p>
 
-        <p>
-          <i class="fa-solid fa-dungeon green"></i>
-          Durée du prêt :
-          <%= @game.rent_duration %>
-          jour<%= @game.rent_duration.to_i > 1 ? "s" : "" %>
-        </p>
+          <p class="txt">
+            <i class="fa-solid fa-chess-knight orange"></i>
+            <%= @game.player_number %>
+            joueur<%= @game.player_number > 1 ? "s" : "" %>
+          </p>
 
-        <p>
-          <i class="fa-solid fa-map-location-dot red"></i>
-          <%= @game.address.upcase.split(",").last %>
-        </p>
+          <p class="txt">
+            <i class="fa-solid fa-dungeon green"></i>
+            Durée du prêt :
+            <%= @game.rent_duration %>
+            jour<%= @game.rent_duration.to_i > 1 ? "s" : "" %>
+          </p>
 
-        <div class="mt-4">
-          <button class="btn btn-link p-0 text-decoration-none d-flex align-items-center gap-2"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#gameRules"
-                  aria-expanded="false"
-                  aria-controls="gameRules">
-            <h3 class="game-title mb-0">Règles du jeu</h3>
-            <i class="fa-solid fa-chevron-down rules-chevron"></i>
-          </button>
-          <div class="collapse mt-2" id="gameRules">
-            <div class="game-rules text-start">
-              <%= simple_format(@game.rules) %>
+          <p class="txt">
+            <i class="fa-solid fa-map-location-dot red"></i>
+            <%= @game.address.upcase.split(",").last %>
+          </p>
+
+          <div class="mt-4">
+            <button class="btn btn-link p-0 text-decoration-none d-flex align-items-center gap-2"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#gameRules"
+                    aria-expanded="false"
+                    aria-controls="gameRules">
+              <h4 class="game-title2 mb-0">Règles du jeu</h4>
+              <i class="fa-solid fa-chevron-down rules-chevron"></i>
+            </button>
+
+            <div class="collapse mt-3" id="gameRules">
+              <div class="game-rules text-start">
+                <%= simple_format(@game.rules) %>
+              </div>
             </div>
           </div>
-        </div>
 
-        <% if user_signed_in? && current_user == @game.user %>
-          <div class="d-flex justify-content-center gap-2 mt-4">
-            <%= link_to edit_game_path(@game),
-                        class: "modified button" do %>
-              <i class="fa-solid fa-pen"></i>
-            <% end %>
+          <% if user_signed_in? && current_user == @game.user %>
+            <div class="d-flex justify-content-center gap-2 mt-4">
+              <%= link_to edit_game_path(@game), class: "modified button" do %>
+                <i class="fa-solid fa-pen"></i>
+              <% end %>
 
-            <%= button_to game_path(@game),
-                          method: :delete,
-                          data: {
-                            turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce jeu ?"
-                          },
-                          class: "decline button" do %>
-              <i class="fa-solid fa-trash"></i>
-            <% end %>
-          </div>
-        <% end %>
-
-        <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-3">
-
-          <%= link_to "← Retour",
-                      (current_user == @game.user ? owner_path : games_path(query: params[:query])),
-                      class: "btn btn-outline-secondary rounded-5 px-4" %>
-
-          <% if current_user != @game.user && @inline_chat.nil? %>
-            <%= button_to "Démarrer conversation",
-                          game_chats_path(@game),
-                          method: :post,
-                          params: { query: params[:query] },
-                          class: "button" %>
+              <%= button_to game_path(@game),
+                            method: :delete,
+                            data: {
+                              turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce jeu ?"
+                            },
+                            class: "decline button" do %>
+                <i class="fa-solid fa-trash"></i>
+              <% end %>
+            </div>
           <% end %>
+
+          <div class="d-flex flex-wrap justify-content-between align-items-center mt-4 gap-3">
+
+            <%= link_to "← Retour",
+                        (current_user == @game.user ? owner_path : games_path(query: params[:query])),
+                        class: "btn btn-outline-secondary rounded-5 px-4" %>
+
+            <% if current_user != @game.user && @inline_chat.nil? %>
+              <%= button_to "Démarrer conversation",
+                            game_chats_path(@game),
+                            method: :post,
+                            params: { query: params[:query] },
+                            class: "button" %>
+            <% end %>
+
+          </div>
 
         </div>
 
