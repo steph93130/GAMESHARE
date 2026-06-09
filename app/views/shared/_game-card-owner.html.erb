@@ -1,0 +1,41 @@
+<% if games.any? %>
+    <div class="row" id="ludo">
+      <% games.each do |game| %>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-1 link">
+          <%= link_to game_path(game), class: "game-card-link" do %>
+
+            <div class="game-card h-60"
+                 style="--game-bg: url('<%= cl_image_path(game.picture.key) if game.picture.attached? %>');">
+
+              <p class="txt">
+                <i class="fa-solid fa-dice red"></i> <%= game.category %>
+              </p>
+
+              <p class="txt">
+                <i class="fa-solid fa-user blue"></i> <%= game.age %> ans
+              </p>
+
+              <p class="txt">
+                <i class="fa-solid fa-chess-knight orange"></i>
+                <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : '' %>
+              </p>
+
+              <h2 class="game-title">
+                <%= game.title %>
+              </h2>
+
+            </div>
+
+          <% end %>
+        </div>
+
+      <% end %>
+    </div>
+  <% else %>
+
+    <div class="text-center">
+      <p>Aucun jeu disponible.</p>
+    </div>
+
+  <% end %>
