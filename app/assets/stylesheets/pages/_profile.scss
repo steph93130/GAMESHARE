@@ -1,0 +1,40 @@
+.rating {
+  width: 65%;
+
+  text-align: center;
+  vertical-align: middle;
+  margin: auto;
+  border: 1px solid $bg-footer;
+  border-radius: 15px;
+  margin-top: 20px;
+  display: flexbox;
+  flex-direction: column;
+  background: $sweetgrey;
+
+    .fa-solid {
+      vertical-align: middle;
+    }
+    .text-rating {
+      margin-top: 1em;
+
+    }
+}
+
+.text-rating span {
+  font-style: italic;
+  font-size: smaller;
+  color: $gray;
+}
+
+.card-profil {
+  width: 99%;
+  margin: 1.5em auto 1.5em auto;
+  border: 1px solid $bg-footer;
+  border-radius: 4px;
+  display: flexbox;
+
+    p {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    }
+}

@@ -23,7 +23,11 @@
   </head>
 
   <body class="<%= ['bg-red-light', 'bg-blue-light', 'bg-yellow-light', 'bg-orange-light', 'bg-green-light', 'bg-purple-light'].sample %> min-vh-100"">
-<%= render "shared/nav" %>
+    <% if current_page?(profile_path) %>
+      <%= render "shared/navbar_profil", user:@user %>
+    <% else %>
+      <%= render "shared/nav" %>
+    <% end %>
     <%= yield %>
 
   <p class="notice"><%= notice %></p>

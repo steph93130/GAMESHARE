@@ -101,3 +101,24 @@ span {
     width: 250px;
   }
 }
+
+.header-profil {
+  height: 150px;
+  width: 100%;
+  background: $bg-footer;
+  text-align: center;
+  align-items: top;
+  display: flexbox;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-right: 0px;
+  margin: 0px;
+  border-end-start-radius: 15px;
+  border-end-end-radius: 15px;
+
+    p {
+      margin: 0px;
+       color: white;
+    }
+
+}
