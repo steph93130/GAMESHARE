@@ -45,12 +45,14 @@
 
 
 .game-title {
-  padding: 5px;
+  color: white;
+  padding: 15px;
   border-radius: 15px;
-  background: black;
+  background: $purple;
   margin-top: 70px;
   text-align: center;
   display: inline-block;
+
 }
 
 .txt {

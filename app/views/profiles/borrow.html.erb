@@ -10,7 +10,7 @@
         <div class="alert"><h3 style="color:red"><%= flash[:alert] %></h3></div>
       <% end %>
       <!--############################################################### -->
-
+      
       <div class="row">
         <div class="border rounded-4 p-4">
 
@@ -24,8 +24,8 @@
           </div>
           <!-- FIN Div Du menu profil -->
         </div>
-        <!-- Debut de la liste des jeux empruntés avec leur statut -->
-        <% if @bookings.any? %>
+        <!-- liste des jeux empruntés avec leur statut -->
+        <% if @bs.any? %>
           <div class="row" id="ludo">
             <% @bookings.each do |booking| %>
               <div class="col-12 col-md-6 col-lg-4 col-xl-2 mb-4">
@@ -56,6 +56,7 @@
             <p><%= current_user.username %>, tu n'as aucun emprunt actuellement.</p>
           </div>
         <% end %>
+        <!-- Fin test liste des jeux empruntés avec leur statut -->
       </div>
     </div>
   </div>

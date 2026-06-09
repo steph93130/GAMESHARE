@@ -1,60 +1,56 @@
 .game-card-big {
-text-align: center;
-background-color: white;
-padding:25px;
-border-radius: 25px;
-margin-bottom: 25px;
-// box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-// border: solid 1px $purple;
-box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6);
-}
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
 
-.rules-chevron {
-  transition: transform 0.3s ease;
-  font-size: 0.85rem;
-  color: $purple;
-}
-
-[aria-expanded="true"] .rules-chevron {
-  transform: rotate(180deg);
 }
 
 .game-image-big {
-  max-width: 450px;
-  max-height: 450px;
-  object-fit: contain;
-  margin-bottom: 25px;
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+}
+
+.game-content {
+  padding: 30px;
+}
+
+.game-content .txt {
+  color: $bg-footer;
+  margin-bottom: 12px;
+}
+
+.game-rules {
+  color: $bg-footer;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.game-title-big {
+  display: inline-block;
+  color: white;
+  background: $purple ;
+  padding: 15px;
   border-radius: 25px;
+
+
 }
-
-
-a {
-  text-decoration: none;
-}
-
-p {
-  color: $Moderngrey;
-}
-
 
 @media (max-width: 576px) {
-
-   .game-card-big{
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-
-  .game-card-link {
+  .game-card-big {
     margin-left: 10px;
     margin-right: 10px;
   }
 
   .game-image-big {
-  max-width: 250px;
-  max-height: 250px;
-  object-fit: contain;
-  margin-bottom: 25px;
-  border-radius: 25px;
-}
+    height: 240px;
+  }
 
+  .game-content {
+    padding: 20px;
+  }
 }
