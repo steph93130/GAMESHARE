@@ -46,12 +46,36 @@
 
 .game-title {
   color: white;
-  padding: 15px;
+  font-size: 25px;
+  padding: 5px;
   border-radius: 15px;
-  background: black;
   margin-top: 70px;
   text-align: center;
   display: inline-block;
+}
+
+.bg-title-red {
+  background: $red;
+}
+
+.bg-title-blue {
+  background: $blue;
+}
+
+.bg-title-yellow {
+  background: $yellow;
+}
+
+.bg-title-orange {
+  background: $orange;
+}
+
+.bg-title-green {
+  background: $green;
+}
+
+.bg-title-purple {
+  background: $purple;
 }
 
 .txt {

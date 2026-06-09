@@ -6,7 +6,8 @@ class BookingsController < ApplicationController
     @booking = Booking.new(game: @chat.game, user: current_user, chat: @chat, status: :submited )
     authorize @booking
     if @booking.save
-      @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: current_user, content: "SYSTEM MESSAGE /=> #{current_user.username} demande le prêt de votre jeux")
+      @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: current_user, content: "BORROW_REQUEST|#{current_user.username}")
+      broadcast_message_to_chat(@booking.chat, @system_message)
       Turbo::StreamsChannel.broadcast_replace_to(
         "chat_#{@chat.id}_booking_actions",
         target: "booking_actions",

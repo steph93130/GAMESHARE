@@ -3,10 +3,8 @@
       <% games.each do |game| %>
 
         <div class="col-12 col-md-6 col-lg-4 mb-1 link">
-          <%= link_to game_path(game), class: "game-card-link" do %>
-
-            <div class="game-card h-60"
-                 style="--game-bg: url('<%= cl_image_path(game.picture.key) if game.picture.attached? %>');">
+          <div class="game-card h-60"
+                style="--game-bg: url('<%= cl_image_path(game.picture.key) if game.picture.attached? %>');">
 
               <p class="txt">
                 <i class="fa-solid fa-dice red"></i> <%= game.category %>
@@ -20,14 +18,20 @@
                 <i class="fa-solid fa-chess-knight orange"></i>
                 <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : '' %>
               </p>
-
+            <%= link_to game_path(game), class: "game-card-link" do %>
               <h2 class="game-title">
                 <%= game.title %>
               </h2>
-
+            <% end %>
+                <%= button_to toggle_availability_game_path(game), method: :patch,
+                    class: "availability-toggle btn border-0 bg-transparent p-0" do %>
+                  <i class="fa-solid <%= game.available? ? 'fa-toggle-on text-success' : 'fa-toggle-off text-secondary' %> fs-5"></i>
+                  <span class="d-block withe" style="font-size: 0.7rem; line-height: 1.2;">
+                    <%= game.available? ? "Disponible" : "Indisponible" %>
+                  </span>
+                <% end %>
             </div>
 
-          <% end %>
         </div>
 
       <% end %>
