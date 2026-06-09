@@ -14,12 +14,17 @@
 
   <%= link_to owner_path, class: "mobile-nav-item c1" do %>
     <i class="fa-solid fa-dice red-light"></i>
-    <span>Mes jeux</span>
+    <span>Tes jeux</span>
+  <% end %>
+
+  <%= link_to "#modalAddGame", class: "mobile-nav-item", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
+    <i class="fa-solid fa-square-plus red-light"></i>
+    <span>Ajoute un jeu</span>
   <% end %>
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
     <i class="fa-solid fa-list-check blue-light"></i>
-    <span>Emprunts</span>
+    <span>Tes Share</span>
   <% end %>
 
   <div class="dropdown">
@@ -87,12 +92,17 @@
 
   <%= link_to owner_path, class: "mobile-nav-item c1" do %>
     <i class="fa-solid fa-dice red-light"></i>
-    <span>Mes jeux</span>
+    <span>Tes jeux</span>
+  <% end %>
+
+  <%= link_to "#modalAddGame", class:"mobile-nav-item", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
+    <i class="fa-solid fa-square-plus red-light"></i>
+    <span>Ajoute un jeu</span>
   <% end %>
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
     <i class="fa-solid fa-list-check blue-light"></i>
-    <span>Emprunts</span>
+    <span>Tes Share</span>
   <% end %>
 
   <div class="dropdown">
@@ -104,7 +114,7 @@
        data-bs-toggle="dropdown"
        aria-expanded="false">
         <i class="fa-solid fa-user c3"></i>
-        <span>Profil</span>
+        <span>Profile</span>
       </a>
 
       <ul class="dropdown-menu dropdown-menu-end">
@@ -155,3 +165,5 @@
   </div>
 
 </nav>
+
+<%= render "shared/modal_ajout_jeu",  game:game %>
