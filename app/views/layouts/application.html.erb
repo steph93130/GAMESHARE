@@ -54,6 +54,12 @@
       <%= render "shared/logo0" %>
       <%= render "shared/nav" %>
     <% end %>
+    <% if user_signed_in? %>
+      <%= turbo_stream_from "user_#{current_user.id}_notifs" %>
+      <%= turbo_stream_from "user_#{current_user.id}_flash" %>
+      <%= render "shared/actions_attentes", user: current_user %>
+      <div id="flash_notifications"></div>
+    <% end %>
     <%= yield %>
     <div id="rating_modal_container"></div>
 

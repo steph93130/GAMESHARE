@@ -1,37 +1,146 @@
-<!-- emprunteur -->
-<% count_emprunt = 0 %>
-<% user.chats.each do |chat| %>
-    <% if chat.booking.nil? %>
-        <p> vous n'avez pas de demande en attante</p>
-    <% elsif chat.booking.status == "validated" ||  chat.booking.status == "accepted" || chat.booking.status == "returned" %>
-        <% count_emprunt += 1 %>
-    <% end %>
-<% end %>
-<% if count_emprunt >= 1 %>
-    <% if count_emprunt > 1 %>
-        <% message = "vous avez #{count_emprunt} actions d'emprunts en attentes" %>
-    <% else %>
-        <% message = "vous avez #{count_emprunt} action d'emprunt en attente" %>
-    <% end %>
-    <p class="notif_attente text-center"><%= message %> <%= link_to 'voir', borrow_path, class: "button" %></p>
-<% end %>
-<!-- prêteur -->
+<div id="actions_attentes">
+  <!-- emprunteur -->
+  <% refused_chats = [] %>
+  <% accepted_chats_emprunteur = [] %>
+  <% validated_chats_emprunteur = [] %>
+  <% cancelled_chats_emprunteur = [] %>
+  <% returned_chats_emprunteur = [] %>
+  <% closed_chats_emprunteur = [] %>
+  <% user.chats.each do |chat| %>
+      <% if chat.booking&.status == "declined" && !chat.booking.notif_dismissed_borrower %>
+          <% refused_chats << chat %>
+      <% elsif chat.booking&.status == "accepted" && !chat.booking.notif_dismissed_borrower %>
+          <% accepted_chats_emprunteur << chat %>
+      <% elsif chat.booking&.status == "validated" && !chat.booking.notif_dismissed_borrower %>
+          <% validated_chats_emprunteur << chat %>
+      <% elsif chat.booking&.status == "cancelled" && !chat.booking.notif_dismissed_borrower %>
+          <% cancelled_chats_emprunteur << chat %>
+      <% elsif chat.booking&.status == "returned" && !chat.booking.notif_dismissed_borrower %>
+          <% returned_chats_emprunteur << chat %>
+      <% elsif chat.booking&.status == "closed" && !chat.booking.notif_dismissed_borrower %>
+          <% closed_chats_emprunteur << chat %>
+      <% end %>
+  <% end %>
+  <% refused_chats.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span><%= chat.booking.game.user.username %> a refusé ton emprunt !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
+  <% accepted_chats_emprunteur.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span><%= chat.booking.game.user.username %> a accepté ton emprunt !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
+  <% validated_chats_emprunteur.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span>Tu as validé l'emprunt de <%= chat.booking.game.title %> !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
+  <% cancelled_chats_emprunteur.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span>Tu as annulé l'emprunt du jeu <%= chat.booking.game.title %> !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
+  <% returned_chats_emprunteur.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span><%= chat.booking.game.user.username %> a validé le retour du jeu <%= chat.booking.game.title %>, récupère ta caution !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
+  <% closed_chats_emprunteur.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span><%= chat.booking.user.username %>, l'emprunt du jeu <%= chat.booking.game.title %> est clôturé !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
 
-<% count_pret = 0 %>
-<% user.games.each do |game| %>
-    <% game.chats.each do |chat| %>
-        <% if chat.booking.nil? %>
-            <p> vous n'avez pas de demande en attante</p>
-        <% elsif chat.booking.status == "submited" ||  chat.booking.status == "validated" %>
-            <% count_pret += 1 %>
-        <% end %>
-    <% end %>
-<% end %>
-<% if count_pret >= 1 %>
-    <% if count_pret > 1 %>
-        <% message = "vous avez #{count_pret} actions de prêt en attentes" %>
-    <% else %>
-        <% message = "vous avez #{count_pret} action de prêt en attente" %>
-    <% end %>
-    <p class="notif_attente text-center"><%= message %> <%= link_to 'voir', borrow_path, class: "button" %></p>
-<% end %>
+  <!-- messages non lus -->
+  <% all_chats = (user.chats + user.games.flat_map(&:chats)).uniq %>
+  <% all_chats.each do |chat| %>
+      <% latest_unread = chat.messages.where(read_by_recipient: false).where.not(user_id: user.id).order(:created_at).last %>
+      <% if latest_unread %>
+          <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+              <span><%= latest_unread.user.username %> t'as envoyé un message !</span>
+              <%= link_to "voir", chat_path(chat), class: "button" %>
+              <%= link_to mark_read_chat_path(chat), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+          </div>
+      <% end %>
+  <% end %>
+
+  <!-- prêteur -->
+  <% submitted_chats_preteur = [] %>
+  <% accepted_chats_preteur = [] %>
+  <% declined_chats_preteur = [] %>
+  <% validated_chats_preteur = [] %>
+  <% cancelled_chats_preteur = [] %>
+  <% returned_chats_preteur = [] %>
+  <% user.games.each do |game| %>
+      <% game.chats.each do |chat| %>
+          <% if chat.booking&.status == "submited" && !chat.booking.notif_dismissed_lender %>
+              <% submitted_chats_preteur << chat %>
+          <% elsif chat.booking&.status == "accepted" && !chat.booking.notif_dismissed_lender %>
+              <% accepted_chats_preteur << chat %>
+          <% elsif chat.booking&.status == "declined" && !chat.booking.notif_dismissed_lender %>
+              <% declined_chats_preteur << chat %>
+          <% elsif chat.booking&.status == "validated" && !chat.booking.notif_dismissed_lender %>
+              <% validated_chats_preteur << chat %>
+          <% elsif chat.booking&.status == "cancelled" && !chat.booking.notif_dismissed_lender %>
+              <% cancelled_chats_preteur << chat %>
+          <% elsif chat.booking&.status == "returned" && !chat.booking.notif_dismissed_lender %>
+              <% returned_chats_preteur << chat %>
+          <% end %>
+      <% end %>
+  <% end %>
+  <% submitted_chats_preteur.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span><%= chat.booking.user.username %> veut emprunter <%= chat.booking.game.title %> !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
+  <% accepted_chats_preteur.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span><%= chat.booking.game.user.username %>, tu as accepté de prêter <%= chat.booking.game.title %> !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
+  <% declined_chats_preteur.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span><%= chat.booking.game.user.username %>, tu as refusé de prêter <%= chat.booking.game.title %> !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
+  <% validated_chats_preteur.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span><%= chat.booking.user.username %> a validé l'emprunt !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
+  <% cancelled_chats_preteur.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span><%= chat.booking.user.username %> a annulé l'emprunt !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
+  <% returned_chats_preteur.each do |chat| %>
+      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <span><%= chat.booking.game.user.username %>, tu as validé le retour du jeu <%= chat.booking.game.title %> !</span>
+          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
+      </div>
+  <% end %>
+</div>

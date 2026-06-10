@@ -85,7 +85,8 @@ class GamesController < ApplicationController
     authorize @game
 
     if @game.update(game_params)
-      redirect_to game_path(@game), notice: "Jeu modifié avec succès"
+      broadcast_flash_to(current_user, "Jeu modifié avec succès !")
+      redirect_to game_path(@game)
     else
       render :edit, status: :unprocessable_entity
     end

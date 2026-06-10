@@ -31,6 +31,26 @@ class ApplicationController < ActionController::Base
   
   private
 
+  def broadcast_notifs_to(user)
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "user_#{user.id}_notifs",
+      target: "actions_attentes",
+      html: render_to_string(
+        partial: "shared/actions_attentes",
+        locals: { user: user.reload }
+      )
+    )
+  end
+
+  def broadcast_flash_to(user, message)
+    Turbo::StreamsChannel.broadcast_prepend_to(
+      "user_#{user.id}_flash",
+      target: "flash_notifications",
+      partial: "shared/flash_notif",
+      locals: { message: message }
+    )
+  end
+
   def skip_pundit?
     devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)|(^chats$)/
   end

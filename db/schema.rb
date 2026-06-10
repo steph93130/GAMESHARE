@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_08_085612) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_10_115133) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -46,6 +46,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_085612) do
     t.bigint "chat_id", null: false
     t.datetime "created_at", null: false
     t.bigint "game_id", null: false
+    t.boolean "notif_dismissed_borrower", default: false, null: false
+    t.boolean "notif_dismissed_lender", default: false, null: false
     t.float "rating_preteur"
     t.float "rating_user"
     t.boolean "report"
@@ -90,6 +92,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_085612) do
     t.bigint "chat_id", null: false
     t.string "content"
     t.datetime "created_at", null: false
+    t.boolean "read_by_recipient", default: false, null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["chat_id"], name: "index_messages_on_chat_id"
