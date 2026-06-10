@@ -73,6 +73,8 @@ class BookingsController < ApplicationController
       authorize @booking
       @booking.update(status: :validated)
       @booking.game.update(available: false)
+      flash[:notice] = "#{@booking.chat.user.username}, tu as valider l'emprunt du jeux #{@booking.game.title}."
+      flash[:notice] = "#{@booking.game.user.username}, l'emprunt du jeux as été valider #{@booking.game.title}."
       redirect_to borrow_path
   end
   
@@ -81,6 +83,8 @@ class BookingsController < ApplicationController
   def returned
       authorize @booking
       @booking.update(status: :returned)
+      flash[:notice] = "#{@booking.game.user.username}, tu as valider l'emprunt du jeux #{@booking.game.title}."
+      flash[:notice] = "#{@booking.chat.user.username}, le retour du jeux a été valider #{@booking.game.title}."
       redirect_to owner_path
   end
 
@@ -98,6 +102,8 @@ class BookingsController < ApplicationController
         "game_#{@booking.game.id}_inline_chat",
         target: "inline_chat_container"
       )
+      flash[:notice] = "#{@booking.chat.user.username}, l'emprunt du jeux est cloturé #{@booking.game.title}."
+      flash[:notice] = "#{@booking.game.user.username}, l'emprunt du jeux est cloturé #{@booking.game.title}."
       redirect_to borrow_path
   end
 
