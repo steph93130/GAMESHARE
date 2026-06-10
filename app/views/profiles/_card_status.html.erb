@@ -29,15 +29,23 @@
             </p>
 
         <% elsif b.status == "validated" %>
-            <p class="txt text-warning">
-                <i class="fa-solid fa-user blue"></i>
-                Emprunté par : <%= b.chat.user.username %>
-            </p>
-            <p><%= link_to "", returned_booking_path(b), data: { turbo_method: :patch }, 
-            class:"fa-solid fa-check fs-1 green" %></p>
-            <p><i class="fa-solid fa-chevron-up"></i></p>
-            <p  class="fs-6 text confirmer"><%= b.game.user.username %> clique ici pour valider le retour du jeux.</p>
-
+            <% if b.game.user == current_user %>
+                <p class="txt text-warning">
+                    <i class="fa-solid fa-user blue"></i>
+                    Emprunté par : <%= b.chat.user.username %>
+                </p>
+                <p><%= link_to "", returned_booking_path(b), data: { turbo_method: :patch }, 
+                class:"fa-solid fa-check fs-1 green" %></p>
+                <p><i class="fa-solid fa-chevron-up"></i></p>
+                <p  class="fs-6 text confirmer"><%= b.game.user.username %> clique ici pour valider le retour du jeux.</p>
+            <% else %>
+                <p class="txt text-warning">
+                    <i class="fa-solid fa-user blue"></i>
+                    prêté par : <%= b.game.user.username %>
+                </p>
+                <p>En cours n'oublie pas de le rendre </i></p>
+            <% end %>
+            
         <!-- emprunteur -->
         <% elsif b.status == "accepted" %>
             <p> 
