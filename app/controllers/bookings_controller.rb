@@ -41,7 +41,11 @@ class BookingsController < ApplicationController
           content: "#{@booking.game.user.username} vient d'accepter votre demande de prêt. <a href=\"#{borrow_path}\" style=\"color: white; text-decoration: underline;\">Voir mes emprunts</a>"
       )
       broadcast_message_to_chat(@booking.chat, @system_message)
-      flash[:notice] = "#{@booking.game.user.username}, tu as accepté de prêter ton jeux #{@booking.game.title}."
+      if current_user == @booking.game.user
+        flash[:notice] = "#{@booking.game.user.username}, Tu as accepté de prêter ton jeux #{@booking.game.title}."
+      else
+        flash[:notice] = "#{@booking.game.user.username}, As accepté de prêter son jeux #{@booking.game.title}."
+      end
       redirect_to owner_path
   end
 
@@ -73,8 +77,11 @@ class BookingsController < ApplicationController
       authorize @booking
       @booking.update(status: :validated)
       @booking.game.update(available: false)
-      flash[:notice] = "#{@booking.chat.user.username}, tu as valider l'emprunt du jeux #{@booking.game.title}."
-      flash[:notice] = "#{@booking.game.user.username}, l'emprunt du jeux as été valider #{@booking.game.title}."
+      if current_user == @booking.chat.user
+        flash[:notice] = "#{@booking.chat.user.username}, Tu as valider l'emprunt du jeux #{@booking.game.title}."
+      else
+        flash[:notice] = "#{@booking.chat.user.username}, As valider l'emprunt du jeux #{@booking.game.title}."
+      end
       redirect_to borrow_path
   end
   
@@ -83,8 +90,11 @@ class BookingsController < ApplicationController
   def returned
     authorize @booking
     @booking.update(status: :returned)
-    flash[:notice] = "#{@booking.game.user.username}, tu as valider l'emprunt du jeux #{@booking.game.title}."
-    flash[:notice] = "#{@booking.chat.user.username}, le retour du jeux a été valider #{@booking.game.title}."
+       if current_user == @booking.game.user
+        flash[:notice] = "#{@booking.game.user.username}, Tu as valider le retour du jeux #{@booking.game.title}."
+       else
+        flash[:notice] = "#{@booking.game.user.username}, As valider le retour du jeux #{@booking.game.title}."
+      end
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
@@ -115,8 +125,11 @@ class BookingsController < ApplicationController
       "game_#{@booking.game.id}_inline_chat",
       target: "inline_chat_container"
     )
-    flash[:notice] = "#{@booking.chat.user.username}, l'emprunt du jeux est cloturé #{@booking.game.title}."
-    flash[:notice] = "#{@booking.game.user.username}, l'emprunt du jeux est cloturé #{@booking.game.title}."
+      if current_user == @booking.chat.user
+        flash[:notice] = "#{@booking.chat.user.username}, l'emprunt du jeux est cloturé #{@booking.game.title}."
+      else
+        flash[:notice] = "#{@booking.game.user.username}, l'emprunt du jeux est cloturé #{@booking.game.title}."
+      end
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
