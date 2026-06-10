@@ -18,7 +18,7 @@
 
   <%= link_to "#modalAddGame", class: "mobile-nav-item", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
     <i class="fa-solid fa-square-plus red-light"></i>
-      <span><%= (controller_name == "games" && action_name == "show") ? "Modifie ce jeu" : "Ajoute un jeu" %></span>
+      <span>Ajoute un jeu</span>
     <% end %>
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
@@ -109,7 +109,7 @@
 
   <%= link_to "#modalAddGame", class: "mobile-nav-item", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
     <i class="fa-solid fa-square-plus red-light"></i>
-    <span><%= (controller_name == "games" && action_name == "show") ? "Modifie ce jeu" : "Ajoute un jeu" %></span>
+    <span>Ajoute un jeu</span>
   <% end %>
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
@@ -176,4 +176,4 @@
 
 </nav>
 
-<%= render "shared/modal_ajout_jeu", game:@game %>
+<%= render "shared/modal_ajout_jeu", game: Game.new %>

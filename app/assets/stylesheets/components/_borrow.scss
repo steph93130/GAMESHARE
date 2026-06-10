@@ -40,6 +40,16 @@
   i { margin-right: 4px; }
 }
 
+.text-warning {
+  background: yellow;
+  color:white;
+  border-radius:15px;
+  padding: 6px;
+  border: 2.5px solid red;
+  font-weight: bold;
+}
+
+
 .booking-actions {
   display: flex;
   gap: 8px;
