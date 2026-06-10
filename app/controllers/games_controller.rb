@@ -71,7 +71,7 @@ class GamesController < ApplicationController
     authorize @game
 
     if @game.save
-      redirect_to @game
+      redirect_to game_path(@game)
     else
       render :new, status: :unprocessable_entity
     end
