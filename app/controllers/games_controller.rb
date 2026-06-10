@@ -107,14 +107,22 @@ class GamesController < ApplicationController
 
   def fetch_rules
     title = params[:title].to_s.strip
-    image = params[:image] # ActionDispatch::Http::UploadedFile ou nil
+    image = params[:image]
 
     return render json: { error: "Le titre du jeu est requis." }, status: :bad_request if title.blank?
 
     prompt = <<~PROMPT
-      Tu es un expert en jeux de société. Donne-moi les règles de base du jeu "#{title}" en français.
-      Réponds UNIQUEMENT en HTML, sans balises <html>, <head> ou <body>.
-      Structure ta réponse ainsi :
+      Tu es un expert en jeux de société. Pour le jeu "#{title}", génère en français :
+      1. Une description du jeu en 1 à 2 phrases maximum (texte brut sans HTML, accessible à tous).
+      2. Les règles complètes en HTML structuré.
+
+      Réponds UNIQUEMENT avec un objet JSON valide, sans balises markdown. Structure exacte :
+      {
+        "description": "texte simple ici",
+        "rules": "html des règles ici"
+      }
+
+      Pour les règles HTML :
       - <h3> pour chaque section (Objectif, Mise en place, Déroulement d'un tour, Fin de partie, Conseils)
       - <p> pour les paragraphes explicatifs
       - <ul><li> pour les listes d'actions ou de matériel
@@ -130,7 +138,12 @@ class GamesController < ApplicationController
                  chat.ask(prompt)
                end
 
-    render json: { rules: response.content }, content_type: "application/json"
+    content = response.content.strip.gsub(/\A```(?:json)?\n?/, "").gsub(/\n?```\z/, "")
+    data = JSON.parse(content)
+
+    render json: { rules: data["rules"], description: data["description"] }, content_type: "application/json"
+  rescue JSON::ParserError
+    render json: { error: "L'IA a retourné un format invalide. Réessayez." }, status: :unprocessable_entity
   rescue RubyLLM::Error => e
     render json: { error: "L'IA n'a pas pu répondre : #{e.message}" }, status: :unprocessable_entity
   rescue StandardError => e
