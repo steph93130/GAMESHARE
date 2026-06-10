@@ -1,17 +1,17 @@
 
-<div class="col-12 col-md-6 col-lg-4 mb-1 link">
+<div class="col-12 col-md-6 col-lg-4 mb-1 link border shadow p-3">
     <%= link_to "#", class: "game-card-link" do %>
-        <h2 class="game-title">
+        <h2 class="game-title bg-title-<%= %w[red blue yellow orange green purple].sample %>">
             <%= b.game.title %>
         </h2>
 
-        <p class="txt">
+        <p class="txt-borrow">
             <i class="fa-solid fa-dice red"></i>
             status: <%= b.status %>
         </p>
         <!-- prêteur -->
         <% if b.status == "submited" %>
-            <p class="txt text-warning">
+            <p class="txt-borrow text-warning">
                 <i class="fa-solid fa-user blue"></i>
                 Emprunté par : <%= b.chat.user.username %>
             </p>
@@ -20,51 +20,50 @@
                 class:"fa-solid fa-thumbs-up fs-1 green" %>
             </p>
             <p>
-                <%= link_to "", decline_booking_path(b), data: { turbo_method: :patch }, 
+                <%= link_to "", decline_booking_path(b), data: { turbo_method: :patch },
                 class:"fa-solid fa-thumbs-down fs-1 red" %>
             </p>
-            <p><i class="fa-solid fa-chevron-up"></i>x</p>
             <p  class="fs-6 text confirmer">
-                <%= b.game.user.username %> clique ici pour valider définitivement.
+                <%= b.game.user.username %> clique ici pour valider définitivement ➡️
             </p>
 
         <% elsif b.status == "validated" %>
             <% if b.game.user == current_user %>
-                <p class="txt text-warning">
+                <p class="txt-borrow text-warning">
                     <i class="fa-solid fa-user blue"></i>
                     Emprunté par : <%= b.chat.user.username %>
                 </p>
-                <p><%= link_to "", returned_booking_path(b), data: { turbo_method: :patch }, 
+                <p><%= link_to "", returned_booking_path(b), data: { turbo_method: :patch },
                 class:"fa-solid fa-check fs-1 green" %></p>
-                <p><i class="fa-solid fa-chevron-up"></i></p>
                 <p  class="fs-6 text confirmer"><%= b.game.user.username %> clique ici pour valider le retour du jeux.</p>
             <% else %>
-                <p class="txt text-warning">
+                <p class="txt-borrow text-warning">
                     <i class="fa-solid fa-user blue"></i>
                     prêté par : <%= b.game.user.username %>
                 </p>
-                <p>En cours n'oublie pas de le rendre </i></p>
+                <p>En cours n'oublie pas de le rendre </p>
             <% end %>
-            
+
         <!-- emprunteur -->
         <% elsif b.status == "accepted" %>
-            <p> 
+            <p>
                 <i class="fa-solid fa-user blue"></i>
-                Prêter par : <%= b.game.user.username %>
+                Prêté par : <%= b.game.user.username %>
             </p>
-            <p><%= link_to "", deposit_booking_path(b), class:"fa-solid fa-basket-shopping fs-1 green" %></p>
-            <p><i class="fa-solid fa-chevron-up"></i></p>
-            <p  class="fs-6 text confirmer"><%= b.user.username %> clique ici pour valider définitivement.</p>
+            <div class="basket-text d-flex justify-content-end align-items-center flex-row-reverse">
+              <p><%= link_to "", deposit_booking_path(b), class:"fa-solid fa-basket-shopping fs-1 green" %></p>
+              <p  class="fs-6"><%= b.user.username %> clique ici pour valider définitivement.</p>
+            </div>
 
         <% elsif b.status == "returned" %>
-            <p> 
+            <p>
                 <i class="fa-solid fa-user blue"></i>
-                Prêter par : <%= b.game.user.username %>
+                Prêté par : <%= b.game.user.username %>
             </p>
             <p><%= link_to "", give_back_booking_path(b), class:"fa-solid fa-euro-sign fs-1 green" %></p>
-            <p><i class="fa-solid fa-chevron-up"></i></p>
-            <p  class="fs-6 text confirmer"><%= b.user.username %> clique ici pour récupéré ta caution.</p>
-        
+
+            <p  class="fs-6 text confirmer"><%= b.user.username %> clique ici pour récupérer ta caution.</p>
+
         <% end %>
     <% end %>
 </div>
