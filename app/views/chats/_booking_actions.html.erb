@@ -1,7 +1,6 @@
 <div id="booking_actions">
   <% if booking.present? %>
-    <p>Emprunt demandé !!</p>
-    <% if is_owner %>
+<% if is_owner %>
       <div class="d-flex justify-content-center gap-2">
         <%= link_to "Accepter", accept_booking_path(booking), class: "accept button", data: { turbo_method: :patch } %>
         <%= link_to "Refuser", decline_booking_path(booking), class: "decline button", data: { turbo_method: :patch } %>
@@ -9,7 +8,7 @@
     <% end %>
   <% else %>
     <% unless is_owner %>
-      <%= link_to "Emprunter le jeu", chat_bookings_path(chat), class: "accept button", data: { turbo_method: :post } %>
+      <%= link_to "Emprunter le jeu", chat_bookings_path(chat), class: "button", data: { turbo_method: :post } %>
     <% end %>
   <% end %>
 </div>

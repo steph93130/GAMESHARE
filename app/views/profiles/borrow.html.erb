@@ -1,13 +1,13 @@
 <p>mes prêts</p>
 <!-- liste des jeux prêter avec leur statut -->
-<% if !@bs.empty? %>
+<% if !@owner.empty? %>
   <div class="row" id="ludo">
 
-    <% @bs[:submited].each do |booking| %>
+    <% @owner[:submited].each do |booking| %>
       <%= render "profiles/card_status", b: booking  %>
     <% end %>
 
-    <% @bs[:returned].each do |booking| %>
+    <% @owner[:validated].each do |booking| %>
       <%= render "profiles/card_status", b: booking  %>
     <% end %>
     
@@ -21,14 +21,14 @@
 <!-- Fin test liste des jeux prêter avec leur statut -->
 <p>mes emprunts</p>
 <!-- liste des jeux empruntés avec leur statut -->
-<% if !@bs.empty? %>
+<% if !@borrow.empty? %>
   <div class="row" id="ludo">
     
-    <% @bs[:accepted].each do |booking| %>
+    <% @borrow[:accepted].each do |booking| %>
       <%= render "profiles/card_status", b: booking  %>
     <% end %>
     
-    <% @bs[:validated].each do |booking| %>
+    <% @borrow[:returned].each do |booking| %>
       <%= render "profiles/card_status", b: booking  %>
     <% end %>
   </div>
@@ -40,10 +40,18 @@
 <%# raise %>
 <!-- Fin test liste des jeux empruntés avec leur statut -->
 
-<!-- Cloture -->
-<p>jeux cloturé</p>
-<% if !@bs.empty? %>
-  <% @bs[:closed].each do |booking| %>
+<!-- Cloture preteur-->
+<p>jeux prété cloturé</p>
+<% if !@owner.empty? %>
+  <% @owner[:closed].each do |booking| %>
+    <%= render "profiles/card_status", b: booking  %>
+  <% end %>
+<% end %>
+<!-- FIN cloture -->
+<!-- Cloture preteur-->
+<p>jeux empunté cloturé</p>
+<% if !@borrow.empty? %>
+  <% @borrow[:closed].each do |booking| %>
     <%= render "profiles/card_status", b: booking  %>
   <% end %>
 <% end %>
