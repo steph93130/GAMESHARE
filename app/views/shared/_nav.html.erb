@@ -13,17 +13,20 @@
     <span>Tes jeux</span>
   <% end %>
 
+
+
+
   <%= link_to "#modalAddGame", class: "mobile-nav-item", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
     <i class="fa-solid fa-square-plus red-light"></i>
-    <span>Ajoute un jeu</span>
-  <% end %>
+      <span><%= (controller_name == "games" && action_name == "show") ? "Modifie ce jeu" : "Ajoute un jeu" %></span>
+    <% end %>
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
     <i class="fa-solid fa-list-check blue-light"></i>
     <span>Tes Share</span>
   <% end %>
 
- <% if user_signed_in? %>
+  <% if user_signed_in? %>
 
   <div class="dropdown">
     <a href="#"
@@ -106,7 +109,7 @@
 
   <%= link_to "#modalAddGame", class: "mobile-nav-item", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
     <i class="fa-solid fa-square-plus red-light"></i>
-    <span>Ajoute un jeu</span>
+    <span><%= (controller_name == "games" && action_name == "show") ? "Modifie ce jeu" : "Ajoute un jeu" %></span>
   <% end %>
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
