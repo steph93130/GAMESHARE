@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+
   def show
     @user = current_user
     @games = current_user.games
@@ -12,31 +13,18 @@ class ProfilesController < ApplicationController
     @user = current_user
     authorize :profile
     @chats = current_user.chats.all
-    @bookings = borrow_booking
-    @bs = borrow_status
+    @borrow = borrow_status
+    @owner = owner_status
   end
 
   def owner # prêteur
     @games = current_user.games
     @game = Game.new
-    @bookings = Booking.all
     @user = current_user
     authorize :profile
-    @bs = owner_status
   end
 
   private 
-
-  def borrow_booking
-    bookings = []
-    @chats.each do |chat|
-      if chat.booking.nil? == false
-        bookings << chat.booking
-      end
-    
-    end
-    bookings.sort_by { |b| b.created_at }.reverse
-  end
 
   def borrow_status
     submited = []
