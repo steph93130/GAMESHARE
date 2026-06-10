@@ -12,5 +12,4 @@ class ChatPolicy < ApplicationPolicy
   def create?
     true
   end
-
 end

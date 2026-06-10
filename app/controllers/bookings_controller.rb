@@ -1,13 +1,20 @@
 class BookingsController < ApplicationController
-    before_action :set_booking, only: [:accept, :decline, :validate, :deposit, :cancel, :dismiss_notif, :close, :give_back, :returned, :rate]
+  before_action :set_booking,
+                only: [:accept, :decline, :validate, :deposit, :cancel, :dismiss_notif, :close, :give_back, :returned,
+                       :rate]
 
   # l'emprunteur crée le booking passage a submiting affichage chez le preteur
   def create
     @chat = Chat.find(params[:chat_id])
-    @booking = Booking.new(game: @chat.game, user: current_user, chat: @chat, status: :submited )
+    @booking = Booking.new(game: @chat.game, user: current_user, chat: @chat, status: :submited)
     authorize @booking
     if @booking.save
-      @system_message = @booking.chat.messages.create(chat_id: @booking.chat, user: current_user, content: "BORROW_REQUEST|#{current_user.username}", read_by_recipient: true)
+      @system_message = @booking.chat.messages.create(
+        chat_id: @booking.chat,
+        user: current_user,
+        content: "BORROW_REQUEST|#{current_user.username}",
+        read_by_recipient: true
+      )
       broadcast_message_to_chat(@booking.chat, @system_message)
       broadcast_notifs_to(@chat.game.user)
       Turbo::StreamsChannel.broadcast_replace_to(
@@ -33,72 +40,73 @@ class BookingsController < ApplicationController
 
   # prêteur accepte le prêt
   def accept
-      authorize @booking
-      @booking.update(status: :accepted, notif_dismissed_borrower: false, notif_dismissed_lender: false)
-      @booking.game.update(available: false)
-      @system_message = @booking.chat.messages.create(
-          chat_id: @booking.chat,
-          user: @booking.game.user,
-          content: "#{@booking.game.user.username} vient d'accepter votre demande de prêt. <a href=\"#{borrow_path}\" style=\"color: white; text-decoration: underline;\">Voir mes emprunts</a>",
-          read_by_recipient: true
-      )
-      broadcast_message_to_chat(@booking.chat, @system_message)
-      Turbo::StreamsChannel.broadcast_replace_to(
-        "chat_#{@booking.chat.id}_booking_actions_borrower",
-        target: "booking_actions",
-        partial: "chats/booking_actions",
-        locals: { chat: @booking.chat, booking: @booking, is_owner: false }
-      )
-      broadcast_bookings_to(@booking.user)
-      broadcast_notifs_to(@booking.user)
-      broadcast_notifs_to(@booking.game.user)
-      redirect_to borrow_path
+    authorize @booking
+    @booking.update(status: :accepted, notif_dismissed_borrower: false, notif_dismissed_lender: false)
+    @booking.game.update(available: false)
+    @system_message = @booking.chat.messages.create(
+      chat_id: @booking.chat,
+      user: @booking.game.user,
+      content: "#{@booking.game.user.username} vient d'accepter votre demande de prêt. " \
+               "<a href=\"#{borrow_path}\" style=\"color: white; text-decoration: underline;\">Voir mes emprunts</a>",
+      read_by_recipient: true
+    )
+    broadcast_message_to_chat(@booking.chat, @system_message)
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "chat_#{@booking.chat.id}_booking_actions_borrower",
+      target: "booking_actions",
+      partial: "chats/booking_actions",
+      locals: { chat: @booking.chat, booking: @booking, is_owner: false }
+    )
+    broadcast_bookings_to(@booking.user)
+    broadcast_notifs_to(@booking.user)
+    broadcast_notifs_to(@booking.game.user)
+    redirect_to borrow_path
   end
 
   # prêteur refuse le prêt
   def decline
-      authorize @booking
-      @booking.update(status: :declined, notif_dismissed_borrower: false, notif_dismissed_lender: false)
-      Turbo::StreamsChannel.broadcast_remove_to(
-        "game_#{@booking.game.id}_inline_chat",
-        target: "inline_chat_container"
-      )
-      @system_message = @booking.chat.messages.create(
-          chat_id: @booking.chat,
-          user: @booking.game.user,
-          content: "#{@booking.game.user.username} vient de refuser votre demande de prêt.",
-          read_by_recipient: true
-      )
-      broadcast_message_to_chat(@booking.chat, @system_message)
-      Turbo::StreamsChannel.broadcast_replace_to(
-        "chat_#{@booking.chat.id}_booking_actions_borrower",
-        target: "booking_actions",
-        partial: "chats/booking_actions",
-        locals: { chat: @booking.chat, booking: @booking, is_owner: false }
-      )
-      broadcast_bookings_to(@booking.user)
-      broadcast_notifs_to(@booking.user)
-      broadcast_notifs_to(@booking.game.user)
-      redirect_to borrow_path
+    authorize @booking
+    @booking.update(status: :declined, notif_dismissed_borrower: false, notif_dismissed_lender: false)
+    Turbo::StreamsChannel.broadcast_remove_to(
+      "game_#{@booking.game.id}_inline_chat",
+      target: "inline_chat_container"
+    )
+    @system_message = @booking.chat.messages.create(
+      chat_id: @booking.chat,
+      user: @booking.game.user,
+      content: "#{@booking.game.user.username} vient de refuser votre demande de prêt.",
+      read_by_recipient: true
+    )
+    broadcast_message_to_chat(@booking.chat, @system_message)
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "chat_#{@booking.chat.id}_booking_actions_borrower",
+      target: "booking_actions",
+      partial: "chats/booking_actions",
+      locals: { chat: @booking.chat, booking: @booking, is_owner: false }
+    )
+    broadcast_bookings_to(@booking.user)
+    broadcast_notifs_to(@booking.user)
+    broadcast_notifs_to(@booking.game.user)
+    redirect_to borrow_path
   end
-    
+
   # emprunteur accede pages de caution
   def deposit
-      # raise
-      authorize @booking
+    # raise
+    authorize @booking
   end
+
   # emprunteur valide si accept
   def validate
-      authorize @booking
-      @booking.update(status: :validated, notif_dismissed_borrower: false, notif_dismissed_lender: false)
-      @booking.game.update(available: false)
-      broadcast_bookings_to(@booking.game.user)
-      broadcast_notifs_to(@booking.game.user)
-      broadcast_notifs_to(@booking.user)
-      redirect_to borrow_path
+    authorize @booking
+    @booking.update(status: :validated, notif_dismissed_borrower: false, notif_dismissed_lender: false)
+    @booking.game.update(available: false)
+    broadcast_bookings_to(@booking.game.user)
+    broadcast_notifs_to(@booking.game.user)
+    broadcast_notifs_to(@booking.user)
+    redirect_to borrow_path
   end
-  
-  
+
   # dismiss d'une notification
   def dismiss_notif
     authorize @booking
@@ -157,7 +165,7 @@ class BookingsController < ApplicationController
 
   # emprunteur récupère sa caution
   def give_back
-      authorize @booking
+    authorize @booking
   end
 
   # Apres give back clodure le booking  par l'enprunteur
@@ -188,7 +196,6 @@ class BookingsController < ApplicationController
     end
   end
 
-
   # notation après un échange
   def rate
     authorize @booking
@@ -206,7 +213,7 @@ class BookingsController < ApplicationController
     redirect_to redirect_path
   end
 
-    private
+  private
 
   def set_booking
     @booking = Booking.find(params[:id])
@@ -244,6 +251,7 @@ class BookingsController < ApplicationController
     user.chats.includes(:booking).each do |chat|
       b = chat.booking
       next unless b
+
       key = b.status.to_sym
       statuses[key] << b if statuses.key?(key)
     end
@@ -256,6 +264,7 @@ class BookingsController < ApplicationController
       game.chats.each do |chat|
         b = chat.booking
         next unless b
+
         key = b.status.to_sym
         statuses[key] << b if statuses.key?(key)
       end
@@ -265,9 +274,13 @@ class BookingsController < ApplicationController
 
   def update_user_rating(user)
     borrower_scores = Booking.where(user: user).where.not(rating_user: nil).pluck(:rating_user)
-    lender_scores   = Booking.joins(:game).where(games: { user_id: user.id }).where.not(rating_preteur: nil).pluck(:rating_preteur)
+    lender_scores = Booking.joins(:game)
+                           .where(games: { user_id: user.id })
+                           .where.not(rating_preteur: nil)
+                           .pluck(:rating_preteur)
     all_scores = borrower_scores + lender_scores
     return if all_scores.empty?
+
     user.update(rating: all_scores.sum / all_scores.size.to_f)
   end
 
