@@ -1,6 +1,6 @@
 <div class="col-12 col-md-6 col-lg-4 mb-1 link background-transparent">
   <div class="game-card h-60"
-       style="--game-bg: url('<%= cl_image_path(b.game.picture.key) if b.game.picture.attached? %>');">
+      style="--game-bg: url('<%= cl_image_path(b.game.picture.key) if b.game.picture.attached? %>');">
 
       <%= link_to game_path(b.game), class: "game-card-link" do %>
       <h2 class="game-title bg-title-<%= %w[red blue yellow orange green purple].sample %>"><%= b.game.title %></h2>
