@@ -1,3 +1,9 @@
+<% content_for :meta_title, "#{@game.title} - #{DEFAULT_META["meta_product_name"]}" %>
+<% content_for :meta_description, @game.description %>
+<% if @game.picture.attached? %>
+  <% content_for :meta_image, cl_image_path(@game.picture.key) %>
+<% end %>
+
 <div class="container my-5">
 
 
@@ -105,11 +111,7 @@
           <% end %>
 
           <div class="d-flex flex-wrap justify-content-between align-items-center mt-4 gap-3">
-
-            <%= link_to "← Retour",
-                        (current_user == @game.user ? owner_path : games_path(query: params[:query])),
-                        class: "btn btn-outline-secondary rounded-5 px-4" %>
-
+            
             <% if current_user != @game.user && @inline_chat.nil? %>
               <%= button_to "Démarrer conversation",
                             game_chats_path(@game),
