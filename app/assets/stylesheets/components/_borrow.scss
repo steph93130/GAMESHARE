@@ -7,3 +7,71 @@
   font-weight: bolder;
   color: $orange;
 }
+
+.booking-status {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 1px;
+  border-radius: 999px;
+
+  &.status-pending  { background: rgba($orange, 0.25); color: lighten($orange, 30%); border: 1px solid $orange; }
+  &.status-accepted { background: rgba($green, 0.25);  color: lighten($green, 40%);  border: 1px solid $green; }
+  &.status-validated{ background: rgba($blue, 0.25);   color: lighten($blue, 50%);   border: 1px solid $blue; }
+  &.status-returned { background: rgba($purple, 0.25); color: lighten($purple, 40%); border: 1px solid $purple; }
+  &.status-closed   { background: rgba(white, 0.1);    color: rgba(white, 0.6);       border: 1px solid rgba(white, 0.3); }
+}
+
+.txt-small {
+  margin: 0;
+  font-size: 0.75rem;
+  color: rgba(white, 0.8);
+
+  i { margin-right: 4px; }
+}
+
+.booking-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.btn-booking {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.15s, opacity 0.15s;
+
+  &:hover {
+    color: white;
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+
+  &--accept  { background: $green; }
+  &--decline { background: $red; }
+  &--action  { background: $purple; }
+}
+
+.background-transparent {
+  background: transparent;
+  color: $bg-footer;
+  border-radius: 15px;
+  padding: 10px;
+}

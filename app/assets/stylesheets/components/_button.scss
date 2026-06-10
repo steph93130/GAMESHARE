@@ -64,6 +64,22 @@
   }
  }
 
+ .button--inactive {
+  background-color: transparent;
+  background-image: none;
+  color: $purple;
+  border-color: $purple;
+  box-shadow: none;
+
+  &:hover {
+    background-color: rgba($purple, 0.08);
+    background-image: none;
+    color: $purple;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
  .accept {
   background: $green;
   color: $white;
