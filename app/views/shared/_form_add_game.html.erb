@@ -4,12 +4,12 @@
       <%= form_with model: game, local: true, html: { multipart: true }, class: "row g-3" do |f| %>
 
         <div class="col-12">
-          <%= f.label :title, "Titre", class: "form-label" %>
+          <%= f.label :title, "Titre", class: "form-label2" %>
           <%= f.text_field :title, class: "form-control", id: "game_title" %>
         </div>
 
         <div class="col-12">
-          <%= f.label :condition, "État", class: "form-label" %>
+          <%= f.label :condition, "État", class: "form-label2" %>
           <%= f.select :condition,
             ["Bon", "Moyen", "Usagé"],
             { prompt: "Choisir un état" },
@@ -17,12 +17,12 @@
         </div>
 
         <div class="col-12">
-          <%= f.label :picture, "Image du jeu", class: "form-label" %>
+          <%= f.label :picture, "Image du jeu", class: "form-label2" %>
           <%= f.file_field :picture, class: "form-control", id: "game_picture" %>
         </div>
 
         <div class="col-12">
-          <%= f.label :rent_duration, "Durée de location", class: "form-label" %>
+          <%= f.label :rent_duration, "Durée de location", class: "form-label2" %>
           <%= f.select :rent_duration,
             [["1 jour", 1], ["3 jours", 3], ["7 jours", 7], ["14 jours", 14]],
             { prompt: "Choisir une durée" },
@@ -30,7 +30,7 @@
         </div>
 
         <div class="col-12">
-          <%= f.label :age, "Âge recommandé", class: "form-label" %>
+          <%= f.label :age, "Âge recommandé", class: "form-label2" %>
           <%= f.select :age,
             [["3+", 3], ["6+", 6], ["7+", 7], ["10+", 10],["12+", 16],["16+", 16]],
             { prompt: "Choisir un âge" },
@@ -38,7 +38,7 @@
         </div>
 
         <div class="col-12">
-          <%= f.label :player_number, "Nombre de joueurs", class: "form-label" %>
+          <%= f.label :player_number, "Nombre de joueurs", class: "form-label2" %>
           <%= f.select :player_number,
             [["1", 1], ["2", 2], ["4", 4], ["5", 5], ["6+", 6]],
             { prompt: "Choisir" },
@@ -46,7 +46,7 @@
         </div>
 
         <div class="col-12">
-          <%= f.label :category, "Catégorie", class: "form-label" %>
+          <%= f.label :category, "Catégorie", class: "form-label2" %>
           <%= f.select :category,
             [
               "Jeu familial", "Jeu expert", "Jeu d'ambiance", "Jeu de cartes",
@@ -59,14 +59,14 @@
         </div>
 
         <div class="col-12">
-          <%= f.label :description, "Description", class: "form-label" %>
+          <%= f.label :description, "Description", class: "form-label2" %>
           <%= f.text_area :description, rows: 4, class: "form-control" %>
         </div>
 
         <%# ── Champ Règles du jeu avec bouton IA ── %>
         <div class="col-12">
           <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
-            <%= f.label :rules, "Règles du jeu", class: "form-label mb-1" %>
+            <%= f.label :rules, "Règles du jeu", class: "form-label2 mb-1" %>
             <button type="button" id="fetch-rules-btn" class="btn btn-outline-primary btn-sm d-flex align-items-center gap-2 rounded-2">
               <span id="fetch-rules-icon">✨</span>
               <span id="fetch-rules-label" class="text-info-emphasis">Générer via l'IA</span>
@@ -90,7 +90,7 @@
         </div>
 
         <div class="col-12">
-          <%= f.label :deposit, "Caution", class: "form-label" %>
+          <%= f.label :deposit, "Caution", class: "form-label2" %>
           <%= f.select :deposit,
             [["5 €", 5], ["10 €", 10], ["15 €", 15], ["20 €", 20]],
             { prompt: "Choisir une caution" },
