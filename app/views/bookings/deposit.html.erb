@@ -1,32 +1,16 @@
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-12 col-lg-8">
-      <div class="border rounded-4 p-4">
-        <div class="d-flex gap-3 mb-4 justify-content-center">
-          <%= link_to "Ma ludothèque", "#ludo", class: "btn btn-primary rounded-pill" %>
-          <%= link_to "Ajouter un jeu", "#",
-              class: "btn btn-outline-primary rounded-pill",
-              data: { bs_toggle: "modal", bs_target: "#modalAddGame" } %>
-          <%= link_to "Mes emprunts", borrow_path, class: "btn btn-outline-primary rounded-pill" %>
-        </div>
-
-            <div class="col-12 col-md-6 col-lg-4 col-xl-2 mb-4">
-              <div class="mini-card">
-                <h2>Validation de votre emprunt</h2>
-                <p>Carte bancaire associé au compte</p>
-                <p><i class="fa-brands fa-cc-visa"></i> **** **** **** 5834</p>
-                <p>Voulez vous utilisez cette carte ?</p>
-                <p>
-                    <%= link_to "Valider la transaction", validate_booking_path(@booking), data: { turbo_method: :patch }, class: "button"  %>
-                    <button class="button">Non</button>
-                </p>
-
-              </div>
-            </div>
-
-        </div>
-
+    <div class="col-12 col-md-6 col-lg-4 col-xl-2 mb-4">
+      <div class="mini-card">
+        <h3> <%= current_user.username %>, valide ton emprunt en laissant une empreinte de ta CB pour la caution.</h3>
+          <p><i class="fa-solid fa-pen-to-square fs-6"></i> Carte bancaire associée à ton compte :  </p>
+          <p><i class="fa-brands fa-cc-visa fs-2"></i> **** **** **** 5834</p>
+          <p> Date de validité : **/28</p>
+          <!-- <p>Veux-tu utiliser cette carte ?</p> -->
+          <p><%= link_to "Valider la transaction", validate_booking_path(@booking), data: { turbo_method: :patch }, class: "button" %></p>
+          <button class="button decline">Refuser</button>
+          <p class="fs-3 mt-2">Tu préfères utiliser  <i class="fa-brands fa-cc-paypal"></i> ?</p>
       </div>
     </div>
   </div>
-<hr>
+</div>
