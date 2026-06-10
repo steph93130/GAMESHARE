@@ -55,15 +55,15 @@
                  style="--game-bg: url('<%= cl_image_path(game.picture.key) if game.picture.attached? %>');">
 
               <p class="txt">
-                <i class="fa-solid fa-dice red"></i> <%= game.category %>
+                <i class="fa-solid fa-dice red"></i><br> <%= game.category %>
               </p>
 
               <p class="txt">
-                <i class="fa-solid fa-user blue"></i> <%= game.age %> ans
+                <i class="fa-solid fa-user blue"></i><br> <%= game.age %> ans
               </p>
 
               <p class="txt">
-                <i class="fa-solid fa-chess-knight orange"></i>
+                <i class="fa-solid fa-chess-knight orange"></i><br>
                 <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : '' %>
               </p>
 

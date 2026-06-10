@@ -105,9 +105,9 @@
 
 
 
-  <p class="txt"><i class="fa-solid fa-dice red"></i> <%= game.category %></p>
-  <p class="txt"><i class="fa-solid fa-user blue"></i> <%= game.age %> ans</p>
-  <p class="txt"><i class="fa-solid fa-chess-knight orange"></i> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : '' %></p>
+  <p class="txt"><i class="fa-solid fa-dice red"></i><br> <%= game.category %></p>
+  <p class="txt"><i class="fa-solid fa-user blue"></i><br> <%= game.age %> ans</p>
+  <p class="txt"><i class="fa-solid fa-chess-knight orange"></i><br> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : '' %></p>
 
    <h2 class="game-title bg-title-<%= %w[red blue yellow orange green purple].sample %>"><%= game.title %></h2>
 

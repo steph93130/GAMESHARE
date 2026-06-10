@@ -28,6 +28,10 @@
       <%= render "profiles/card_status", b: booking  %>
     <% end %>
     
+    <% @borrow[:validated].each do |booking| %>
+      <%= render "profiles/card_status", b: booking  %>
+    <% end %>
+    
     <% @borrow[:returned].each do |booking| %>
       <%= render "profiles/card_status", b: booking  %>
     <% end %>
