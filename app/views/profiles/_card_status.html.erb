@@ -1,69 +1,64 @@
+<div class="col-12 col-md-6 col-lg-4 mb-1 link background-transparent">
+  <div class="game-card h-60"
+       style="--game-bg: url('<%= cl_image_path(b.game.picture.key) if b.game.picture.attached? %>');">
 
-<div class="col-12 col-md-6 col-lg-4 mb-1 link border shadow p-3">
-    <%= link_to "#", class: "game-card-link" do %>
-        <h2 class="game-title bg-title-<%= %w[red blue yellow orange green purple].sample %>">
-            <%= b.game.title %>
-        </h2>
-
-        <p class="txt-borrow">
-            <i class="fa-solid fa-dice red"></i>
-            status: <%= b.status %>
-        </p>
-        <!-- prêteur -->
-        <% if b.status == "submited" %>
-            <p class="txt-borrow text-warning">
-                <i class="fa-solid fa-user blue"></i>
-                Emprunté par : <%= b.chat.user.username %>
-            </p>
-            <p>
-                <%= link_to "", accept_booking_path(b), data: { turbo_method: :patch },
-                class:"fa-solid fa-thumbs-up fs-1 green" %>
-            </p>
-            <p>
-                <%= link_to "", decline_booking_path(b), data: { turbo_method: :patch },
-                class:"fa-solid fa-thumbs-down fs-1 red" %>
-            </p>
-            <p  class="fs-6 text confirmer">
-                <%= b.game.user.username %> clique ici pour valider définitivement ➡️
-            </p>
-
-        <% elsif b.status == "validated" %>
-            <% if b.game.user == current_user %>
-                <p class="txt-borrow text-warning">
-                    <i class="fa-solid fa-user blue"></i>
-                    Emprunté par : <%= b.chat.user.username %>
-                </p>
-                <p><%= link_to "", returned_booking_path(b), data: { turbo_method: :patch },
-                class:"fa-solid fa-check fs-1 green" %></p>
-                <p  class="fs-6 text confirmer"><%= b.game.user.username %> clique ici pour valider le retour du jeux.</p>
-            <% else %>
-                <p class="txt-borrow text-warning">
-                    <i class="fa-solid fa-user blue"></i>
-                    prêté par : <%= b.game.user.username %>
-                </p>
-                <p>En cours n'oublie pas de le rendre </p>
-            <% end %>
-
-        <!-- emprunteur -->
-        <% elsif b.status == "accepted" %>
-            <p>
-                <i class="fa-solid fa-user blue"></i>
-                Prêté par : <%= b.game.user.username %>
-            </p>
-            <div class="basket-text d-flex justify-content-end align-items-center flex-row-reverse">
-              <p><%= link_to "", deposit_booking_path(b), class:"fa-solid fa-basket-shopping fs-1 green" %></p>
-              <p  class="fs-6"><%= b.user.username %> clique ici pour valider définitivement.</p>
-            </div>
-
-        <% elsif b.status == "returned" %>
-            <p>
-                <i class="fa-solid fa-user blue"></i>
-                Prêté par : <%= b.game.user.username %>
-            </p>
-            <p><%= link_to "", give_back_booking_path(b), class:"fa-solid fa-euro-sign fs-1 green" %></p>
-
-            <p  class="fs-6 text confirmer"><%= b.user.username %> clique ici pour récupérer ta caution.</p>
-
-        <% end %>
+      <%= link_to game_path(b.game), class: "game-card-link" do %>
+      <h2 class="game-title bg-title-<%= %w[red blue yellow orange green purple].sample %>"><%= b.game.title %></h2>
     <% end %>
+
+    <div class="booking-status">
+      <% if b.status == "submited" %>
+        <span class="status-badge status-pending">
+          <i class="fa-solid fa-clock"></i> Demande reçue
+        </span>
+        <p class="txt-small"><i class="fa-solid fa-user"></i> <%= b.chat.user.username %></p>
+        <div class="booking-actions">
+          <%= link_to accept_booking_path(b), data: { turbo_method: :patch }, class: "btn-booking btn-booking--accept" do %>
+            <i class="fa-solid fa-check"></i>
+          <% end %>
+          <%= link_to decline_booking_path(b), data: { turbo_method: :patch }, class: "btn-booking btn-booking--decline" do %>
+            <i class="fa-solid fa-xmark"></i>
+          <% end %>
+        </div>
+
+      <% elsif b.status == "accepted" %>
+        <span class="status-badge status-accepted">
+          <i class="fa-solid fa-circle-check"></i> Accepté
+        </span>
+        <p class="txt-small"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
+        <%= link_to deposit_booking_path(b), class: "btn-booking btn-booking--action" do %>
+          <i class="fa-solid fa-basket-shopping"></i> Confirmer
+        <% end %>
+
+      <% elsif b.status == "validated" %>
+        <span class="status-badge status-validated">
+          <i class="fa-solid fa-handshake"></i> En cours
+        </span>
+        <% if b.game.user == current_user %>
+          <p class="txt-small"><i class="fa-solid fa-user"></i> <%= b.chat.user.username %></p>
+          <%= link_to returned_booking_path(b), data: { turbo_method: :patch }, class: "btn-booking btn-booking--action" do %>
+            <i class="fa-solid fa-rotate-left"></i> Retour
+          <% end %>
+        <% else %>
+          <p class="txt-small"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
+          <p class="txt-small text-warning">N'oublie pas de le rendre !</p>
+        <% end %>
+
+      <% elsif b.status == "returned" %>
+        <span class="status-badge status-returned">
+          <i class="fa-solid fa-box-open"></i> Retourné
+        </span>
+        <p class="txt-small"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
+        <%= link_to give_back_booking_path(b), class: "btn-booking btn-booking--action" do %>
+          <i class="fa-solid fa-euro-sign"></i> Caution
+        <% end %>
+
+      <% elsif b.status == "closed" %>
+        <span class="status-badge status-closed">
+          <i class="fa-solid fa-lock"></i> Clôturé
+        </span>
+      <% end %>
+    </div>
+
+  </div>
 </div>
