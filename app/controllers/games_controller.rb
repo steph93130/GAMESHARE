@@ -28,9 +28,10 @@ class GamesController < ApplicationController
       end
     end
 
-    @categories      = Game.where(available: true).where.not(user: current_user).distinct.pluck(:category).compact.sort
-    @player_numbers  = Game.where(available: true).where.not(user: current_user).distinct.pluck(:player_number).compact.sort
-    @ages            = Game.where(available: true).where.not(user: current_user).distinct.pluck(:age).compact.sort
+    base = Game.where(available: true).where.not(user: current_user).distinct
+    @categories     = base.pluck(:category).compact.sort
+    @player_numbers = base.pluck(:player_number).compact.sort
+    @ages           = base.pluck(:age).compact.sort
 
     @games = @games.where(category: params[:category]) if params[:category].present?
     @games = @games.where("player_number >= ?", params[:player_number].to_i) if params[:player_number].present?

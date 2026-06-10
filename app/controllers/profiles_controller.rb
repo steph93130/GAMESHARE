@@ -1,5 +1,4 @@
 class ProfilesController < ApplicationController
-
   def show
     @user = current_user
     @games = current_user.games
@@ -24,7 +23,7 @@ class ProfilesController < ApplicationController
     authorize :profile
   end
 
-  private 
+  private
 
   def borrow_status
     submited = []
@@ -55,7 +54,7 @@ class ProfilesController < ApplicationController
       closed: closed
     }
   end
-  
+
   def owner_status
     submited = []
     accepted = []

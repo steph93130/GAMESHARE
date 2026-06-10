@@ -5,12 +5,11 @@ class BookingPolicy < ApplicationPolicy
   # code, beware of possible changes to the ancestors:
   # https://gist.github.com/Burgestrand/4b4bc22f31c8a95c425fc0e30d7ef1f5
 
-
   def create?
     # Il faut que le current_user soit l'emprunteur !!
     user == record.chat.user
   end
-  
+
   def accept?
     # Il faut que le current_user soit le preteur !!
     user == record.game.user
@@ -40,7 +39,7 @@ class BookingPolicy < ApplicationPolicy
   def returned?
     true
   end
-  
+
   def give_back?
     true
   end
@@ -52,7 +51,6 @@ class BookingPolicy < ApplicationPolicy
   def rate?
     user == record.game.user || user == record.user
   end
-
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!

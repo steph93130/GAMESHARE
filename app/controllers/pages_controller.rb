@@ -7,5 +7,4 @@ class PagesController < ApplicationController
                   .limit(3)
     @game = Game.new
   end
-
 end

@@ -4,5 +4,4 @@ class Chat < ApplicationRecord
   has_many :messages
   # Fait en sorte de n'avoir n'avoir qu'un seul booking
   has_one :booking
-  
 end
