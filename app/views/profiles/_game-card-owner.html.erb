@@ -19,9 +19,7 @@
                 <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : '' %>
               </p>
             <%= link_to game_path(game), class: "game-card-link" do %>
-              <h2 class="game-title">
-                <%= game.title %>
-              </h2>
+            <h2 class="game-title bg-title-<%= %w[red blue yellow orange green purple].sample %>"><%= game.title %></h2>
             <% end %>
                 <%= button_to toggle_availability_game_path(game), method: :patch,
                     class: "availability-toggle btn border-0 bg-transparent p-0" do %>

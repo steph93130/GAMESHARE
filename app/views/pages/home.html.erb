@@ -1,9 +1,11 @@
+
 <div class="container my-5">
 
-<% if !current_user.nil? %>
-  <%= render "shared/actions_attentes", user: current_user %>
-<% end %>
+  <% if !current_user.nil? %>
+    <%= render "shared/actions_attentes", user: current_user %>
+  <% end %>
 
+  <%= render "shared/flashes" %>
   <h2 class="mb-4 text-center">
     <span class="red">T</span><span class="blue">r</span><span class="yellow">o</span><span class="red">u</span><span class="blue">v</span><span class="yellow">e</span>
     <span>&nbsp;</span>
@@ -58,15 +60,15 @@
                  style="--game-bg: url('<%= cl_image_path(game.picture.key) if game.picture.attached? %>');">
 
               <p class="txt">
-                <i class="fa-solid fa-dice red"></i> <%= game.category %>
+                <i class="fa-solid fa-dice red"></i><br> <%= game.category %>
               </p>
 
               <p class="txt">
-                <i class="fa-solid fa-user blue"></i> <%= game.age %> ans
+                <i class="fa-solid fa-user blue"></i><br> <%= game.age %> ans
               </p>
 
               <p class="txt">
-                <i class="fa-solid fa-chess-knight orange"></i>
+                <i class="fa-solid fa-chess-knight orange"></i><br>
                 <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : '' %>
               </p>
 
