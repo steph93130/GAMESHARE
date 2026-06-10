@@ -8,7 +8,7 @@
     <% if user_rating == 5 %>
       <% 5.times do %><i class="fa-solid fa-star purple"></i><% end %>
     <% else %>
-      <% user_rating.to_i.times do %><i class="fa-solid fa-star purple fs-6"></i><% end %><% nb_rate_bad.times  do %><i class="fa-solid fa-star white fs-6"></i><% end %>
+      <% user_rating.to_i.times do %><i class="fa-solid fa-star green fs-5"></i><% end %><% nb_rate_bad.times  do %><i class="fa-regular fa-star fs-6"></i><% end %>
     <% end %>
   </div>
 <p class="text-rating"><i class="fa-solid fa-medal"></i> <%= @user.username %>, ta cotation sur GameShare depuis ton inscription <span>(<%= l(@user.created_at.to_date, format: :long, locale: :fr) %>)</span></p>
