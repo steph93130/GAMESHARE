@@ -8,7 +8,7 @@
           <p> Date de validité : **/28</p>
           <!-- <p>Veux-tu utiliser cette carte ?</p> -->
           <p><%= link_to "Valider la transaction", validate_booking_path(@booking), data: { turbo_method: :patch }, class: "button" %></p>
-          <button class="button decline">Refuser</button>
+          <%= link_to "Annuler", cancel_booking_path(@booking), data: { turbo_method: :patch, turbo_confirm: "Es-tu sûr de vouloir annuler l'emprunt ?" }, class: "button decline" %>
           <p class="fs-3 mt-2">Tu préfères utiliser  <i class="fa-brands fa-cc-paypal"></i> ?</p>
       </div>
     </div>

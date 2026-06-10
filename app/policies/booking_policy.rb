@@ -29,6 +29,14 @@ class BookingPolicy < ApplicationPolicy
     true
   end
 
+  def cancel?
+    user == record.user
+  end
+
+  def dismiss_notif?
+    user == record.user || user == record.game.user
+  end
+
   def returned?
     true
   end

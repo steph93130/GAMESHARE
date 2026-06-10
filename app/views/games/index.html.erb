@@ -1,4 +1,3 @@
-
 <div class="container my-5">
 
 
@@ -15,25 +14,24 @@
     <span class="blue">x</span>
   </h2>
   <h2 class="mb-5 text-center">
-  <span class="red">A</span>
-  <span>&nbsp;</span>
-  <span class="blue">c</span>
-  <span class="yellow">ô</span>
-  <span class="orange">t</span>
-  <span class="green">é</span>
-  <span>&nbsp;</span>
-  <span class="red">d</span>
-  <span class="blue">e</span>
-  <span>&nbsp;</span>
-  <span class="red">c</span>
-  <span class="blue">h</span>
-  <span class="yellow">e</span>
-  <span class="orange">z</span>
-  <span>&nbsp;</span>
-  <span class="green">t</span>
-  <span class="red">o</span>
-  <span class="blue">i</span>
-
+    <span class="red">A</span>
+    <span>&nbsp;</span>
+    <span class="blue">c</span>
+    <span class="yellow">ô</span>
+    <span class="orange">t</span>
+    <span class="green">é</span>
+    <span>&nbsp;</span>
+    <span class="red">d</span>
+    <span class="blue">e</span>
+    <span>&nbsp;</span>
+    <span class="red">c</span>
+    <span class="blue">h</span>
+    <span class="yellow">e</span>
+    <span class="orange">z</span>
+    <span>&nbsp;</span>
+    <span class="green">t</span>
+    <span class="red">o</span>
+    <span class="blue">i</span>
   </h2>
 
 
@@ -55,7 +53,7 @@
           <%= f.select :category,
             options_for_select([["Toutes les catégories", ""]] + @categories.map { |c| [c, c] }, params[:category]),
             {},
-            class: "form-select", onchange: "this.form.submit()" %>
+            class: "form-select input_ask", onchange: "this.form.submit()" %>
         </div>
         <div class="col-12 col-md-3">
           <label class="form-label2 fw-semibold d-flex align-items-center gap-1">
@@ -64,7 +62,7 @@
           <%= f.select :player_number,
             options_for_select([["Nbre de joueurs", ""]] + @player_numbers.map { |n| ["#{n} joueur#{n > 1 ? 's' : ''}", n] }, params[:player_number]),
             {},
-            class: "form-select", onchange: "this.form.submit()" %>
+            class: "form-select input_ask", onchange: "this.form.submit()" %>
         </div>
         <div class="col-12 col-md-3">
           <label class="form-label2 fw-semibold d-flex align-items-center gap-1">
@@ -73,7 +71,7 @@
           <%= f.select :age,
             options_for_select([["Tous les âges", ""]] + @ages.map { |a| ["#{a}+", a] }, params[:age]),
             {},
-            class: "form-select", onchange: "this.form.submit()" %>
+            class: "form-select input_ask", onchange: "this.form.submit()" %>
         </div>
         <div class="col-12 col-md-2 d-flex align-items-end justify-content-center">
           <% filters_active = params[:category].present? || params[:player_number].present? || params[:age].present? %>
