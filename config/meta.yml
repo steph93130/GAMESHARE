@@ -1,0 +1,5 @@
+meta_product_name: "GameShare"
+meta_title: "GameShare - Prêt de jeux entre particuliers gratuit"
+meta_description: "Trouver autour de chez vous des Share de jeux de société gratuitement"
+meta_image: "logomax.png" # should exist in `app/assets/images/`
+# twitter_account: "@product_twitter_account" # required for Twitter Cards

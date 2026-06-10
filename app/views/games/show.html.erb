@@ -1,3 +1,9 @@
+<% content_for :meta_title, "#{@game.title} - #{DEFAULT_META["meta_product_name"]}" %>
+<% content_for :meta_description, @game.description %>
+<% if @game.picture.attached? %>
+  <% content_for :meta_image, cl_image_path(@game.picture.key) %>
+<% end %>
+
 <div class="container my-5">
   <div class="row justify-content-center">
     <div class="col-12 col-md-10 col-lg-8">

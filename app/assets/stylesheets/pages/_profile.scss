@@ -15,7 +15,10 @@
     }
     .text-rating {
       margin-top: 1em;
+    }
 
+    .fa-medal {
+      color:gold;
     }
 }
 
@@ -27,7 +30,7 @@
 
 .card-profil {
   width: 95%;
-  margin: 2.5em auto 2.5em auto;
+  margin: 1em auto .5em auto;
   border: 1px solid $bg-footer;
   border-radius: 4px;
   display: flex;
@@ -59,7 +62,7 @@
 }
 
 .main-profil {
-  padding-top: 50px;
+  padding-top: 15px;
 
 }
 

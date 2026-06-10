@@ -29,6 +29,7 @@ Rails.application.routes.draw do
         patch "returned", to: "bookings#returned", as: :returned
         get "give_back", to: "bookings#give_back", as: :give_back
         patch "close", to: "bookings#close", as: :close
+        patch "rate", to: "bookings#rate", as: :rate
       end
   end
   resources :chats, only: [:show] do
