@@ -10,19 +10,19 @@ class GamePolicy < ApplicationPolicy
   end
 
   def create?
-    true
+    user == record.user
   end
 
   def edit?
-    true
+    user == record.user
   end
 
   def update?
-    true
+    user == record.user
   end
 
   def destroy?
-    true
+    user == record.user
   end
 
   class Scope < Scope

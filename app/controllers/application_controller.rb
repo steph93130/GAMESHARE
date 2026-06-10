@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   before_action :set_game_for_modal
   include Pundit::Authorization
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   # Pundit: allow-list approach
   after_action :verify_authorized, except: :index, unless: :skip_pundit?
   after_action :verify_policy_scoped, only: :index, unless: :skip_pundit?
@@ -28,8 +30,13 @@ class ApplicationController < ActionController::Base
   def default_url_options
     { host: ENV["DOMAIN"] || "localhost:3000" }
   end
-  
+
   private
+
+  def user_not_authorized
+    flash[:alert] = "Vous n'êtes pas autorisé à effectuer cette action."
+    redirect_to games_path
+  end
 
   def broadcast_notifs_to(user)
     Turbo::StreamsChannel.broadcast_replace_to(
