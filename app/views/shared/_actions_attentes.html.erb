@@ -1,0 +1,37 @@
+<!-- emprunteur -->
+<% count_emprunt = 0 %>
+<% user.chats.each do |chat| %>
+    <% if chat.booking.nil? %>
+        <p> vous n'avez pas de demande en attante</p>
+    <% elsif chat.booking.status == "validated" ||  chat.booking.status == "accepted" || chat.booking.status == "returned" %>
+        <% count_emprunt += 1 %>
+    <% end %>
+<% end %>
+<% if count_emprunt >= 1 %>
+    <% if count_emprunt > 1 %>
+        <% message = "vous avez #{count_emprunt} actions d'emprunts en attentes" %>
+    <% else %>
+        <% message = "vous avez #{count_emprunt} action d'emprunt en attente" %>
+    <% end %>
+    <p class="notif_attente text-center"><%= message %> <%= link_to 'voir', borrow_path, class: "button" %></p>
+<% end %>
+<!-- prêteur -->
+
+<% count_pret = 0 %>
+<% user.games.each do |game| %>
+    <% game.chats.each do |chat| %>
+        <% if chat.booking.nil? %>
+            <p> vous n'avez pas de demande en attante</p>
+        <% elsif chat.booking.status == "submited" ||  chat.booking.status == "validated" %>
+            <% count_pret += 1 %>
+        <% end %>
+    <% end %>
+<% end %>
+<% if count_pret >= 1 %>
+    <% if count_pret > 1 %>
+        <% message = "vous avez #{count_pret} actions de prêt en attentes" %>
+    <% else %>
+        <% message = "vous avez #{count_pret} action de prêt en attente" %>
+    <% end %>
+    <p class="notif_attente text-center"><%= message %> <%= link_to 'voir', borrow_path, class: "button" %></p>
+<% end %>

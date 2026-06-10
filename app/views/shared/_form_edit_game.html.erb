@@ -22,22 +22,22 @@
 <div class="game-card p-4">
   <%= form_with model: @game, local: true, html: { multipart: true }, class: "row g-3" do |f| %>
     <div class="col-md-6">
-      <%= f.label :title, "Titre", class: "form-label" %>
+      <%= f.label :title, "Titre", class: "form-label2" %>
       <%= f.text_field :title, class: "form-control" %>
     </div>
     <div class="col-md-6">
-      <%= f.label :condition, "État", class: "form-label" %>
+      <%= f.label :condition, "État", class: "form-label2" %>
       <%= f.select :condition,
         ["Bon", "Moyen", "Usagé"],
         { prompt: "Choisir un état" },
         class: "form-select" %>
     </div>
     <div class="col-md-6">
-      <%= f.label :picture, "Image du jeu", class: "form-label" %>
+      <%= f.label :picture, "Image du jeu", class: "form-label2" %>
       <%= f.file_field :picture, class: "form-control" %>
     </div>
   <div class="col-md-6">
-    <%= f.label :rent_duration, "Durée de location", class: "form-label" %>
+    <%= f.label :rent_duration, "Durée de location", class: "form-label2" %>
     <%= f.select :rent_duration,
     [
       ["1 jour", 1],
@@ -49,21 +49,21 @@
     class: "form-select" %>
   </div>
   <div class="col-md-4">
-    <%= f.label :age, "Âge recommandé", class: "form-label" %>
+    <%= f.label :age, "Âge recommandé", class: "form-label2" %>
     <%= f.select :age,
       [["3+", 3], ["6+", 6], ["7+", 7], ["10+", 10], ["16+", 16]],
       { prompt: "Choisir un âge" },
       class: "form-select" %>
   </div>
   <div class="col-md-4">
-    <%= f.label :player_number, "Nombre de joueurs", class: "form-label" %>
+    <%= f.label :player_number, "Nombre de joueurs", class: "form-label2" %>
     <%= f.select :player_number,
       (1..12).map { |n| [n, n] },
       { prompt: "Choisir" },
       class: "form-select" %>
   </div>
   <div class="col-md-4">
-    <%= f.label :category, "Catégorie", class: "form-label" %>
+    <%= f.label :category, "Catégorie", class: "form-label2" %>
     <%= f.select :category,
       [
         "Jeu familial",
@@ -87,15 +87,15 @@
       class: "form-select" %>
   </div>
   <div class="col-12">
-    <%= f.label :description, "Description", class: "form-label" %>
+    <%= f.label :description, "Description", class: "form-label2" %>
     <%= f.text_area :description, rows: 4, class: "form-control" %>
   </div>
   <div class="col-12">
-    <%= f.label :rules, "Règles du jeu", class: "form-label" %>
+    <%= f.label :rules, "Règles du jeu", class: "form-label2" %>
     <%= f.text_area :rules, rows: 4, class: "form-control" %>
   </div>
   <div class="col-md-6">
-  <%= f.label :deposit, "Caution", class: "form-label" %>
+  <%= f.label :deposit, "Caution", class: "form-label2" %>
   <%= f.select :deposit,
     [
       ["5 €", 5],
