@@ -1,1 +1,11 @@
 // Specific CSS for your home-page
+
+[data-controller="geolocation"] {
+  .input-group-text {
+    border-radius: 999px 0 0 999px;
+  }
+
+  .btn-primary {
+    border-radius: 0 999px 999px 0;
+  }
+}
