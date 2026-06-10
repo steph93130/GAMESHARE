@@ -1,57 +1,104 @@
 <div id="booking_management">
-  <p>mes prêts</p>
-  <% if !owner.empty? %>
-    <div class="row" id="ludo">
-
-      <% owner[:submited].each do |booking| %>
-        <%= render "profiles/card_status", b: booking, viewer: viewer %>
-      <% end %>
-
-      <% owner[:validated].each do |booking| %>
-        <%= render "profiles/card_status", b: booking, viewer: viewer %>
-      <% end %>
-
+  <div class="main-profil">
+    <div class="ma-ludo card-profil collapsed"
+         data-bs-toggle="collapse"
+         data-bs-target="#myLudo-pret"
+         aria-expanded="false"
+         aria-controls="myLudo-pret"
+         style="cursor: pointer;">
+      <p><i class="fa-solid fa-dice purple"></i> MES PRÊTS (<%= owner.values.sum(&:length) %>)</p>
+      <p><i class="fa-solid fa-angle-right chevron-toggle"></i></p>
     </div>
-  <% else %>
-    <div class="text-center">
-      <p><%= viewer.username %>, tu n'as aucun emprunt actuellement.</p>
+    <div class="mt-4">
+      <div class="collapse mt-2" id="myLudo-pret">
+        <div class="text-start background-transparent" data-controller="tab-toggle">
+          <div class="boutons-prets text-center">
+            <div class="button" data-tab-toggle-target="btnEncours" data-action="click->tab-toggle#showEncours">En cours</div>
+            <div class="button" data-tab-toggle-target="btnClotures" data-action="click->tab-toggle#showClotures">Clôturés</div>
+          </div>
+
+          <div class="prets-encours" data-tab-toggle-target="encours">
+            <% prets_encours = owner.empty? ? [] : owner[:submited] + owner[:validated] %>
+            <% if prets_encours.any? %>
+              <div class="row">
+                <% prets_encours.each do |booking| %>
+                  <%= render "profiles/card_status", b: booking %>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="text-center mt-3">
+                <p><%= viewer.username %>, tu n'as pas de prêts en cours.</p>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="prets-clotures" data-tab-toggle-target="clotures">
+            <% prets_clotures = owner.empty? ? [] : owner[:closed] %>
+            <% if prets_clotures.any? %>
+              <div class="row">
+                <% prets_clotures.each do |booking| %>
+                  <%= render "profiles/card_status", b: booking %>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="text-center mt-3">
+                <p><%= viewer.username %>, tu n'as pas de prêts clôturés.</p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
 
-  <p>mes emprunts</p>
-  <% if !borrow.empty? %>
-    <div class="row" id="ludo">
-
-      <% borrow[:accepted].each do |booking| %>
-        <%= render "profiles/card_status", b: booking, viewer: viewer %>
-      <% end %>
-
-      <% borrow[:validated].each do |booking| %>
-        <%= render "profiles/card_status", b: booking, viewer: viewer %>
-      <% end %>
-
-      <% borrow[:returned].each do |booking| %>
-        <%= render "profiles/card_status", b: booking, viewer: viewer %>
-      <% end %>
-
+    <div class="ma-ludo card-profil collapsed"
+         data-bs-toggle="collapse"
+         data-bs-target="#myLudo-emprunt"
+         aria-expanded="false"
+         aria-controls="myLudo-emprunt"
+         style="cursor: pointer;">
+      <p><i class="fa-solid fa-dice purple"></i> MES EMPRUNTS (<%= borrow.values.sum(&:length) %>)</p>
+      <p><i class="fa-solid fa-angle-right chevron-toggle"></i></p>
     </div>
-  <% else %>
-    <div class="text-center">
-      <p><%= viewer.username %>, tu n'as aucun emprunt actuellement.</p>
+
+    <div class="mt-4">
+      <div class="collapse mt-2" id="myLudo-emprunt">
+        <div class="text-start background-transparent" data-controller="tab-toggle">
+          <div class="boutons-emprunts text-center">
+            <div class="button" data-tab-toggle-target="btnEncours" data-action="click->tab-toggle#showEncours">En cours</div>
+            <div class="button" data-tab-toggle-target="btnClotures" data-action="click->tab-toggle#showClotures">Clôturés</div>
+          </div>
+
+          <div class="emprunts-encours" data-tab-toggle-target="encours">
+            <% emprunts_encours = borrow.empty? ? [] : borrow[:accepted] + borrow[:validated] + borrow[:returned] %>
+            <% if emprunts_encours.any? %>
+              <div class="row">
+                <% emprunts_encours.each do |booking| %>
+                  <%= render "profiles/card_status", b: booking %>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="text-center mt-3">
+                <p><%= viewer.username %>, tu n'as pas d'emprunts en cours.</p>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="emprunts-clotures" data-tab-toggle-target="clotures">
+            <% emprunts_clotures = borrow.empty? ? [] : borrow[:closed] %>
+            <% if emprunts_clotures.any? %>
+              <div class="row">
+                <% emprunts_clotures.each do |booking| %>
+                  <%= render "profiles/card_status", b: booking %>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="text-center mt-3">
+                <p><%= viewer.username %>, tu n'as pas d'emprunts clôturés.</p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <p>jeux prété cloturé</p>
-  <% if !owner.empty? %>
-    <% owner[:closed].each do |booking| %>
-      <%= render "profiles/card_status", b: booking, viewer: viewer %>
-    <% end %>
-  <% end %>
-
-  <p>jeux empunté cloturé</p>
-  <% if !borrow.empty? %>
-    <% borrow[:closed].each do |booking| %>
-      <%= render "profiles/card_status", b: booking, viewer: viewer %>
-    <% end %>
-  <% end %>
+  </div>
 </div>
