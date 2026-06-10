@@ -1,5 +1,5 @@
  .button {
- display: inline-flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
@@ -81,3 +81,7 @@
     color: $white;
     opacity: 1;
   }
+
+.input_ask {
+  border-radius: 999px !important;
+}
