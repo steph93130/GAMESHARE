@@ -41,6 +41,13 @@ class BookingsController < ApplicationController
           content: "#{@booking.game.user.username} vient d'accepter votre demande de prêt. <a href=\"#{borrow_path}\" style=\"color: white; text-decoration: underline;\">Voir mes emprunts</a>"
       )
       broadcast_message_to_chat(@booking.chat, @system_message)
+      Turbo::StreamsChannel.broadcast_replace_to(
+        "chat_#{@booking.chat.id}_booking_actions_borrower",
+        target: "booking_actions",
+        partial: "chats/booking_actions",
+        locals: { chat: @booking.chat, booking: @booking, is_owner: false }
+      )
+      broadcast_bookings_to(@booking.user)
       if current_user == @booking.game.user
         flash[:notice] = "#{@booking.game.user.username}, Tu as accepté de prêter ton jeux #{@booking.game.title}."
       else
@@ -63,6 +70,13 @@ class BookingsController < ApplicationController
           content: "#{@booking.game.user.username} vient de refuser votre demande de prêt."
       )
       broadcast_message_to_chat(@booking.chat, @system_message)
+      Turbo::StreamsChannel.broadcast_replace_to(
+        "chat_#{@booking.chat.id}_booking_actions_borrower",
+        target: "booking_actions",
+        partial: "chats/booking_actions",
+        locals: { chat: @booking.chat, booking: @booking, is_owner: false }
+      )
+      broadcast_bookings_to(@booking.user)
       flash[:alert] = "#{@booking.game.user.username}, tu as refusé de prêter ton jeux #{@booking.game.title}."
       redirect_to owner_path
   end
@@ -77,6 +91,7 @@ class BookingsController < ApplicationController
       authorize @booking
       @booking.update(status: :validated)
       @booking.game.update(available: false)
+      broadcast_bookings_to(@booking.game.user)
       if current_user == @booking.chat.user
         flash[:notice] = "#{@booking.chat.user.username}, Tu as valider l'emprunt du jeux #{@booking.game.title}."
       else
@@ -90,6 +105,7 @@ class BookingsController < ApplicationController
   def returned
     authorize @booking
     @booking.update(status: :returned)
+    broadcast_bookings_to(@booking.user)
        if current_user == @booking.game.user
         flash[:notice] = "#{@booking.game.user.username}, Tu as valider le retour du jeux #{@booking.game.title}."
        else
@@ -121,6 +137,8 @@ class BookingsController < ApplicationController
     authorize @booking
     @booking.update(status: :closed)
     @booking.game.update(available: true)
+    broadcast_bookings_to(@booking.game.user)
+    broadcast_games_to(@booking.game.user)
     Turbo::StreamsChannel.broadcast_remove_to(
       "game_#{@booking.game.id}_inline_chat",
       target: "inline_chat_container"
@@ -159,13 +177,65 @@ class BookingsController < ApplicationController
       @booking.update(rating_preteur: score)
       update_user_rating(@booking.game.user)
     end
-    redirect_to borrow_path, notice: "Merci pour votre évaluation !"
+    redirect_path = params[:rated_role] == "user" ? owner_path : borrow_path
+    redirect_to redirect_path, notice: "Merci pour votre évaluation !"
   end
 
     private
 
   def set_booking
     @booking = Booking.find(params[:id])
+  end
+
+  def broadcast_games_to(user)
+    inner = render_to_string(
+      partial: "profiles/game-card-owner",
+      locals: { games: user.games.reload }
+    )
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "user_#{user.id}_games",
+      target: "owner_games",
+      html: "<div id=\"owner_games\" class=\"game-rules text-start\">#{inner}</div>"
+    )
+  end
+
+  def broadcast_bookings_to(user)
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "user_#{user.id}_bookings",
+      target: "booking_management",
+      html: render_to_string(
+        partial: "profiles/booking_management",
+        locals: {
+          borrow: borrow_status_for(user),
+          owner: owner_status_for(user),
+          viewer: user
+        }
+      )
+    )
+  end
+
+  def borrow_status_for(user)
+    statuses = { submited: [], accepted: [], validated: [], returned: [], closed: [] }
+    user.chats.includes(:booking).each do |chat|
+      b = chat.booking
+      next unless b
+      key = b.status.to_sym
+      statuses[key] << b if statuses.key?(key)
+    end
+    statuses
+  end
+
+  def owner_status_for(user)
+    statuses = { submited: [], accepted: [], validated: [], returned: [], closed: [] }
+    user.games.includes(chats: :booking).each do |game|
+      game.chats.each do |chat|
+        b = chat.booking
+        next unless b
+        key = b.status.to_sym
+        statuses[key] << b if statuses.key?(key)
+      end
+    end
+    statuses
   end
 
   def update_user_rating(user)

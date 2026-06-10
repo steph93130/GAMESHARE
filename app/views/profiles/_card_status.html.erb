@@ -1,5 +1,5 @@
 
-<div class="col-12 col-md-6 col-lg-4 mb-1 link">
+<div id="booking_card_<%= b.id %>" class="col-12 col-md-6 col-lg-4 mb-1 link">
     <%= link_to "#", class: "game-card-link" do %>
         <h2 class="game-title">
             <%= b.game.title %>
@@ -29,7 +29,7 @@
             </p>
 
         <% elsif b.status == "validated" %>
-            <% if b.game.user == current_user %>
+            <% if b.game.user == viewer %>
                 <p class="txt text-warning">
                     <i class="fa-solid fa-user blue"></i>
                     Emprunté par : <%= b.chat.user.username %>

@@ -1,4 +1,6 @@
-<div class="form-rating-card" data-controller="star-rating">
+<div class="form-rating-card"
+     data-controller="star-rating"
+     data-star-rating-redirect-url-value="<%= rated_role == 'user' ? owner_path : borrow_path %>">
   <%= form_with url: rate_booking_path(booking), method: :patch do |f| %>
     <%= f.hidden_field :rated_role, value: rated_role %>
 
