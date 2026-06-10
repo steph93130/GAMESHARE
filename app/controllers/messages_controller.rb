@@ -12,6 +12,8 @@ class MessagesController < ApplicationController
           render_to_string(partial: "messages/message", locals: { message: @message, mine: @message.user == user })
         )
       end
+      recipient = @chat.user == current_user ? @chat.game.user : @chat.user
+      broadcast_notifs_to(recipient)
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to @chat }
