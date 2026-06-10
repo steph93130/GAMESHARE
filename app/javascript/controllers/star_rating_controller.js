@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["input", "label", "submit", "starsList"]
+  static values = { redirectUrl: String }
 
   labels = ["", "Bof... 😕", "Pas terrible 😐", "Correct 🙂", "Très bien 😊", "Parfait ! 🌟"]
   currentScore = 0
@@ -32,8 +33,7 @@ export default class extends Controller {
   }
 
   skip() {
-    const container = document.getElementById("rating_modal_container")
-    if (container) container.remove()
+    window.location.href = this.redirectUrlValue
   }
 
   highlightStars(count) {

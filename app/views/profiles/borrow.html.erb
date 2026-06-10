@@ -1,64 +1,7 @@
-<p>mes prêts</p>
-<!-- liste des jeux prêter avec leur statut -->
-<% if !@owner.empty? %>
-  <div class="row" id="ludo">
+<%= turbo_stream_from "user_#{current_user.id}_bookings" %>
 
-    <% @owner[:submited].each do |booking| %>
-      <%= render "profiles/card_status", b: booking  %>
-    <% end %>
+<%= render "profiles/booking_management", borrow: @borrow, owner: @owner, viewer: current_user %>
 
-    <% @owner[:validated].each do |booking| %>
-      <%= render "profiles/card_status", b: booking  %>
-    <% end %>
-    
-  </div>
-<% else %>
-  <div class="text-center">
-    <p><%= current_user.username %>, tu n'as aucun emprunt actuellement.</p>
-  </div>
-<% end %>
-<%# raise %>
-<!-- Fin test liste des jeux prêter avec leur statut -->
-<p>mes emprunts</p>
-<!-- liste des jeux empruntés avec leur statut -->
-<% if !@borrow.empty? %>
-  <div class="row" id="ludo">
-    
-    <% @borrow[:accepted].each do |booking| %>
-      <%= render "profiles/card_status", b: booking  %>
-    <% end %>
-    
-    <% @borrow[:validated].each do |booking| %>
-      <%= render "profiles/card_status", b: booking  %>
-    <% end %>
-    
-    <% @borrow[:returned].each do |booking| %>
-      <%= render "profiles/card_status", b: booking  %>
-    <% end %>
-  </div>
-<% else %>
-  <div class="text-center">
-    <p><%= current_user.username %>, tu n'as aucun emprunt actuellement.</p>
-  </div>
-<% end %>
-<%# raise %>
-<!-- Fin test liste des jeux empruntés avec leur statut -->
-
-<!-- Cloture preteur-->
-<p>jeux prété cloturé</p>
-<% if !@owner.empty? %>
-  <% @owner[:closed].each do |booking| %>
-    <%= render "profiles/card_status", b: booking  %>
-  <% end %>
-<% end %>
-<!-- FIN cloture -->
-<!-- Cloture preteur-->
-<p>jeux empunté cloturé</p>
-<% if !@borrow.empty? %>
-  <% @borrow[:closed].each do |booking| %>
-    <%= render "profiles/card_status", b: booking  %>
-  <% end %>
-<% end %>
-<!-- FIN cloture -->
+<div id="rating_modal_container"></div>
 
 <%# raise %>

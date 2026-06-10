@@ -1,4 +1,5 @@
+<%= turbo_stream_from "user_#{current_user.id}_games" %>
 
-<div class="game-rules text-start">
-<%= render "profiles/game-card-owner", games:@games %>
+<div id="owner_games" class="game-rules text-start">
+  <%= render "profiles/game-card-owner", games: @games %>
 </div>

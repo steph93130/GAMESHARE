@@ -1,0 +1,57 @@
+<div id="booking_management">
+  <p>mes prêts</p>
+  <% if !owner.empty? %>
+    <div class="row" id="ludo">
+
+      <% owner[:submited].each do |booking| %>
+        <%= render "profiles/card_status", b: booking, viewer: viewer %>
+      <% end %>
+
+      <% owner[:validated].each do |booking| %>
+        <%= render "profiles/card_status", b: booking, viewer: viewer %>
+      <% end %>
+
+    </div>
+  <% else %>
+    <div class="text-center">
+      <p><%= viewer.username %>, tu n'as aucun emprunt actuellement.</p>
+    </div>
+  <% end %>
+
+  <p>mes emprunts</p>
+  <% if !borrow.empty? %>
+    <div class="row" id="ludo">
+
+      <% borrow[:accepted].each do |booking| %>
+        <%= render "profiles/card_status", b: booking, viewer: viewer %>
+      <% end %>
+
+      <% borrow[:validated].each do |booking| %>
+        <%= render "profiles/card_status", b: booking, viewer: viewer %>
+      <% end %>
+
+      <% borrow[:returned].each do |booking| %>
+        <%= render "profiles/card_status", b: booking, viewer: viewer %>
+      <% end %>
+
+    </div>
+  <% else %>
+    <div class="text-center">
+      <p><%= viewer.username %>, tu n'as aucun emprunt actuellement.</p>
+    </div>
+  <% end %>
+
+  <p>jeux prété cloturé</p>
+  <% if !owner.empty? %>
+    <% owner[:closed].each do |booking| %>
+      <%= render "profiles/card_status", b: booking, viewer: viewer %>
+    <% end %>
+  <% end %>
+
+  <p>jeux empunté cloturé</p>
+  <% if !borrow.empty? %>
+    <% borrow[:closed].each do |booking| %>
+      <%= render "profiles/card_status", b: booking, viewer: viewer %>
+    <% end %>
+  <% end %>
+</div>
