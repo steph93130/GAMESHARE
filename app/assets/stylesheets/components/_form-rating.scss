@@ -1,15 +1,155 @@
+.form-rating-card {
+  background: $white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  max-width: 420px;
+  margin: auto;
+  width: 100%;
+}
 
+// ── Header dark gradient (repris du header-profil) ──
+.form-rating-header {
+  background: $bg-footer;
+  background-image: linear-gradient(135deg, $bg-footer 0%, darken($purple, 10%) 100%);
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+  color: $white;
+}
 
-.form-label{
-  color:gray;
+.form-rating-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-image: linear-gradient(135deg, lighten($purple, 15%) 0%, $purple 100%);
+  color: $white;
+  font-family: $headers-font;
+  font-size: 1.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-rating-question {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.3px;
+}
+
+.form-rating-username {
+  color: $white;
+  font-family: $headers-font;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+// ── Body avec étoiles ──
+.form-rating-body {
+  padding: 2rem 1.5rem 1rem;
   text-align: center;
 }
 
-.form-rating-container {
-  width: 30%;
-  background-color:rgba(210, 210, 210, 0.885) ;
-  border-radius: 15px;
-  margin: auto;
-  box-shadow: 2px 2px 2px $bg-footer;
+.star-selector {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
 
+.star-item {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+
+  i {
+    font-size: 2.4rem;
+    color: #d1d5db;
+    transition: color 0.15s ease, transform 0.15s ease;
+  }
+
+  &:hover {
+    transform: scale(1.15);
+  }
+
+  &.star-active i {
+    color: #f59e0b;
+  }
+
+  &.star-confirmed i {
+    color: #f59e0b;
+    animation: star-pop 0.25s ease;
+  }
+}
+
+@keyframes star-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+.rating-hint {
+  font-size: 0.9rem;
+  color: $Moderngrey;
+  min-height: 1.4rem;
+  margin: 0;
+  font-style: italic;
+  transition: color 0.2s ease;
+}
+
+// ── Footer ──
+.form-rating-footer {
+  padding: 0 1.5rem 1.75rem;
+  text-align: center;
+
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ── Bouton "Passer" discret ──
+.btn-skip {
+  display: block;
+  margin: 0.6rem auto 0;
+  background: none;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  color: $Moderngrey;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+
+  &:hover {
+    color: $Anthracite;
+    text-decoration-color: currentColor;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $purple;
+    outline-offset: 3px;
+    border-radius: 4px;
+    color: $Anthracite;
+    text-decoration-color: currentColor;
+  }
+}
+
+// ── Modal overlay (inchangé) ──
+.rating-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 1rem;
 }

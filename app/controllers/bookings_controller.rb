@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-    before_action :set_booking, only: [:accept, :decline, :validate, :deposit, :close, :give_back, :returned]
+    before_action :set_booking, only: [:accept, :decline, :validate, :deposit, :close, :give_back, :returned, :rate]
 
   # l'emprunteur crée le booking passage a submiting affichage chez le preteur
   def create
@@ -81,11 +81,24 @@ class BookingsController < ApplicationController
   
   # prêteur valide le retour
   def returned
-      authorize @booking
-      @booking.update(status: :returned)
-      flash[:notice] = "#{@booking.game.user.username}, tu as valider l'emprunt du jeux #{@booking.game.title}."
-      flash[:notice] = "#{@booking.chat.user.username}, le retour du jeux a été valider #{@booking.game.title}."
-      redirect_to owner_path
+    authorize @booking
+    @booking.update(status: :returned)
+    flash[:notice] = "#{@booking.game.user.username}, tu as valider l'emprunt du jeux #{@booking.game.title}."
+    flash[:notice] = "#{@booking.chat.user.username}, le retour du jeux a été valider #{@booking.game.title}."
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "rating_modal_container",
+          partial: "shared/modal_rating",
+          locals: {
+            booking: @booking,
+            rated_user: @booking.user,
+            rated_role: "user"
+          }
+        )
+      end
+      format.html { redirect_to borrow_path }
+    end
   end
 
   # emprunteur récupère sa caution
@@ -95,23 +108,59 @@ class BookingsController < ApplicationController
 
   # Apres give back clodure le booking  par l'enprunteur
   def close
-      authorize @booking
-      @booking.update(status: :closed)
-      @booking.game.update(available: true)
-      Turbo::StreamsChannel.broadcast_remove_to(
-        "game_#{@booking.game.id}_inline_chat",
-        target: "inline_chat_container"
-      )
-      flash[:notice] = "#{@booking.chat.user.username}, l'emprunt du jeux est cloturé #{@booking.game.title}."
-      flash[:notice] = "#{@booking.game.user.username}, l'emprunt du jeux est cloturé #{@booking.game.title}."
-      redirect_to borrow_path
+    authorize @booking
+    @booking.update(status: :closed)
+    @booking.game.update(available: true)
+    Turbo::StreamsChannel.broadcast_remove_to(
+      "game_#{@booking.game.id}_inline_chat",
+      target: "inline_chat_container"
+    )
+    flash[:notice] = "#{@booking.chat.user.username}, l'emprunt du jeux est cloturé #{@booking.game.title}."
+    flash[:notice] = "#{@booking.game.user.username}, l'emprunt du jeux est cloturé #{@booking.game.title}."
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "rating_modal_container",
+          partial: "shared/modal_rating",
+          locals: {
+            booking: @booking,
+            rated_user: @booking.game.user,
+            rated_role: "preteur"
+          }
+        )
+      end
+      format.html { redirect_to borrow_path }
+    end
   end
 
+
+  # notation après un échange
+  def rate
+    authorize @booking
+    score = params[:score].to_f.clamp(0.0, 5.0)
+    case params[:rated_role]
+    when "user"
+      @booking.update(rating_user: score)
+      update_user_rating(@booking.user)
+    when "preteur"
+      @booking.update(rating_preteur: score)
+      update_user_rating(@booking.game.user)
+    end
+    redirect_to borrow_path, notice: "Merci pour votre évaluation !"
+  end
 
     private
 
   def set_booking
     @booking = Booking.find(params[:id])
+  end
+
+  def update_user_rating(user)
+    borrower_scores = Booking.where(user: user).where.not(rating_user: nil).pluck(:rating_user)
+    lender_scores   = Booking.joins(:game).where(games: { user_id: user.id }).where.not(rating_preteur: nil).pluck(:rating_preteur)
+    all_scores = borrower_scores + lender_scores
+    return if all_scores.empty?
+    user.update(rating: all_scores.sum / all_scores.size.to_f)
   end
 
   def broadcast_message_to_chat(chat, message)
