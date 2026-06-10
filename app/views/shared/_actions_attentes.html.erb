@@ -71,7 +71,7 @@
       <% if latest_unread %>
           <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
               <span><%= latest_unread.user.username %> t'as envoyé un message !</span>
-              <%= link_to "voir", chat_path(chat), class: "button" %>
+              <%= button_to "voir", mark_read_chat_path(chat, after: "game"), method: :patch, class: "button" %>
               <%= link_to mark_read_chat_path(chat), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
           </div>
       <% end %>

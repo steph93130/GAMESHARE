@@ -36,6 +36,10 @@ class ChatsController < ApplicationController
     @chat = Chat.find(params[:id])
     @chat.messages.where(read_by_recipient: false).where.not(user: current_user).update_all(read_by_recipient: true)
     broadcast_notifs_to(current_user)
-    head :ok
+    if params[:after] == "game"
+      redirect_to game_path(@chat.game)
+    else
+      head :ok
+    end
   end
 end
