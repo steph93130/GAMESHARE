@@ -41,6 +41,10 @@ class BookingPolicy < ApplicationPolicy
     true
   end
 
+  def rate?
+    user == record.game.user || user == record.user
+  end
+
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!
