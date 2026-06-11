@@ -53,6 +53,13 @@ $logo-height: 150px;
 
   }
 
+  .logo-name {
+  -webkit-text-stroke: 2px white;
+  text-shadow:
+    0 0 2px white,
+    0 0 4px white;
+}
+
   .logoX {
   max-width: 100px;
   }
