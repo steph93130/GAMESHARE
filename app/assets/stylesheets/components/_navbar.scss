@@ -103,16 +103,16 @@ span {
 }
 
 .header-profil {
-  min-height: 300px;
+  min-height: 200px;
   width: 100%;
   background: $bg-footer;
   text-align: center;
   align-content: center;
   display: flex;
   flex-direction: column;
-  padding-top: 30px;
+  padding-top: 15px;
   padding-right: 0px;
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
   margin: 0px;
   border: 1px solid $bg-footer;
   border-end-start-radius: 15px;

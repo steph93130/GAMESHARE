@@ -3,16 +3,16 @@
 }
 
 .notif_attente {
-    padding: 0.375em 1em;
+    padding: 0.45em 1.21em;
     background-color: $bg-footer;
-    border-radius: 0.2em;
+    border-radius: 0.24em;
     color: #fff;
     position: relative;
     z-index: 1049;
 
     span {
         color: #fff;
-        font-size: 0.75rem;
+        font-size: 0.9rem;
     }
 
     a {
@@ -21,7 +21,7 @@
 }
 
 .notif-dismiss {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     color: #fff;
     opacity: 0.7;
     text-decoration: none;
