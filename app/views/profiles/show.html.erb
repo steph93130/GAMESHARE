@@ -1,17 +1,21 @@
 <div class="container">
 
 <div class="rating">
+<p class="text-rating"><i class="fa-solid fa-medal"></i> <%= @user.username %>, ton statut sur GameShare depuis ton inscription <span>(<%= l(@user.created_at.to_date, format: :long, locale: :fr) %>)</span></p>
   <div class="calcul-rating">
     <% user_rating = @user.rating.round(1) %>
-    <% nb_rate_bad = 5 - user_rating.to_i %>
-
-    <% if user_rating == 5 %>
-      <% 5.times do %><i class="fa-solid fa-star purple"></i><% end %>
-    <% else %>
-      <% user_rating.to_i.times do %><i class="fa-solid fa-star green fs-5"></i><% end %><% nb_rate_bad.times  do %><i class="fa-regular fa-star fs-6"></i><% end %>
-    <% end %>
+<% if user_rating == 0 %>
+  <p>⭐ Nouveau venu</p>
+<% elsif user_rating > 0  && user_rating <= 2 %>
+  <p>🌱 Prometteur</p>
+<% elsif user_rating > 2  && user_rating <= 3 %>
+  <p>🌟 Bien apprécié par la communauté</p>
+<% elsif user_rating > 3 && user_rating <= 4 %>
+<p>🏅 Membre recommandé</p>
+<% elsif user_rating > 4 %>
+<p>🚀 Top profil</p>
+<% end %>
   </div>
-<p class="text-rating"><i class="fa-solid fa-medal"></i> <%= @user.username %>, ta cotation sur GameShare depuis ton inscription <span>(<%= l(@user.created_at.to_date, format: :long, locale: :fr) %>)</span></p>
 </div>
 <div class="main-profil">
   <%= link_to owner_path do %>
