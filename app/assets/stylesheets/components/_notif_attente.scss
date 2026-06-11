@@ -1,8 +1,14 @@
+#actions_attentes {
+    margin-top: 1rem;
+}
+
 .notif_attente {
     padding: 0.375em 1em;
     background-color: $bg-footer;
     border-radius: 0.2em;
     color: #fff;
+    position: relative;
+    z-index: 1049;
 
     span {
         color: #fff;

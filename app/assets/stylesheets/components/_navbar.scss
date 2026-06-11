@@ -103,26 +103,30 @@ span {
 }
 
 .header-profil {
-  height: 300px;
+  min-height: 300px;
   width: 100%;
   background: $bg-footer;
   text-align: center;
   align-content: center;
   display: flex;
   flex-direction: column;
-  padding-top: 60px;
+  padding-top: 30px;
   padding-right: 0px;
+  padding-bottom: 1rem;
   margin: 0px;
   border: 1px solid $bg-footer;
   border-end-start-radius: 15px;
   border-end-end-radius: 15px;
+  overflow: hidden;
 
 
     p {
-      margin-top: 15px;
-      margin-bottom: 15px;
+      margin-top: 4px;
+      margin-bottom: 4px;
       font-size: medium ;
       color: white;
+      padding: 0 1rem;
+      word-break: break-word;
     }
 
     .logo2{
