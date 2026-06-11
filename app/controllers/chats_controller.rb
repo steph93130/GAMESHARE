@@ -10,7 +10,7 @@ class ChatsController < ApplicationController
         partial: "chats/inline",
         locals: { chat: @chat, is_owner: true, other_user: @chat.user }
       )
-      redirect_to game_path(@game, query: params[:query])
+      redirect_to game_path(@game, query: params[:query], anchor: "inline_chat_container")
     else
       render "games/show", status: :unprocessable_entity
     end

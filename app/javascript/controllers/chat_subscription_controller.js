@@ -7,7 +7,7 @@ export default class extends Controller {
   static targets = ["messages"]
 
   connect() {
-    this.messagesTarget.lastElementChild?.scrollIntoView()
+    (this.messagesTarget.lastElementChild ?? this.element).scrollIntoView({ behavior: "smooth" })
 
     const bookingActions = document.getElementById("booking_actions")
     if (bookingActions?.parentElement) {
@@ -28,6 +28,10 @@ export default class extends Controller {
       { received: data => {
         this.messagesTarget.insertAdjacentHTML("beforeend", data.trim())
         this.messagesTarget.lastElementChild?.scrollIntoView({ behavior: "smooth" })
+        fetch(`/chats/${this.chatIdValue}/mark_read`, {
+          method: 'PATCH',
+          headers: { 'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content }
+        })
       }}
     )
   }
