@@ -3,7 +3,7 @@
 <div class="container">
 
 <div class="rating">
-<p class="text-rating"><i class="fa-solid fa-medal"></i> <%= @user.username %>, ton statut sur GameShare depuis ton inscription <span>(<%= l(@user.created_at.to_date, format: :long, locale: :fr) %>)</span></p>
+<p class="text-rating text-paytone"><%= @user.username %>, ton statut sur GameShare depuis ton inscription <span>(<%= l(@user.created_at.to_date, format: :long, locale: :fr) %>)</span></p>
   <div class="calcul-rating">
     <% user_rating = @user.rating.round(1) %>
 <% if user_rating == 0 %>
