@@ -30,7 +30,7 @@
           </div>
 
           <div class="prets-encours" data-tab-toggle-target="encours">
-            <% prets_encours = owner.empty? ? [] : owner[:submited] + owner[:validated] %>
+            <% prets_encours = owner.empty? ? [] : owner[:submited] + owner[:validated] + owner[:returned] %>
             <% if prets_encours.any? %>
               <div class="row mx-0">
                 <% prets_encours.each do |booking| %>
@@ -68,7 +68,7 @@
          aria-expanded="false"
          aria-controls="myLudo-emprunt"
          style="cursor: pointer;">
-      <p><i class="fa-solid fa-euro-sign purple"></i> MES EMPRUNTS (<%= borrow[:accepted].length + borrow[:validated].length %>)</p>
+      <p><i class="fa-solid fa-euro-sign purple"></i> MES EMPRUNTS (<%= borrow[:accepted].length + borrow[:validated].length  + borrow[:closed].length + borrow[:returned].length %>)</p>
       <!-- <p><i class="fa-solid fa-dice purple"></i> MES EMPRUNTS (<%#= borrow.values.sum(&:length) %>)</p> -->
       <p><i class="fa-solid fa-angle-right chevron-toggle"></i></p>
     </div>
@@ -92,7 +92,7 @@
           </div>
 
           <div class="emprunts-encours" data-tab-toggle-target="encours">
-            <% emprunts_encours = borrow.empty? ? [] : borrow[:accepted] + borrow[:validated] %>
+            <% emprunts_encours = borrow.empty? ? [] : borrow[:accepted] + borrow[:validated] + borrow[:returned] %>
             <% if emprunts_encours.any? %>
               <div class="row mx-0">
                 <% emprunts_encours.each do |booking| %>
