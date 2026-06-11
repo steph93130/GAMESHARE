@@ -1,200 +1,198 @@
 <nav class="fixed-top p-2 border-bottom bg-nav justify-content-around d-none d-md-flex" id="desktop-nav">
 
- <%= link_to root_path class: "mobile-nav-item" do %>
-      <%= image_tag "logomax.png",
+  <%= link_to root_path class: "mobile-nav-item" do %>
+    <%= image_tag "logomax.png",
           alt: "GameShare",
           class: "logo2",
           height: "35px" %>
-    <% end %>
+  <% end %>
 
 
   <%= link_to owner_path, class: "mobile-nav-item c1" do %>
     <i class="fa-solid fa-dice red-light"></i>
-    <span>Tes jeux</span>
+    <span>Mes jeux</span>
   <% end %>
 
 
-
-
-<% if user_signed_in? %>
-  <%= link_to "#modalAddGame",
+  <% if user_signed_in? %>
+    <%= link_to "#modalAddGame",
       class: "mobile-nav-item",
       data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
-    <i class="fa-solid fa-square-plus red-light"></i>
-    <span>Ajoute un jeu</span>
-  <% end %>
-<% else %>
-  <%= link_to "#modalAddGame",
+      <i class="fa-solid fa-square-plus red-light"></i>
+      <span>Ajoute un jeu</span>
+    <% end %>
+  <% else %>
+    <%= link_to "#modalAddGame",
       class: "mobile-nav-item hidden",
       data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
-    <i class="fa-solid fa-square-plus red-light"></i>
-    <span>Ajoute un jeu</span>
+      <i class="fa-solid fa-square-plus red-light"></i>
+      <span>Ajoute un jeu</span>
+    <% end %>
   <% end %>
-<% end %>
 
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
     <i class="fa-solid fa-list-check blue-light"></i>
-    <span>Tes Share</span>
+    <span>Mes Share</span>
   <% end %>
 
-  <% if user_signed_in? %>
-
   <div class="dropdown">
-    <a href="#"
+    <% if user_signed_in? %>
+
+
+      <a href="#"
        class="mobile-nav-item dropdown-toggle"
        data-bs-toggle="dropdown"
        aria-expanded="false">
-      <i class="fa-solid fa-user c3"></i>
-      <span>Profile</span>
-    </a>
+        <i class="fa-solid fa-user c3"></i>
+        <span>Mon profil</span>
+      </a>
 
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li>
-        <%= link_to "Mon profil",
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+          <%= link_to "Mon profil",
             profile_path,
             class: "dropdown-item" %>
-      </li>
+        </li>
 
-      <li><hr class="dropdown-divider"></li>
+        <li><hr class="dropdown-divider"></li>
 
-      <li>
-        <%= link_to "Déconnexion",
+        <li>
+          <%= link_to "Déconnexion",
             destroy_user_session_path,
             data: { turbo_method: :delete },
             class: "dropdown-item text-danger" %>
-      </li>
-    </ul>
-  </div>
+        </li>
+      </ul>
 
-<% else %>
 
-  <div class="dropdown">
-    <a href="#"
+    <% else %>
+
+
+      <a href="#"
       class="mobile-nav-item dropdown-toggle"
       data-bs-toggle="dropdown"
       aria-expanded="false">
-      <i class="fa-solid fa-user"></i>
-      <span>Compte</span>
-    </a>
+        <i class="fa-solid fa-user"></i>
+        <span>Compte</span>
+      </a>
 
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li>
-        <%= link_to "Connexion",
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+          <%= link_to "Connexion",
             new_user_session_path,
             class: "dropdown-item" %>
-      </li>
+        </li>
 
-      <li>
-        <%= link_to "Inscription",
+        <li>
+          <%= link_to "Inscription",
             new_user_registration_path,
             class: "dropdown-item" %>
-      </li>
-    </ul>
-  </div>
+        </li>
+      </ul>
 
-<% end %>
+
+    <% end %>
+  </div>
 
 </nav>
 
 
-
-
-
-
 <nav class="mobile-nav d-md-none">
 
-   <%= link_to root_path class: "mobile-nav-item" do %>
-      <%= image_tag "logomax.png",
+  <%= link_to root_path class: "mobile-nav-item" do %>
+    <%= image_tag "logomax.png",
           alt: "GameShare",
           class: "logo2",
           height: "35px" %>
-    <% end %>
+  <% end %>
 
 
   <%= link_to owner_path, class: "mobile-nav-item c1" do %>
     <i class="fa-solid fa-dice red-light"></i>
-    <span>Tes jeux</span>
+    <span>Mes jeux</span>
   <% end %>
 
 
-<% if user_signed_in? %>
-  <%= link_to "#modalAddGame",
+  <% if user_signed_in? %>
+    <%= link_to "#modalAddGame",
       class: "mobile-nav-item",
       data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
-    <i class="fa-solid fa-square-plus red-light"></i>
-    <span>Ajoute un jeu</span>
-  <% end %>
-<% else %>
-  <%= link_to "#modalAddGame",
+      <i class="fa-solid fa-square-plus red-light"></i>
+      <span>Ajoute un jeu</span>
+    <% end %>
+  <% else %>
+    <%= link_to "#modalAddGame",
       class: "mobile-nav-item hidden",
       data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
-    <i class="fa-solid fa-square-plus red-light"></i>
-    <span>Ajoute un jeu</span>
+      <i class="fa-solid fa-square-plus red-light"></i>
+      <span>Ajoute un jeu</span>
+    <% end %>
   <% end %>
-<% end %>
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
     <i class="fa-solid fa-list-check blue-light"></i>
-    <span>Tes Share</span>
+    <span>Mes Share</span>
   <% end %>
 
- <% if user_signed_in? %>
-
   <div class="dropdown dropup">
-    <a href="#"
+    <% if user_signed_in? %>
+
+
+      <a href="#"
        class="mobile-nav-item dropdown-toggle"
        data-bs-toggle="dropdown"
        aria-expanded="false">
-      <i class="fa-solid fa-user c3"></i>
-      <span>Profile</span>
-    </a>
+        <i class="fa-solid fa-user c3"></i>
+        <span>Mon profil</span>
+      </a>
 
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li>
-        <%= link_to "Mon profil",
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+          <%= link_to "Mon profil",
             profile_path,
             class: "dropdown-item" %>
-      </li>
+        </li>
 
-      <li><hr class="dropdown-divider"></li>
+        <li><hr class="dropdown-divider"></li>
 
-      <li>
-        <%= link_to "Déconnexion",
+        <li>
+          <%= link_to "Déconnexion",
             destroy_user_session_path,
             data: { turbo_method: :delete },
             class: "dropdown-item text-danger" %>
-      </li>
-    </ul>
-  </div>
+        </li>
+      </ul>
 
-<% else %>
 
-  <div class="dropdown dropup">
-    <a href="#"
+    <% else %>
+
+
+      <a href="#"
        class="mobile-nav-item dropdown-toggle"
        data-bs-toggle="dropdown"
        aria-expanded="false">
-      <i class="fa-solid fa-user"></i>
-      <span>Compte</span>
-    </a>
+        <i class="fa-solid fa-user"></i>
+        <span>Compte</span>
+      </a>
 
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li>
-        <%= link_to "Connexion",
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+          <%= link_to "Connexion",
             new_user_session_path,
             class: "dropdown-item" %>
-      </li>
+        </li>
 
-      <li>
-        <%= link_to "Inscription",
+        <li>
+          <%= link_to "Inscription",
             new_user_registration_path,
             class: "dropdown-item" %>
-      </li>
-    </ul>
-  </div>
+        </li>
+      </ul>
 
-<% end %>
+
+    <% end %>
+  </div>
 
 </nav>
 
