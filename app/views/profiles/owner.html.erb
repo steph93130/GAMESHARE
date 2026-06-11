@@ -1,3 +1,5 @@
+<% provide(:title, "gameshare - tes jeux") %>
+
 <%= turbo_stream_from "user_#{current_user.id}_games" %>
 
 <div id="owner_games" class="game-rules owner text-start">

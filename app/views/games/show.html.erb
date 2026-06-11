@@ -1,3 +1,5 @@
+<% provide(:title, "gameshare - #{@game.title}") %>
+
 <% content_for :meta_title, "#{@game.title} - #{DEFAULT_META["meta_product_name"]}" %>
 <% content_for :meta_description, @game.description %>
 <% if @game.picture.attached? %>
