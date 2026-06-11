@@ -11,7 +11,7 @@
         <span class="status-badge status-pending">
           <i class="fa-solid fa-clock"></i> Demande reçue
         </span>
-        <p class="txt-small"><i class="fa-solid fa-user"></i> <%= b.chat.user.username %></p>
+        <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.chat.user.username %></p>
         <div class="booking-actions">
           <%= link_to accept_booking_path(b), data: { turbo_method: :patch }, class: "btn-booking btn-booking--accept" do %>
             <i class="fa-solid fa-check"></i>
@@ -25,7 +25,7 @@
         <span class="status-badge status-accepted">
           <i class="fa-solid fa-circle-check"></i> Accepté
         </span>
-        <p class="txt-small"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
+        <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
         <%= link_to deposit_booking_path(b), class: "btn-booking btn-booking--action" do %>
           <i class="fa-solid fa-basket-shopping"></i> Confirmer
         <% end %>
@@ -35,20 +35,20 @@
           <i class="fa-solid fa-handshake"></i> En cours
         </span>
         <% if b.game.user == current_user %>
-          <p class="txt-small"><i class="fa-solid fa-user"></i> <%= b.chat.user.username %></p>
+          <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.chat.user.username %></p>
           <%= link_to returned_booking_path(b), data: { turbo_method: :patch }, class: "btn-booking btn-booking--action" do %>
             <i class="fa-solid fa-rotate-left"></i> Retour
           <% end %>
         <% else %>
-          <p class="txt-small"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
-          <p class="txt-small text-warning">N'oublie pas de le rendre !</p>
+          <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
+          <p class="txt-small text-warning ps-2">N'oublie pas de le rendre !</p>
         <% end %>
 
       <% elsif b.status == "returned" %>
         <span class="status-badge status-returned">
           <i class="fa-solid fa-box-open"></i> Retourné
         </span>
-        <p class="txt-small"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
+        <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
         <%= link_to give_back_booking_path(b), class: "btn-booking btn-booking--action" do %>
           <i class="fa-solid fa-euro-sign"></i> Caution
         <% end %>
