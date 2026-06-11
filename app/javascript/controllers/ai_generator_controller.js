@@ -41,14 +41,14 @@ export default class extends Controller {
       body.append("image", imageInput.files[0])
     }
 
-    const response = await fetch(this.data.get("url"), {
-      method: "POST",
+    const response = await fetch(url, {
+      method: 'POST',
       headers: {
-        "X-CSRF-Token": csrfToken,
-        "Accept": "application/json"
+        'X-CSRF-Token': csrfToken,
+        Accept: 'application/json',
       },
       body,
-      credentials: 'include'
+      credentials: 'include',
     })
 
     const data = await response.json()
