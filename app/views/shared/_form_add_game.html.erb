@@ -12,7 +12,7 @@
           <%= f.label :condition, "État", class: "form-label2" %>
           <%= f.select :condition,
             ["Bon", "Moyen", "Usagé"],
-            { prompt: "Choisi" },
+            { prompt: "Choisis" },
             class: "form-select rounded-pill" %>
         </div>
 
@@ -25,7 +25,7 @@
           <%= f.label :rent_duration, "Durée de location", class: "form-label2" %>
           <%= f.select :rent_duration,
             [["1 jour", 1], ["3 jours", 3], ["7 jours", 7], ["14 jours", 14]],
-            { prompt: "Choisi" },
+            { prompt: "Choisis" },
             class: "form-select rounded-pill" %>
         </div>
 
@@ -33,7 +33,7 @@
           <%= f.label :age, "Âge recommandé", class: "form-label2" %>
           <%= f.select :age,
             [["3+", 3], ["6+", 6], ["7+", 7], ["10+", 10],["12+", 16],["16+", 16]],
-            { prompt: "Choisi" },
+            { prompt: "Choisis" },
             class: "form-select rounded-pill" %>
         </div>
 
@@ -41,7 +41,7 @@
           <%= f.label :player_number, "Nombre de joueurs", class: "form-label2" %>
           <%= f.select :player_number,
             [["1", 1], ["2", 2], ["4", 4], ["5", 5], ["6+", 6]],
-            { prompt: "Choisi" },
+            { prompt: "Choisis" },
             class: "form-select rounded-pill" %>
         </div>
 
@@ -54,12 +54,12 @@
               "Draft", "Enquête", "Escape game", "Rôle",
               "Figurines", "Affrontement", "Abstrait", "Enfant"
             ],
-            { prompt: "Choisi" },
+            { prompt: "Choisis" },
             class: "form-select rounded-pill" %>
         </div>
 
         <%# ── Bouton unique IA ── %>
-        <button type="button" 
+        <button type="button"
           data-ai-generator-target="button"
           data-action="click->ai-generator#generate"
           class="btn btn-outline-primary d-inline-flex align-items-center gap-2 rounded-2 px-4">
@@ -99,7 +99,7 @@
           <%= f.label :deposit, "Caution", class: "form-label2" %>
           <%= f.select :deposit,
             [["5 €", 5], ["10 €", 10], ["15 €", 15], ["20 €", 20]],
-            { prompt: "Choisi" },
+            { prompt: "Choisis" },
             class: "form-select rounded-pill" %>
         </div>
 
@@ -117,6 +117,6 @@
       <% end %>
     </div>
 
-    
+
   </div>
 </div>
