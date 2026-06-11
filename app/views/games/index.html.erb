@@ -1,8 +1,5 @@
 <div class="container my-5">
 
-
-
-
   <h2 class="text-center">
     <span class="red">N</span>
     <span class="blue">o</span>
@@ -35,7 +32,7 @@
   </h2>
 
 
-  <div class="map""
+  <div class="map"
     data-controller="map"
     data-map-game-markers-value="<%= @game_markers.to_json %>"
     data-map-user-markers-value="<%= @user_markers.to_json %>"
@@ -47,8 +44,8 @@
       <%= f.hidden_field :query, value: params[:query] %>
       <div class="row g-3 align-items-end">
         <div class="col-12 col-md-4">
-          <label class="form-label2 fw-semibold d-flex align-items-center gap-1">
-            <i class="fa-solid fa-dice red"></i> Catégorie du jeu
+          <label class="form-label2  d-flex align-items-center gap-1 mb-1">
+            <i class="fa-solid fa-dice red mb-1"></i> Catégorie du jeu
           </label>
           <%= f.select :category,
             options_for_select([["Toutes les catégories", ""]] + @categories.map { |c| [c, c] }, params[:category]),
@@ -56,8 +53,8 @@
             class: "form-select input_ask", onchange: "this.form.submit()" %>
         </div>
         <div class="col-12 col-md-3">
-          <label class="form-label2 fw-semibold d-flex align-items-center gap-1">
-            <i class="fa-solid fa-chess-knight orange"></i> Nbe de compagnons de jeu (min)
+          <label class="form-label2  d-flex align-items-center gap-1 mb-1">
+            <i class="fa-solid fa-chess-knight orange mb-1"></i> Nbe de compagnons de jeu (min)
           </label>
           <%= f.select :player_number,
             options_for_select([["Nbre de joueurs", ""]] + @player_numbers.map { |n| ["#{n} joueur#{n > 1 ? 's' : ''}", n] }, params[:player_number]),
@@ -65,8 +62,8 @@
             class: "form-select input_ask", onchange: "this.form.submit()" %>
         </div>
         <div class="col-12 col-md-3">
-          <label class="form-label2 fw-semibold d-flex align-items-center gap-1">
-            <i class="fa-solid fa-user blue"></i> Âge conseillé
+          <label class="form-label2  d-flex align-items-center gap-1 mb-1">
+            <i class="fa-solid fa-user blue mb-1"></i> Âge conseillé
           </label>
           <%= f.select :age,
             options_for_select([["Tous les âges", ""]] + @ages.map { |a| ["#{a}+", a] }, params[:age]),
@@ -80,7 +77,7 @@
               <i class="fa-solid fa-filter-circle-xmark fs-4 red"></i>
             <% end %>
           <% else %>
-            <i class="fa-solid fa-filter fs-4 text-muted opacity-50" title="Aucun filtre actif"></i>
+            <i class="fa-solid fa-filter"></i>
           <% end %>
         </div>
       </div>
@@ -99,15 +96,14 @@
             <%= link_to game_path(game, query: params[:query]), data: { turbo_frame: "_top" } do %>
 
 <div class="game-card h-100"
-     style="--game-bg: url('<%= cl_image_path(game.picture.key) if game.picture.attached? %>');">
-
+    style="--game-bg: url('<%= cl_image_path(game.picture.key) if game.picture.attached? %>');">
 
 
   <p class="txt"><i class="fa-solid fa-dice red"></i><br> <%= game.category %></p>
   <p class="txt"><i class="fa-solid fa-user blue"></i><br> <%= game.age %> ans</p>
   <p class="txt"><i class="fa-solid fa-chess-knight orange"></i><br> <%= game.player_number %> joueur<%= game.player_number > 1 ? 's' : '' %></p>
 
-   <h2 class="game-title bg-title-<%= %w[red blue yellow orange green purple].sample %>"><%= game.title %></h2>
+  <h2 class="game-title bg-title-<%= %w[red blue yellow orange green purple].sample %>"><%= game.title %></h2>
 
 </div>
 
@@ -121,7 +117,7 @@
     <% else %>
 
       <div class="text-center">
-        <p>Aucun jeu disponible.</p>
+        <p><%= current_user.username %>, il n'y a pas encore de jeux disponibles autour de chez toi. Profites-en pour en ajouter un !<br> Click ici <br>⤵️</p>
       </div>
 
     <% end %>
