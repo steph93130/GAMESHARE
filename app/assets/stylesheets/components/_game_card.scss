@@ -83,12 +83,23 @@
 .txt {
   color: white;
 }
+
+.txt-home {
+  color: white;
+  background-color: $bg-footer;
+}
+
+
 .txt-borrow {
   color:black;
 }
 
 a {
   text-decoration: none;
+}
+
+.bg-letter {
+background-color: $bg-footer;
 }
 
 

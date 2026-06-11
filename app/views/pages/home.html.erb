@@ -67,11 +67,11 @@
                  style="--game-bg: url('<%= cl_image_path(game.picture.key) if game.picture.attached? %>');">
 
               <p class="txt">
-                <i class="fa-solid fa-dice red"></i><br> <%= game.category %>
+                <i class="fa-solid fa-dice red"></i><br> <span class="bg-letter"><%= game.category %></span>
               </p>
 
               <p class="txt">
-                <i class="fa-solid fa-user blue"></i><br> <%= game.age %> ans
+                <i class="fa-solid fa-user blue"></i><br><%= game.age %> ans
               </p>
 
               <p class="txt">
