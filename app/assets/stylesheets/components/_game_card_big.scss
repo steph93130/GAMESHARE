@@ -22,10 +22,6 @@
   padding: 30px;
 }
 
-.game-content .txt {
-  color: $bg-footer;
-  margin-bottom: 12px;
-}
 
 .game-rules {
   color: $bg-footer;
@@ -54,11 +50,45 @@
   top: 250px;
   margin: 0;
   padding: 8px 18px;
-  font-size: 50px;
+  font-size: 35px;
   border-radius: 0 30px 30px 0;
   z-index: 10;
   color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+
+.pills {
+  background-color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 50%;
+  height: 54px;
+  width: 54px;
+  line-height: 32px;
+// box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.txt {
+  font-size: 20px;
+}
+
+.rules {
+  color: white !important;
+  background-color: $purple;
+  padding: 15px;
+  border-radius: 25px;
+
+}
+
+.game-title3 {
+  color: $purple;
+}
+
+.bg {
+  color: white;
+  padding: 15px;
+  border-radius: 25px;
 }
 
 @media (max-width: 576px) {
@@ -77,11 +107,12 @@
 
 .game-image-big {
   width: 100%;
-  height: 600px;
+  min-height: 400px;
   object-fit: cover;
   margin: 0;
   background: transparent;
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 0;
 }
 
 .game-card-big {
@@ -90,7 +121,15 @@
   overflow: hidden;
   color: white;
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0.25);
-
+  margin: 0;
   }
+
+    .container,
+  .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+
 
 }

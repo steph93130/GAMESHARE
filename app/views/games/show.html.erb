@@ -20,7 +20,7 @@
           </div>
         <% end %>
 
-        <h2 class="game-title-overlay bg-title-<%= %w[red blue yellow orange green purple].sample %>">
+        <h2 class="game-title-overlay bg-title-<%= bg0 = %w[red blue yellow orange green purple].sample %>">
           <%= @game.title %>
         </h2>
 
@@ -46,45 +46,47 @@
 
       <div class="game-content">
 
+        <div class=" bg bg-title-<%= bg0 %>">
+
         <p class="txt">
-          <i class="fa-solid fa-crown yellow"></i>
+          <i class="fa-solid fa-crown yellow pills"></i>
           <strong>Proposé par :</strong>
           <%= @game.user.username %>
         </p>
 
         <p class="txt">
-          <i class="fa-regular fa-message blue"></i>
+          <i class="fa-regular fa-message blue pills"></i>
           <%= @game.description %>
         </p>
 
         <p class="txt">
-          <i class="fa-solid fa-dice red"></i>
+          <i class="fa-solid fa-dice red pills"></i>
           <%= @game.category %>
         </p>
       <div class="d-flex justify-content-between">
-        <p class="txt flex-fill">
-          <i class="fa-solid fa-user blue"></i>
+        <p class=" flex-fill">
+          <i class="fa-solid fa-user blue pills"></i>
           <%= @game.age %> ans
         </p>
 
         <p class="txt flex-fill">
-          <i class="fa-solid fa-chess-knight orange"></i>
+          <i class="fa-solid fa-chess-knight orange pills"></i>
           <%= @game.player_number %>
           joueur<%= @game.player_number > 1 ? "s" : "" %>
         </p>
     </div>
         <p class="txt">
-          <i class="fa-solid fa-dungeon green"></i>
+          <i class="fa-solid fa-dungeon green pills"></i>
           Durée du prêt :
           <%= @game.rent_duration %>
           jour<%= @game.rent_duration.to_i > 1 ? "s" : "" %>
         </p>
 
         <p class="txt">
-          <i class="fa-solid fa-map-location-dot red"></i>
+          <i class="fa-solid fa-map-location-dot red pills"></i>
           <%= @game.address.upcase.split(",").last %>
         </p>
-
+        </div>
         <div class="mt-4">
           <button class="btn btn-link p-0 text-decoration-none d-flex align-items-center gap-2"
                   type="button"
@@ -92,12 +94,12 @@
                   data-bs-target="#gameRules"
                   aria-expanded="false"
                   aria-controls="gameRules">
-            <h4 class="game-title2 mb-0">Règles du jeu</h4>
+            <h4 class="game-title3 mb-0">Règles du jeu</h4>
             <i class="fa-solid fa-chevron-down rules-chevron"></i>
           </button>
 
           <div class="collapse mt-3" id="gameRules">
-            <div class="game-rules text-start">
+            <div class="bg bg-title-<%= bg0 %> text-start">
               <%= simple_format(@game.rules) %>
             </div>
           </div>
