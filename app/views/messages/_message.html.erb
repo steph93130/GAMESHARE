@@ -1,5 +1,5 @@
 <div class="d-flex mb-2 chat-message <%= mine ? 'justify-content-end' : 'justify-content-start' %>">
-  <div class="message-bubble px-3 py-2 rounded-pill <%= mine ? 'bg-white' : 'bg-primary text-white' %>">
+  <div class="message-bubble px-3 py-3 rounded-5 mt-3 <%= mine ? 'bg-white' : 'bg-primary text-white' %>">
     <% if message.content.start_with?("BORROW_REQUEST|") %>
       <% borrower_username = message.content.split("|").last %>
       <% if mine %>
