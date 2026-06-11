@@ -7,7 +7,7 @@
          aria-controls="myLudo-pret"
          style="cursor: pointer;">
       <!-- <p><i class="fa-solid fa-dice purple"></i> MES PRÊTS (<%#= owner.values.sum(&:length) %>)</p> -->
-      <p><i class="fa-solid fa-dice purple"></i> MES PRÊTS (<%= owner[:submited].length + owner[:validated].length + owner[:closed].length + owner[:returned].length %>)</p>
+      <p><i class="fa-solid fa-dice purple"></i> MES PRÊTS (<%= owner[:submited].length + owner[:validated].length + owner[:returned].length %>)</p>
       <p><i class="fa-solid fa-angle-right chevron-toggle"></i></p>
     </div>
     <div class="mt-4">
@@ -22,10 +22,10 @@
               </div>
 
             <div class="button" data-tab-toggle-target="btnClotures" data-action="click->tab-toggle#showClotures">Clôturés
-              <% owner_clotures = owner[:closed].length %>
-              <% if owner_clotures > 1 %>
-              (<%= owner[:closed].length %>)
-              <% end %>
+              <%# owner_clotures = owner[:closed].length %>
+              <%# if owner_clotures > 1 %>
+              <!-- (<%#= owner[:closed].length %>) -->
+              <%# end %>
               </div>
           </div>
 
@@ -84,10 +84,10 @@
               <% end %>
               </div>
             <div class="button" data-tab-toggle-target="btnClotures" data-action="click->tab-toggle#showClotures">Clôturés
-              <% borrow_cloture = borrow[:closed].length %>
-              <% if borrow_cloture > 0 %>
-              (<%= borrow_cloture %>)
-              <% end %>
+              <%# borrow_cloture = borrow[:closed].length %>
+              <%# if borrow_cloture > 0 %>
+              <!-- (<%#= borrow_cloture %>) -->
+              <%# end %>
               </div>
           </div>
 
