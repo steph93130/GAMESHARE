@@ -9,8 +9,12 @@ class GamePolicy < ApplicationPolicy
     true
   end
 
+  def new?
+    user.present?
+  end
+
   def create?
-    user == record.user
+    user.present?
   end
 
   def edit?
