@@ -10,9 +10,9 @@
   flex-direction: column;
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  padding: 20px;
+  padding: 5px;
 
-    .fa-solid {
+  .fa-solid {
       vertical-align: middle;
     }
     .text-rating {
@@ -31,8 +31,8 @@
 }
 
 .card-profil {
-  width: 95%;
-  background: white;
+  width: 92%;
+  background: $bg-footer;
   margin: 1em auto .5em auto;
   // border: 1px solid $bg-footer;
   border-radius: 25px;
@@ -45,14 +45,17 @@
     padding-top: 1em;
     margin-left: 25px;
     margin-right: 25px;
+    color: $white;
     }
 
     .fa-solid {
       padding-right: 15px ;
+      color: $white;
     }
 
     .fa-brands {
       padding-right: 15px;
+      color: $white;
     }
 
     .chevron-toggle {
@@ -66,13 +69,7 @@
 
 .main-profil {
   padding-top: 15px;
-
 }
-
-.rating {
-  padding-top: 25px;
-}
-
 .buttons-profil {
   display: flex;
   align-items:flex-start;

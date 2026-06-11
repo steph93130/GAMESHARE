@@ -83,5 +83,45 @@
   background: transparent;
   color: $bg-footer;
   border-radius: 15px;
-  padding: 10px;
+  padding: 0px;
+}
+
+.prets-encours p {
+  width: 92%;
+  background: white;
+  border: 1px solid grey;
+  border-radius: 15px;
+  margin: auto;
+  padding: 5px 0px 5px 0px;
+  color:black;
+}
+
+.prets-clotures p {
+  width: 92%;
+  background: white;
+  border: 1px solid grey;
+  border-radius: 15px;
+  margin: auto;
+  padding: 5px 0px 5px 0px;
+  color:black;
+}
+
+.emprunts-clotures p {
+  width: 92%;
+  background: white;
+  border: 1px solid grey;
+  border-radius: 15px;
+  margin: auto;
+  padding: 5px 0px 5px 0px;
+  color:black;
+}
+
+.emprunts-encours p {
+  width: 92%;
+  background: white;
+  border: 1px solid grey;
+  border-radius: 15px;
+  margin: auto;
+  padding: 5px 0px 5px 0px;
+  color:black;
 }
