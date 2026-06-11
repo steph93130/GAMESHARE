@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" data-controller="ai-generator" data-ai-generator-url-value="<%= fetch_rules_games_path %>">
 
 <div class="ajouter mt-1">
   <h1 class="my-5 text-center" id="ajout">
@@ -23,7 +23,7 @@
   <%= form_with model: @game, local: true, html: { multipart: true }, class: "row g-3" do |f| %>
     <div class="col-md-6">
       <%= f.label :title, "Titre", class: "form-label2" %>
-      <%= f.text_field :title, class: "form-control" %>
+      <%= f.text_field :title, class: "form-control", data: { ai_generator_target: "title" } %>
     </div>
     <div class="col-md-6">
       <%= f.label :condition, "État", class: "form-label2" %>
@@ -34,7 +34,7 @@
     </div>
     <div class="col-md-6">
       <%= f.label :picture, "Image du jeu", class: "form-label2" %>
-      <%= f.file_field :picture, class: "form-control" %>
+      <%= f.file_field :picture, class: "form-control", data: { ai_generator_target: "image" } %>
     </div>
   <div class="col-md-6">
     <%= f.label :rent_duration, "Durée de location", class: "form-label2" %>
@@ -86,13 +86,37 @@
       { prompt: "Choisir une catégorie" },
       class: "form-select" %>
   </div>
+
+  <%# ── Bouton unique IA ── %>
+  <button type="button"
+    data-ai-generator-target="button"
+    data-action="click->ai-generator#generate"
+    class="btn btn-outline-primary d-inline-flex align-items-center gap-2 rounded-2 px-4">
+    <span data-ai-generator-target="icon">✨</span>
+    <span data-ai-generator-target="label" class="text-info-emphasis">Générer la description et les règles via l'IA</span>
+    <span data-ai-generator-target="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+  </button>
+  <div data-ai-generator-target="alert" class="alert alert-danger py-2 mt-2 d-none" role="alert"></div>
+
   <div class="col-12">
     <%= f.label :description, "Description", class: "form-label2" %>
-    <%= f.text_area :description, rows: 4, class: "form-control" %>
+    <%= f.text_area :description, rows: 3, class: "form-control rounded-4", id: "game_description",
+        data: { ai_generator_target: "description" },
+        placeholder: "Description" %>
   </div>
   <div class="col-12">
-    <%= f.label :rules, "Règles du jeu", class: "form-label2" %>
-    <%= f.text_area :rules, rows: 4, class: "form-control" %>
+    <div class="d-flex justify-content-between align-items-center mb-1">
+      <%= f.label :rules, "Règles du jeu", class: "form-label2 mb-0" %>
+      <button type="button" data-ai-generator-target="editButton" data-action="click->ai-generator#showTextarea" class="btn btn-link btn-sm p-0 text-white text-decoration-none d-none">Modifier</button>
+    </div>
+    <%= f.text_area :rules, rows: 6, class: "form-control rounded-4 font-monospace", id: "game_rules",
+        data: { ai_generator_target: "rules" },
+        placeholder: "Règles du jeu" %>
+    <%# Aperçu du rendu HTML ── affiché à la place du textarea après génération ── %>
+    <div data-ai-generator-target="previewWrapper" class="d-none">
+      <div data-ai-generator-target="preview" class="text-start border rounded-4 p-3 bg-secondary bg-opacity-10"></div>
+      <small class="text-muted">Généré par <%= image_tag("logomax.png", size: "16", alt: "Logo GameShare") %> — clique sur <em>Modifier</em> pour éditer le texte brut.</small>
+    </div>
   </div>
   <div class="col-md-6">
   <%= f.label :deposit, "Caution", class: "form-label2" %>
