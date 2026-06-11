@@ -16,10 +16,22 @@
 
 
 
-  <%= link_to "#modalAddGame", class: "mobile-nav-item", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
+<% if user_signed_in? %>
+  <%= link_to "#modalAddGame",
+      class: "mobile-nav-item",
+      data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
     <i class="fa-solid fa-square-plus red-light"></i>
-      <span>Ajoute un jeu</span>
-    <% end %>
+    <span>Ajoute un jeu</span>
+  <% end %>
+<% else %>
+  <%= link_to "#modalAddGame",
+      class: "mobile-nav-item hidden",
+      data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
+    <i class="fa-solid fa-square-plus red-light"></i>
+    <span>Ajoute un jeu</span>
+  <% end %>
+<% end %>
+
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
     <i class="fa-solid fa-list-check blue-light"></i>
@@ -107,10 +119,22 @@
     <span>Tes jeux</span>
   <% end %>
 
-  <%= link_to "#modalAddGame", class: "mobile-nav-item", data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
+
+<% if user_signed_in? %>
+  <%= link_to "#modalAddGame",
+      class: "mobile-nav-item",
+      data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
     <i class="fa-solid fa-square-plus red-light"></i>
     <span>Ajoute un jeu</span>
   <% end %>
+<% else %>
+  <%= link_to "#modalAddGame",
+      class: "mobile-nav-item hidden",
+      data: { bs_toggle: "modal", bs_target: "#modalAddGame" } do %>
+    <i class="fa-solid fa-square-plus red-light"></i>
+    <span>Ajoute un jeu</span>
+  <% end %>
+<% end %>
 
   <%= link_to borrow_path, class: "mobile-nav-item c2" do %>
     <i class="fa-solid fa-list-check blue-light"></i>
