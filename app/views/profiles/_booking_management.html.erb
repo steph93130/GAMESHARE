@@ -7,7 +7,7 @@
          aria-controls="myLudo-pret"
          style="cursor: pointer;">
       <!-- <p><i class="fa-solid fa-dice purple"></i> MES PRÊTS (<%#= owner.values.sum(&:length) %>)</p> -->
-      <p><i class="fa-solid fa-dice purple"></i> MES PRÊTS (<%= owner[:submited].length + owner[:validated].length + owner[:closed].length %>)</p>
+      <p><i class="fa-solid fa-dice purple"></i> MES PRÊTS (<%= owner[:submited].length + owner[:validated].length + owner[:closed].length + owner[:returned].length %>)</p>
       <p><i class="fa-solid fa-angle-right chevron-toggle"></i></p>
     </div>
     <div class="mt-4">
@@ -15,9 +15,9 @@
         <div class="text-start background-transparent" data-controller="tab-toggle">
           <div class="boutons-prets text-center">
             <div class="button" data-tab-toggle-target="btnEncours" data-action="click->tab-toggle#showEncours">En cours
-              <% owner_encours = owner[:submited].length + owner[:validated].length %>
+              <% owner_encours = owner[:submited].length + owner[:validated].length + owner[:returned].length %>
               <% if owner_encours > 0 %>
-              (<%= owner[:submited].length + owner[:validated].length %>)
+              (<%= owner_encours %>)
               <% end %>
               </div>
 
@@ -68,7 +68,7 @@
          aria-expanded="false"
          aria-controls="myLudo-emprunt"
          style="cursor: pointer;">
-      <p><i class="fa-solid fa-euro-sign purple"></i> MES EMPRUNTS (<%= borrow[:accepted].length + borrow[:validated].length + borrow[:returned].length %>)</p>
+      <p><i class="fa-solid fa-euro-sign purple"></i> MES EMPRUNTS (<%= borrow[:accepted].length + borrow[:validated].length  + borrow[:closed].length %>)</p>
       <!-- <p><i class="fa-solid fa-dice purple"></i> MES EMPRUNTS (<%#= borrow.values.sum(&:length) %>)</p> -->
       <p><i class="fa-solid fa-angle-right chevron-toggle"></i></p>
     </div>
@@ -80,19 +80,19 @@
             <div class="button" data-tab-toggle-target="btnEncours" data-action="click->tab-toggle#showEncours">En cours
               <% borrow_encours = borrow[:accepted].length + borrow[:validated].length %>
               <% if borrow_encours > 0 %>
-              (<%= borrow[:accepted].length + borrow[:validated].length %>)
+              (<%= borrow_encours %>)
               <% end %>
               </div>
             <div class="button" data-tab-toggle-target="btnClotures" data-action="click->tab-toggle#showClotures">Clôturés
-              <% borrow_cloture = borrow[:closed].length + borrow[:returned].length %>
+              <% borrow_cloture = borrow[:closed].length %>
               <% if borrow_cloture > 0 %>
-              (<%= borrow[:closed].length + borrow[:returned].length %>)
+              (<%= borrow_cloture %>)
               <% end %>
               </div>
           </div>
 
           <div class="emprunts-encours" data-tab-toggle-target="encours">
-            <% emprunts_encours = borrow.empty? ? [] : borrow[:accepted] + borrow[:validated] + borrow[:returned] + borrow[:closed] %>
+            <% emprunts_encours = borrow.empty? ? [] : borrow[:accepted] + borrow[:validated] %>
             <% if emprunts_encours.any? %>
               <div class="row mx-0">
                 <% emprunts_encours.each do |booking| %>
