@@ -1,4 +1,5 @@
-%= turbo_stream_from "user_#{current_user.id}_bookings" %>
+<% provide(:title, "gameshare - tes shares") %>
+<%= turbo_stream_from "user_#{current_user.id}_bookings" %>
 
 <%= render "profiles/booking_management", borrow: @borrow, owner: @owner, viewer: current_user %>
 
