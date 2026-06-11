@@ -1,11 +1,11 @@
-<div class="container">
+<div class="container" data-controller="ai-generator" data-ai-generator-url-value="<%= fetch_rules_games_path %>">
   <div class="row justify-content-center">
-    <div class="game-card p-4 col-12 col-lg-8" id="ajout">
+    <div class="game-card p-4 col-12 col-lg-8" >
       <%= form_with model: game, local: true, html: { multipart: true }, class: "row g-3" do |f| %>
 
         <div class="col-12">
           <%= f.label :title, "Titre", class: "form-label2" %>
-          <%= f.text_field :title, class: "form-control rounded-pill", id: "game_title" %>
+          <%= f.text_field :title, class: "form-control rounded-pill", id: "game_title", data: { ai_generator_target: "title" } %>
         </div>
 
         <div class="col-12">
@@ -18,7 +18,7 @@
 
         <div class="col-12">
           <%= f.label :picture, "Image du jeu", class: "form-label2" %>
-          <%= f.file_field :picture, class: "form-control rounded-pill", id: "game_picture" %>
+          <%= f.file_field :picture, class: "form-control rounded-pill", id: "game_picture", data: { ai_generator_target: "image" } %>
         </div>
 
         <div class="col-12">
@@ -59,20 +59,21 @@
         </div>
 
         <%# ── Bouton unique IA ── %>
-        <div class="col-12 text-center">
-          <button type="button" id="fetch-ai-btn" class="btn btn-outline-primary d-inline-flex align-items-center gap-2 rounded-2 px-4">
-            <span id="fetch-ai-icon">✨</span>
-            <span id="fetch-ai-label" class="text-info-emphasis">Générer la description et les règles via l'IA</span>
-            <span id="fetch-ai-spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-          </button>
-
-          <div id="fetch-ai-alert" class="alert alert-danger py-2 mt-2 d-none" role="alert"></div>
-        </div>
+        <button type="button" 
+          data-ai-generator-target="button"
+          data-action="click->ai-generator#generate"
+          class="btn btn-outline-primary d-inline-flex align-items-center gap-2 rounded-2 px-4">
+          <span data-ai-generator-target="icon" id="fetch-ai-icon">✨</span>
+          <span data-ai-generator-target="label" id="fetch-ai-label" class="text-info-emphasis">Générer la description et les règles via l'IA</span>
+          <span data-ai-generator-target="spinner" id="fetch-ai-spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+        </button>
+        <div data-ai-generator-target="alert" id="fetch-ai-alert" class="alert alert-danger py-2 mt-2 d-none" role="alert"></div>
 
         <%# ── Champ Description ── %>
         <div class="col-12">
           <%= f.label :description, "Description", class: "form-label2" %>
           <%= f.text_area :description, rows: 3, class: "form-control rounded-4", id: "game_description",
+              data: { ai_generator_target: "description" },
               placeholder: "Description" %>
         </div>
 
@@ -80,15 +81,16 @@
         <div class="col-12">
           <div class="d-flex justify-content-between align-items-center mb-1">
             <%= f.label :rules, "Règles du jeu", class: "form-label2 mb-0" %>
-            <button type="button" id="edit-rules-btn" class="btn btn-link btn-sm p-0 text-white text-decoration-none d-none">Modifier</button>
+            <button type="button" data-ai-generator-target="editButton" id="edit-rules-btn" data-action="click->ai-generator#showTextarea" class="btn btn-link btn-sm p-0 text-white text-decoration-none d-none">Modifier</button>
           </div>
 
           <%= f.text_area :rules, rows: 6, class: "form-control rounded-4 font-monospace", id: "game_rules",
+              data: { ai_generator_target: "rules" },
               placeholder: "Règles du jeu" %>
 
           <%# Aperçu du rendu HTML ── affiché à la place du textarea après génération ── %>
-          <div id="rules-preview-wrapper" class="d-none">
-            <div id="rules-preview" class="text-start border rounded-4 p-3 bg-secondary bg-opacity-10"></div>
+          <div data-ai-generator-target="previewWrapper" id="rules-preview-wrapper" class="d-none">
+            <div  data-ai-generator-target="preview" id="rules-preview" class="text-start border rounded-4 p-3 bg-secondary bg-opacity-10"></div>
             <small class="text-muted">Généré par <%= image_tag("logomax.png", size: "16", alt: "Logo GameShare") %> — clique sur <em>Modifier</em> pour éditer le texte brut.</small>
           </div>
         </div>
@@ -115,107 +117,6 @@
       <% end %>
     </div>
 
-    <script>
-    document.addEventListener("turbo:load", function () {
-      document.querySelectorAll("select.form-select").forEach(function(sel) {
-        const blank = sel.querySelector('option[value=""]');
-        if (blank) { blank.disabled = true; blank.hidden = true; }
-      });
-
-      const aiBtn       = document.getElementById("fetch-ai-btn");
-      const aiLabel     = document.getElementById("fetch-ai-label");
-      const aiIcon      = document.getElementById("fetch-ai-icon");
-      const aiSpinner   = document.getElementById("fetch-ai-spinner");
-      const aiAlert     = document.getElementById("fetch-ai-alert");
-      const rulesArea   = document.getElementById("game_rules");
-      const descArea    = document.getElementById("game_description");
-      const previewWrap = document.getElementById("rules-preview-wrapper");
-      const preview     = document.getElementById("rules-preview");
-      const editBtn     = document.getElementById("edit-rules-btn");
-      const csrfToken   = document.querySelector('meta[name="csrf-token"]').content;
-
-      // ── Basculer entre aperçu rendu et textarea ──
-      function showPreview() {
-        rulesArea.classList.add("d-none");
-        previewWrap.classList.remove("d-none");
-        editBtn.classList.remove("d-none");
-      }
-
-      function showTextarea() {
-        previewWrap.classList.add("d-none");
-        rulesArea.classList.remove("d-none");
-        editBtn.classList.add("d-none");
-      }
-
-      editBtn.addEventListener("click", showTextarea);
-
-      // ── Reset du formulaire à la fermeture du modal ──
-      const modal = document.getElementById("modalAddGame");
-      if (modal) {
-        modal.addEventListener("hidden.bs.modal", function () {
-          const form = modal.querySelector("form");
-          if (form) form.reset();
-          showTextarea();
-          aiAlert.classList.add("d-none");
-          preview.innerHTML = "";
-        });
-      }
-
-      // ── Bouton IA ──
-      aiBtn.addEventListener("click", async function () {
-        const title      = document.getElementById("game_title").value.trim();
-        const imageInput = document.getElementById("game_picture");
-
-        aiAlert.classList.add("d-none");
-
-        if (!title) {
-          aiAlert.textContent = "Veuillez d'abord renseigner le titre du jeu.";
-          aiAlert.classList.remove("d-none");
-          return;
-        }
-
-        aiBtn.disabled = true;
-        aiIcon.classList.add("d-none");
-        aiSpinner.classList.remove("d-none");
-        aiLabel.textContent = "Génération en cours…";
-
-        try {
-          const body = new FormData();
-          body.append("title", title);
-          if (imageInput && imageInput.files[0]) {
-            body.append("image", imageInput.files[0]);
-          }
-
-          const response = await fetch("<%= fetch_rules_games_path %>", {
-            method: "POST",
-            headers: { "X-CSRF-Token": csrfToken },
-            body
-          });
-
-          const data = await response.json();
-
-          if (!response.ok || data.error) {
-            throw new Error(data.error || "Erreur serveur");
-          }
-
-          if (data.description) descArea.value = data.description;
-          if (data.rules) {
-            rulesArea.value   = data.rules;
-            preview.innerHTML = data.rules;
-            showPreview();
-          }
-
-        } catch (err) {
-          aiAlert.textContent = "Erreur : " + err.message;
-          aiAlert.classList.remove("d-none");
-        } finally {
-          aiBtn.disabled = false;
-          aiIcon.classList.remove("d-none");
-          aiSpinner.classList.add("d-none");
-          aiLabel.textContent = "Générer la description et les règles via l'IA";
-        }
-      });
-    });
-    </script>
+    
   </div>
 </div>
