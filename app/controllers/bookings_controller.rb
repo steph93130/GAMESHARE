@@ -16,6 +16,7 @@ class BookingsController < ApplicationController
         read_by_recipient: true
       )
       broadcast_message_to_chat(@booking.chat, @system_message)
+      broadcast_bookings_to(@chat.game.user)
       broadcast_notifs_to(@chat.game.user)
       Turbo::StreamsChannel.broadcast_replace_to(
         "chat_#{@chat.id}_booking_actions",

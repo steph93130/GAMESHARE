@@ -59,6 +59,13 @@ class GamesController < ApplicationController
       @inline_chat = @game.chats.includes(:booking).where(user: current_user).to_a
                           .find { |c| !inactive.include?(c.booking&.status) }
     end
+    if @inline_chat
+      unread = @inline_chat.messages.where(read_by_recipient: false).where.not(user: current_user)
+      if unread.any?
+        unread.update_all(read_by_recipient: true)
+        broadcast_notifs_to(current_user)
+      end
+    end
   end
 
   def new

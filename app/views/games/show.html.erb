@@ -111,6 +111,7 @@
                           game_chats_path(@game),
                           method: :post,
                           params: { query: params[:query] },
+                          data: { turbo: false },
                           class: "button" %>
           <% end %>
 

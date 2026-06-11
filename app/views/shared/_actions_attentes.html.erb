@@ -22,44 +22,44 @@
       <% end %>
   <% end %>
   <% refused_chats.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span><%= chat.booking.game.user.username %> a refusé ton emprunt !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>
   <% accepted_chats_emprunteur.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span><%= chat.booking.game.user.username %> a accepté ton emprunt !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>
   <% validated_chats_emprunteur.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span>Tu as validé l'emprunt de <%= chat.booking.game.title %> !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>
   <% cancelled_chats_emprunteur.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span>Tu as annulé l'emprunt du jeu <%= chat.booking.game.title %> !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>
   <% returned_chats_emprunteur.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span><%= chat.booking.game.user.username %> a validé le retour du jeu <%= chat.booking.game.title %>, récupère ta caution !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>
   <% closed_chats_emprunteur.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span><%= chat.booking.user.username %>, l'emprunt du jeu <%= chat.booking.game.title %> est clôturé !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>
@@ -69,9 +69,9 @@
   <% all_chats.each do |chat| %>
       <% latest_unread = chat.messages.where(read_by_recipient: false).where.not(user_id: user.id).order(:created_at).last %>
       <% if latest_unread %>
-          <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+          <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="message" data-chat-id="<%= chat.id %>">
               <span><%= latest_unread.user.username %> t'as envoyé un message !</span>
-              <%= button_to "voir", mark_read_chat_path(chat, after: "game"), method: :patch, class: "button" %>
+              <%= link_to mark_read_chat_path(chat, after: "game"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
               <%= link_to mark_read_chat_path(chat), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
           </div>
       <% end %>
@@ -102,44 +102,44 @@
       <% end %>
   <% end %>
   <% submitted_chats_preteur.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span><%= chat.booking.user.username %> veut emprunter <%= chat.booking.game.title %> !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>
   <% accepted_chats_preteur.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span><%= chat.booking.game.user.username %>, tu as accepté de prêter <%= chat.booking.game.title %> !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>
   <% declined_chats_preteur.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span><%= chat.booking.game.user.username %>, tu as refusé de prêter <%= chat.booking.game.title %> !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>
   <% validated_chats_preteur.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span><%= chat.booking.user.username %> a validé l'emprunt !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>
   <% cancelled_chats_preteur.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span><%= chat.booking.user.username %> a annulé l'emprunt !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>
   <% returned_chats_preteur.each do |chat| %>
-      <div class="notif_attente d-flex align-items-center justify-content-center gap-2">
+      <div class="notif_attente d-flex align-items-center justify-content-between gap-3" data-notif-type="booking">
           <span><%= chat.booking.game.user.username %>, tu as validé le retour du jeu <%= chat.booking.game.title %> !</span>
-          <%= button_to "voir", dismiss_notif_booking_path(chat.booking, after: "borrow"), method: :patch, class: "button" %>
+          <%= link_to dismiss_notif_booking_path(chat.booking, after: "borrow"), data: { turbo_method: :patch } do %><i class="fa-regular fa-eye"></i><% end %>
           <%= link_to dismiss_notif_booking_path(chat.booking), data: { turbo_method: :patch }, class: "notif-dismiss" do %><i class="fa-solid fa-xmark"></i><% end %>
       </div>
   <% end %>

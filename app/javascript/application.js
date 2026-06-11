@@ -3,3 +3,42 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "@popperjs/core"
 import "bootstrap"
+
+function filterNotifs() {
+  const container = document.getElementById('actions_attentes');
+  if (!container) return;
+  const onBorrow = window.location.pathname === '/borrow';
+  container.querySelectorAll('[data-notif-type]').forEach(notif => {
+    if (notif.dataset.notifType === 'booking' && onBorrow) {
+      notif.style.setProperty('display', 'none', 'important');
+    } else {
+      notif.style.removeProperty('display');
+    }
+  });
+}
+
+let notifsObserver;
+
+function watchNotifs() {
+  notifsObserver?.disconnect();
+  notifsObserver = new MutationObserver(mutations => {
+    for (const m of mutations) {
+      for (const node of m.addedNodes) {
+        if (node.nodeType === 1 && node.id === 'actions_attentes') {
+          filterNotifs();
+          return;
+        }
+      }
+    }
+  });
+  notifsObserver.observe(document.body, { childList: true });
+}
+
+document.addEventListener('turbo:load', () => {
+  filterNotifs();
+  watchNotifs();
+  if (window.location.hash === '#inline_chat_container') {
+    const el = document.getElementById('inline_chat_container');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+});
