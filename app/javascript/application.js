@@ -41,4 +41,22 @@ document.addEventListener('turbo:load', () => {
     const el = document.getElementById('inline_chat_container');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   }
+
+  const modalAddGame = document.getElementById('modalAddGame');
+  if (modalAddGame) {
+    modalAddGame.addEventListener('hidden.bs.modal', () => {
+      const form = modalAddGame.querySelector('form');
+      if (form) form.reset();
+
+      const previewWrapper = modalAddGame.querySelector('[data-ai-generator-target="previewWrapper"]');
+      const rulesTextarea = modalAddGame.querySelector('[data-ai-generator-target="rules"]');
+      const editButton = modalAddGame.querySelector('[data-ai-generator-target="editButton"]');
+      const alert = modalAddGame.querySelector('[data-ai-generator-target="alert"]');
+
+      if (previewWrapper) previewWrapper.classList.add('d-none');
+      if (rulesTextarea) rulesTextarea.classList.remove('d-none');
+      if (editButton) editButton.classList.add('d-none');
+      if (alert) alert.classList.add('d-none');
+    });
+  }
 });
