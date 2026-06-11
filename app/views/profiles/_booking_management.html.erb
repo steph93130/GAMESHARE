@@ -7,15 +7,26 @@
          aria-controls="myLudo-pret"
          style="cursor: pointer;">
       <!-- <p><i class="fa-solid fa-dice purple"></i> MES PRÊTS (<%#= owner.values.sum(&:length) %>)</p> -->
-      <p><i class="fa-solid fa-dice purple"></i> MES PRÊTS (<%= owner[:submited].length + owner[:validated].length %>)</p>
+      <p><i class="fa-solid fa-dice purple"></i> MES PRÊTS (<%= owner[:submited].length + owner[:validated].length + owner[:closed].length %>)</p>
       <p><i class="fa-solid fa-angle-right chevron-toggle"></i></p>
     </div>
     <div class="mt-4">
       <div class="collapse mt-2" id="myLudo-pret">
         <div class="text-start background-transparent" data-controller="tab-toggle">
           <div class="boutons-prets text-center">
-            <div class="button" data-tab-toggle-target="btnEncours" data-action="click->tab-toggle#showEncours">En cours</div>
-            <div class="button" data-tab-toggle-target="btnClotures" data-action="click->tab-toggle#showClotures">Clôturés</div>
+            <div class="button" data-tab-toggle-target="btnEncours" data-action="click->tab-toggle#showEncours">En cours
+              <% owner_encours = owner[:submited].length + owner[:validated].length %>
+              <% if owner_encours > 0 %>
+              (<%= owner[:submited].length + owner[:validated].length %>)
+              <% end %>
+              </div>
+
+            <div class="button" data-tab-toggle-target="btnClotures" data-action="click->tab-toggle#showClotures">Clôturés
+              <% owner_clotures = owner[:closed].length %>
+              <% if owner_clotures > 1 %>
+              (<%= owner[:closed].length %>)
+              <% end %>
+              </div>
           </div>
 
           <div class="prets-encours" data-tab-toggle-target="encours">
@@ -66,12 +77,22 @@
       <div class="collapse mt-2" id="myLudo-emprunt">
         <div class="text-start background-transparent" data-controller="tab-toggle">
           <div class="boutons-emprunts text-center">
-            <div class="button" data-tab-toggle-target="btnEncours" data-action="click->tab-toggle#showEncours">En cours</div>
-            <div class="button" data-tab-toggle-target="btnClotures" data-action="click->tab-toggle#showClotures">Clôturés</div>
+            <div class="button" data-tab-toggle-target="btnEncours" data-action="click->tab-toggle#showEncours">En cours
+              <% borrow_encours = borrow[:accepted].length + borrow[:validated].length %>
+              <% if borrow_encours > 0 %>
+              (<%= borrow[:accepted].length + borrow[:validated].length %>)
+              <% end %>
+              </div>
+            <div class="button" data-tab-toggle-target="btnClotures" data-action="click->tab-toggle#showClotures">Clôturés
+              <% borrow_cloture = borrow[:closed].length + borrow[:returned].length %>
+              <% if borrow_cloture > 0 %>
+              (<%= borrow[:closed].length + borrow[:returned].length %>)
+              <% end %>
+              </div>
           </div>
 
           <div class="emprunts-encours" data-tab-toggle-target="encours">
-            <% emprunts_encours = borrow.empty? ? [] : borrow[:accepted] + borrow[:validated] + borrow[:returned] %>
+            <% emprunts_encours = borrow.empty? ? [] : borrow[:accepted] + borrow[:validated] + borrow[:returned] + borrow[:closed] %>
             <% if emprunts_encours.any? %>
               <div class="row mx-0">
                 <% emprunts_encours.each do |booking| %>
