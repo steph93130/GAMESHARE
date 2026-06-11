@@ -20,6 +20,10 @@ $logo-height: 150px;
     font-style: normal;
   }
 
+    body {
+    padding-top: 50px;
+  }
+
 @media (max-width: 576px) {
   .logo {
     position: absolute;
@@ -29,14 +33,27 @@ $logo-height: 150px;
     top : 5px;
   }
 
+  .fix {
+    position: fixed;
+    height: 60px;
+    width: 100%;
+    background: $bg-footer;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    padding: 5px;
+    }
+
+  body {
+    padding-top: 40px;
+  }
+
   .h1X {
-    left: 70px;
-    top : 10px;
-    margin-top: -30px;
+    margin-bottom: 50px;
+
   }
 
   .logoX {
   max-width: 100px;
-  margin-top: 15px;
   }
 }
