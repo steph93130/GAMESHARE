@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :games, dependent: :destroy
   has_many :chats, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :bookings, dependent: :destroy
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :email,    presence: true, uniqueness: { case_sensitive: false }

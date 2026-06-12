@@ -103,6 +103,7 @@ class BookingsController < ApplicationController
     @booking.update(status: :validated, notif_dismissed_borrower: false, notif_dismissed_lender: false)
     @booking.game.update(available: false)
     broadcast_bookings_to(@booking.game.user)
+    broadcast_bookings_to(@booking.user)
     broadcast_notifs_to(@booking.game.user)
     broadcast_notifs_to(@booking.user)
     redirect_to borrow_path
@@ -146,6 +147,7 @@ class BookingsController < ApplicationController
     authorize @booking
     @booking.update(status: :returned, notif_dismissed_lender: false, notif_dismissed_borrower: false)
     broadcast_bookings_to(@booking.user)
+    broadcast_bookings_to(@booking.game.user)
     broadcast_notifs_to(@booking.user)
     broadcast_notifs_to(@booking.game.user)
     respond_to do |format|
@@ -175,6 +177,7 @@ class BookingsController < ApplicationController
     @booking.update(status: :closed, notif_dismissed_borrower: false)
     @booking.game.update(available: true)
     broadcast_bookings_to(@booking.game.user)
+    broadcast_bookings_to(@booking.user)
     broadcast_games_to(@booking.game.user)
     broadcast_notifs_to(@booking.user)
     Turbo::StreamsChannel.broadcast_remove_to(
