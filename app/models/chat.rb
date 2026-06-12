@@ -3,5 +3,5 @@ class Chat < ApplicationRecord
   belongs_to :user
   has_many :messages, dependent: :destroy
   # Fait en sorte de n'avoir n'avoir qu'un seul booking
-  has_one :booking
+  has_one :booking, dependent: :destroy
 end
