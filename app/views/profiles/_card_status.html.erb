@@ -25,16 +25,21 @@
         <span class="status-badge status-accepted">
           <i class="fa-solid fa-circle-check"></i> Accepté
         </span>
-        <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
-        <%= link_to deposit_booking_path(b), class: "btn-booking btn-booking--action" do %>
-          <i class="fa-solid fa-basket-shopping"></i> Confirmer
+        <% if is_borrower %>
+          <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
+          <%= link_to deposit_booking_path(b), class: "btn-booking btn-booking--action" do %>
+            <i class="fa-solid fa-basket-shopping"></i> Confirmer
+          <% end %>
+        <% else %>
+          <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.chat.user.username %></p>
+          <p class="txt-small text-warning ps-2">En attente de confirmation</p>
         <% end %>
 
       <% elsif b.status == "validated" %>
         <span class="status-badge status-validated">
           <i class="fa-solid fa-handshake"></i> En cours
         </span>
-        <% if b.game.user == current_user %>
+        <% unless is_borrower %>
           <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.chat.user.username %></p>
           <%= link_to returned_booking_path(b), data: { turbo_method: :patch }, class: "btn-booking btn-booking--action" do %>
             <i class="fa-solid fa-rotate-left"></i> Retour
@@ -48,9 +53,14 @@
         <span class="status-badge status-returned">
           <i class="fa-solid fa-box-open"></i> Retourné
         </span>
-        <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
-        <%= link_to give_back_booking_path(b), class: "btn-booking btn-booking--action" do %>
-          <i class="fa-solid fa-euro-sign"></i> Caution
+        <% if is_borrower %>
+          <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.game.user.username %></p>
+          <%= link_to give_back_booking_path(b), class: "btn-booking btn-booking--action" do %>
+            <i class="fa-solid fa-euro-sign"></i> Caution
+          <% end %>
+        <% else %>
+          <p class="txt-small ps-2"><i class="fa-solid fa-user"></i> <%= b.chat.user.username %></p>
+          <p class="txt-small text-warning ps-2">En attente de récupération de caution</p>
         <% end %>
 
       <% elsif b.status == "closed" %>

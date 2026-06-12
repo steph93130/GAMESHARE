@@ -30,11 +30,11 @@
           </div>
 
           <div class="prets-encours" data-tab-toggle-target="encours">
-            <% prets_encours = owner.empty? ? [] : owner[:submited] + owner[:validated] + owner[:returned] %>
+            <% prets_encours = owner.empty? ? [] : owner[:accepted] + owner[:submited] + owner[:validated] + owner[:returned] %>
             <% if prets_encours.any? %>
               <div class="row mx-0">
                 <% prets_encours.each do |booking| %>
-                  <%= render "profiles/card_status", b: booking %>
+                  <%= render "profiles/card_status", b: booking, viewer: viewer, is_borrower: false %>
                 <% end %>
               </div>
             <% else %>
@@ -49,7 +49,7 @@
             <% if prets_clotures.any? %>
               <div class="row mx-0">
                 <% prets_clotures.each do |booking| %>
-                  <%= render "profiles/card_status", b: booking %>
+                  <%= render "profiles/card_status", b: booking, viewer: viewer, is_borrower: false %>
                 <% end %>
               </div>
             <% else %>
@@ -96,7 +96,7 @@
             <% if emprunts_encours.any? %>
               <div class="row mx-0">
                 <% emprunts_encours.each do |booking| %>
-                  <%= render "profiles/card_status", b: booking %>
+                  <%= render "profiles/card_status", b: booking, viewer: viewer, is_borrower: true %>
                 <% end %>
               </div>
             <% else %>
@@ -111,7 +111,7 @@
             <% if emprunts_clotures.any? %>
               <div class="row mx-0">
                 <% emprunts_clotures.each do |booking| %>
-                  <%= render "profiles/card_status", b: booking %>
+                  <%= render "profiles/card_status", b: booking, viewer: viewer, is_borrower: true %>
                 <% end %>
               </div>
             <% else %>
